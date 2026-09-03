@@ -1,0 +1,1250 @@
+{
+  "name": "unodeai",
+  "displayName": "UnodeAi — Multi-Model AI Team",
+  "description": "Delegate to an AI team. Keep the receipts. A project manager agent breaks your goal into tasks and delegates to specialists, each on the model you choose — and no agent’s “done” is ever printed as evidence: what an agent claims stays separate from what the framework observed. Export any run as one Markdown file a client or an auditor can read without installing anything, or as portable JSON that carries no request text, instructions, command lines or file contents, and declares what it does carry. Runs in VS Code and Cursor, on your providers and your keys — no telemetry, no network call at activation, and a published SHA-256 for the exact bytes you install.",
+  "version": "0.9.76",
+  "publisher": "unode",
+  "license": "MIT",
+  "icon": "images/icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/UnodeTechxyz/unodeai"
+  },
+  "homepage": "https://www.unodetech.xyz",
+  "engines": {
+    "vscode": "^1.93.0"
+  },
+  "categories": [
+    "AI",
+    "Chat"
+  ],
+  "keywords": [
+    "agentic",
+    "ai agent",
+    "coding agent",
+    "multi-agent",
+    "agents",
+    "ai",
+    "llm",
+    "team",
+    "workflow",
+    "mcp",
+    "unode"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": "limited",
+      "description": "In an untrusted workspace, UnodeAi runs read-only: agents can chat, plan, read files, and search, but shell commands, file writes/edits/deletes, MCP servers, and the verify command are all disabled until you trust the workspace. This prevents workspace-supplied config (e.g. commands or MCP servers in a repo's .unode/team.json or settings) from executing code or modifying files without your consent.",
+      "restrictedConfigurations": [
+        "unode.allowedCommands",
+        "unode.commandApproval",
+        "unode.verifyCommand",
+        "unode.concurrencyStrategy",
+        "unode.additionalRoots",
+        "unode.baseUrl",
+        "unode.unodeBaseUrl",
+        "unode.pricingSources",
+        "unode.modelCatalogUrl",
+        "unode.customBaseUrl",
+        "unode.defaultProvider",
+        "unode.webAccess",
+        "unode.codexCliPath",
+        "unode.marketplace.catalogUrl",
+        "unode.marketplace.fetchCatalog",
+        "unode.marketplace.skillLibraryUrl"
+      ]
+    },
+    "virtualWorkspaces": {
+      "supported": false,
+      "description": "UnodeAi needs a real filesystem and git (worktrees, checkpoints, .unode/ team data), so it is not supported in virtual workspaces."
+    }
+  },
+  "contributes": {
+    "chatParticipants": [
+      {
+        "id": "unode.crew",
+        "name": "unode",
+        "fullName": "UnodeAi",
+        "description": "Hand a goal to your AI crew — the PM delegates, verifies, and reports back.",
+        "isSticky": true
+      }
+    ],
+    "commands": [
+      {
+        "command": "unode.showTeamPanel",
+        "title": "UnodeAi: Show Team Panel",
+        "icon": "$(organization)"
+      },
+      {
+        "command": "unode.showDashboard",
+        "title": "UnodeAi: Show Dashboard",
+        "icon": "$(dashboard)"
+      },
+      {
+        "command": "unode.openMissionControl",
+        "title": "UnodeAi: Open Dashboard",
+        "icon": {
+          "light": "images/unode-icon.light.svg",
+          "dark": "images/unode-icon.dark.svg"
+        }
+      },
+      {
+        "command": "unode.generateEvidenceReport",
+        "title": "UnodeAi: Generate Evidence Report",
+        "icon": "$(checklist)"
+      },
+      {
+        "command": "unode.startAllAgents",
+        "title": "UnodeAi: Start All Agents",
+        "icon": "$(play)"
+      },
+      {
+        "command": "unode.stopAllAgents",
+        "title": "UnodeAi: Stop All Agents",
+        "icon": "$(debug-stop)"
+      },
+      {
+        "command": "unode.addAgent",
+        "title": "UnodeAi: Add Agent",
+        "icon": "$(add)"
+      },
+      {
+        "command": "unode.teamActions",
+        "title": "UnodeAi: Team Actions…",
+        "icon": "$(ellipsis)"
+      },
+      {
+        "command": "unode.showWorkbenchInspector",
+        "title": "UnodeAi: Show Changed Files",
+        "icon": "$(list-tree)"
+      },
+      {
+        "command": "unode.hideWorkbenchInspector",
+        "title": "UnodeAi: Hide Changed Files",
+        "icon": "$(list-flat)"
+      },
+      {
+        "command": "unode.restoreCheckpointById",
+        "title": "UnodeAi: Restore This File Checkpoint"
+      },
+      {
+        "command": "unode.openAgentBuilder",
+        "title": "UnodeAi: Build an Agent",
+        "icon": "$(person-add)"
+      },
+      {
+        "command": "unode.createDefaultTeam",
+        "title": "UnodeAi: Create Default Team (PM + Architect + Developer + Reviewer)",
+        "icon": "$(organization)"
+      },
+      {
+        "command": "unode.createTeamPreset",
+        "title": "UnodeAi: Create or Switch Team…",
+        "icon": "$(organization)"
+      },
+      {
+        "command": "unode.saveTeam",
+        "title": "UnodeAi: Save Team…",
+        "icon": "$(save)"
+      },
+      {
+        "command": "unode.openSavedTeam",
+        "title": "UnodeAi: Open Saved Team…",
+        "icon": "$(folder-opened)"
+      },
+      {
+        "command": "unode.startSolo",
+        "title": "UnodeAi: Solo Agent (toggle)",
+        "icon": {
+          "light": "images/zap-line.light.svg",
+          "dark": "images/zap-line.dark.svg"
+        }
+      },
+      {
+        "command": "unode.startSoloActive",
+        "title": "UnodeAi: Solo Agent (toggle)",
+        "icon": {
+          "light": "images/zap-solid.light.svg",
+          "dark": "images/zap-solid.dark.svg"
+        }
+      },
+      {
+        "command": "unode.sendMessage",
+        "title": "UnodeAi: Send Message to Agent",
+        "icon": "$(send)"
+      },
+      {
+        "command": "unode.openChat",
+        "title": "UnodeAi: Open Chat",
+        "icon": "$(comment-discussion)"
+      },
+      {
+        "command": "unode.chatWithAgent",
+        "title": "UnodeAi: Open Chat with Agent",
+        "icon": "$(comment-discussion)"
+      },
+      {
+        "command": "unode.openWorkbench",
+        "title": "UnodeAi: Open Workbench",
+        "icon": "$(layout)"
+      },
+      {
+        "command": "unode.reviewRun",
+        "title": "UnodeAi: Review Delivered Work",
+        "icon": "$(pass-filled)"
+      },
+      {
+        "command": "unode.applyExecutionHooks",
+        "title": "UnodeAi: Apply Execution Hooks",
+        "icon": "$(shield)"
+      },
+      {
+        "command": "unode.closeWorkbench",
+        "title": "UnodeAi: Close Workbench",
+        "icon": "$(close)"
+      },
+      {
+        "command": "unode.toggleWorkbenchComposerFocus",
+        "title": "UnodeAi: Toggle Workbench Composer Focus",
+        "icon": "$(edit)"
+      },
+      {
+        "command": "unode.focusPendingApproval",
+        "title": "UnodeAi: Show Pending Approval",
+        "icon": "$(lock)"
+      },
+      {
+        "command": "unode.runWorkflow",
+        "title": "UnodeAi: Run Workflow",
+        "icon": "$(run-all)"
+      },
+      {
+        "command": "unode.editWorkflow",
+        "title": "UnodeAi: Edit Workflow",
+        "icon": "$(type-hierarchy-sub)"
+      },
+      {
+        "command": "unode.onboarding",
+        "title": "UnodeAi: Run Setup Wizard",
+        "icon": "$(rocket)"
+      },
+      {
+        "command": "unode.runDemoTask",
+        "title": "UnodeAi: Run Demo Task",
+        "icon": "$(run)"
+      },
+      {
+        "command": "unode.agentStart",
+        "title": "UnodeAi: Start Agent",
+        "icon": "$(play-circle)"
+      },
+      {
+        "command": "unode.agentStop",
+        "title": "UnodeAi: Stop Agent",
+        "icon": "$(debug-stop)"
+      },
+      {
+        "command": "unode.agentRestart",
+        "title": "UnodeAi: Restart Agent",
+        "icon": "$(debug-restart)"
+      },
+      {
+        "command": "unode.agentRemove",
+        "title": "UnodeAi: Remove Agent",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "unode.agentEdit",
+        "title": "UnodeAi: Edit Agent",
+        "icon": "$(edit)"
+      },
+      {
+        "command": "unode.showMessageLog",
+        "title": "UnodeAi: Show Activity",
+        "icon": "$(output)"
+      },
+      {
+        "command": "unode.showPromptedCommandLog",
+        "title": "UnodeAi: Show Prompted Command Frequencies",
+        "icon": "$(list-ordered)"
+      },
+      {
+        "command": "unode.clearChat",
+        "title": "UnodeAi: Clear Chat",
+        "icon": "$(clear-all)"
+      },
+      {
+        "command": "unode.compactContext",
+        "title": "UnodeAi: Compact Context",
+        "icon": "$(fold)"
+      },
+      {
+        "command": "unode.archiveChat",
+        "title": "UnodeAi: Archive Chat",
+        "icon": "$(archive)"
+      },
+      {
+        "command": "unode.viewArchivedChats",
+        "title": "UnodeAi: View Archived Chats",
+        "icon": "$(history)"
+      },
+      {
+        "command": "unode.export",
+        "title": "UnodeAi: Export…",
+        "icon": "$(export)"
+      },
+      {
+        "command": "unode.exportChat",
+        "title": "UnodeAi: Export Chat",
+        "icon": "$(save)"
+      },
+      {
+        "command": "unode.importChat",
+        "title": "UnodeAi: Import Chat",
+        "icon": "$(folder-opened)"
+      },
+      {
+        "command": "unode.toggleChatCompact",
+        "title": "UnodeAi: Compress Chat View",
+        "icon": "$(collapse-all)"
+      },
+      {
+        "command": "unode.clearMessageLog",
+        "title": "UnodeAi: Clear Messages",
+        "icon": "$(clear-all)"
+      },
+      {
+        "command": "unode.exportMessages",
+        "title": "UnodeAi: Export Messages",
+        "icon": "$(save)"
+      },
+      {
+        "command": "unode.exportRun",
+        "title": "UnodeAi: Export Run Evidence Pack",
+        "icon": "$(package)"
+      },
+      {
+        "command": "unode.exportPortableRun",
+        "title": "UnodeAi: Export Portable Run Evidence",
+        "icon": "$(law)"
+      },
+      {
+        "command": "unode.exportWorkerProgress",
+        "title": "UnodeAi: Export Worker Progress Distribution",
+        "icon": "$(graph)"
+      },
+      {
+        "command": "unode.importMessages",
+        "title": "UnodeAi: Import Messages",
+        "icon": "$(folder-opened)"
+      },
+      {
+        "command": "unode.toggleMessagesCompact",
+        "title": "UnodeAi: Compress Activity View",
+        "icon": "$(collapse-all)"
+      },
+      {
+        "command": "unode.collapseTeam",
+        "title": "UnodeAi: Collapse Team to Icons",
+        "icon": "$(collapse-all)"
+      },
+      {
+        "command": "unode.expandTeam",
+        "title": "UnodeAi: Expand Team Cards",
+        "icon": "$(expand-all)"
+      },
+      {
+        "command": "unode.setApiKey",
+        "title": "UnodeAi: Set Provider API Key",
+        "icon": "$(key)"
+      },
+      {
+        "command": "unode.showAgentOutput",
+        "title": "UnodeAi: Show Agent Output",
+        "icon": "$(output)"
+      },
+      {
+        "command": "unode.showAgentTerminal",
+        "title": "UnodeAi: Show Agent Terminal",
+        "icon": "$(terminal)"
+      },
+      {
+        "command": "unode.restoreCheckpoint",
+        "title": "UnodeAi: Restore File Checkpoint…",
+        "icon": "$(history)"
+      },
+      {
+        "command": "unode.showCheckpointDiff",
+        "title": "UnodeAi: Show Checkpoint Diff",
+        "icon": "$(diff)"
+      },
+      {
+        "command": "unode.openSettings",
+        "title": "UnodeAi: Open Settings",
+        "icon": "$(gear)"
+      },
+      {
+        "command": "unode.openAccount",
+        "title": "UnodeAi: Open Unode Account / Profile",
+        "icon": "$(account)"
+      },
+      {
+        "command": "unode.showSecurity",
+        "title": "UnodeAi: Security",
+        "icon": "$(shield)"
+      },
+      {
+        "command": "unode.refreshPrices",
+        "title": "UnodeAi: Refresh Model Prices",
+        "icon": "$(sync)"
+      },
+      {
+        "command": "unode.toggleConcurrencyMode",
+        "title": "UnodeAi: Toggle Concurrency Mode (Optimistic ⇄ Worktree)"
+      },
+      {
+        "command": "unode.concurrencyMode.optimistic",
+        "title": "UnodeAi: Concurrency — Optimistic (click to switch to Worktree)",
+        "icon": "$(files)"
+      },
+      {
+        "command": "unode.concurrencyMode.worktree",
+        "title": "UnodeAi: Concurrency — Worktree (click to switch to Optimistic)",
+        "icon": "$(git-branch)"
+      },
+      {
+        "command": "unode.openMarketplace",
+        "title": "UnodeAi: Open Marketplace",
+        "icon": "$(extensions)"
+      },
+      {
+        "command": "unode.addMcpServer",
+        "title": "UnodeAi: Add MCP Server",
+        "icon": "$(server)"
+      },
+      {
+        "command": "unode.worktree.finalize",
+        "title": "UnodeAi: Finalize Worktree Merges to Branch",
+        "icon": "$(git-merge)"
+      },
+      {
+        "command": "unode.openWorktreeReview",
+        "title": "UnodeAi: Crew Worktrees (Review)",
+        "icon": "$(git-pull-request)"
+      },
+      {
+        "command": "unode.resetWorkspaceState",
+        "title": "UnodeAi: Reset Workspace State"
+      },
+      {
+        "command": "unode.enableCommands",
+        "title": "Enable Safe Commands",
+        "category": "UnodeAi"
+      },
+      {
+        "command": "unode.editTeamRules",
+        "title": "UnodeAi: Edit Team Rules",
+        "icon": "$(law)"
+      },
+      {
+        "command": "unode.setDashboardTaskCount",
+        "title": "UnodeAi: Set Dashboard Recent-Task Count"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "unode",
+          "title": "UnodeAi",
+          "icon": "images/unode-icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "unode": [
+        {
+          "id": "unode.teamPanel",
+          "name": "Team",
+          "type": "webview",
+          "icon": "images/unode-icon.svg",
+          "contextualTitle": "UnodeAi Team"
+        },
+        {
+          "id": "unode.activityPanel",
+          "name": "Activity",
+          "type": "webview",
+          "icon": "$(output)",
+          "contextualTitle": "UnodeAi Activity"
+        },
+        {
+          "id": "unode.chat",
+          "name": "Chat",
+          "type": "webview",
+          "icon": "$(comment-discussion)",
+          "contextualTitle": "UnodeAi Chat"
+        }
+      ]
+    },
+    "menus": {
+      "editor/title": [
+        {
+          "command": "unode.showWorkbenchInspector",
+          "when": "activeWebviewPanelId == 'unode.workbench' && !unode.inspectorOpen",
+          "group": "navigation@1"
+        },
+        {
+          "command": "unode.hideWorkbenchInspector",
+          "when": "activeWebviewPanelId == 'unode.workbench' && unode.inspectorOpen",
+          "group": "navigation@1"
+        },
+        {
+          "command": "unode.openMissionControl",
+          "group": "navigation@99"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "unode.openWorkbench",
+          "when": "view == unode.teamPanel",
+          "group": "navigation@0"
+        },
+        {
+          "command": "unode.addAgent",
+          "when": "view == unode.teamPanel",
+          "group": "navigation@1"
+        },
+        {
+          "command": "unode.startSolo",
+          "when": "view == unode.teamPanel && !unode.soloActive",
+          "group": "navigation@2"
+        },
+        {
+          "command": "unode.startSoloActive",
+          "when": "view == unode.teamPanel && unode.soloActive",
+          "group": "navigation@2"
+        },
+        {
+          "command": "unode.teamActions",
+          "when": "view == unode.teamPanel",
+          "group": "navigation@1.5"
+        },
+        {
+          "command": "unode.openSettings",
+          "when": "view == unode.teamPanel",
+          "group": "navigation@2.2"
+        },
+        {
+          "command": "unode.sendMessage",
+          "when": "view == unode.teamPanel",
+          "group": "navigation@3"
+        },
+        {
+          "command": "unode.collapseTeam",
+          "when": "view == unode.teamPanel && !unode.teamCompact",
+          "group": "navigation@10"
+        },
+        {
+          "command": "unode.expandTeam",
+          "when": "view == unode.teamPanel && unode.teamCompact",
+          "group": "navigation@10"
+        },
+        {
+          "command": "unode.openWorkbench",
+          "when": "view == unode.chat && !unode.workbenchOpen",
+          "group": "navigation@0"
+        },
+        {
+          "command": "unode.closeWorkbench",
+          "when": "view == unode.chat && unode.workbenchOpen",
+          "group": "navigation@0"
+        },
+        {
+          "command": "unode.exportChat",
+          "when": "view == unode.chat",
+          "group": "navigation"
+        },
+        {
+          "command": "unode.importChat",
+          "when": "view == unode.chat",
+          "group": "navigation"
+        },
+        {
+          "command": "unode.toggleChatCompact",
+          "when": "view == unode.chat",
+          "group": "navigation"
+        },
+        {
+          "command": "unode.archiveChat",
+          "when": "view == unode.chat",
+          "group": "navigation"
+        },
+        {
+          "command": "unode.clearChat",
+          "when": "view == unode.chat",
+          "group": "navigation"
+        },
+        {
+          "command": "unode.viewArchivedChats",
+          "when": "view == unode.chat",
+          "group": "1_archive"
+        },
+        {
+          "command": "unode.exportMessages",
+          "when": "view == unode.activityPanel",
+          "group": "navigation"
+        },
+        {
+          "command": "unode.exportRun",
+          "when": "view == unode.activityPanel",
+          "group": "navigation"
+        },
+        {
+          "command": "unode.exportWorkerProgress",
+          "when": "view == unode.activityPanel",
+          "group": "navigation"
+        },
+        {
+          "command": "unode.importMessages",
+          "when": "view == unode.activityPanel",
+          "group": "navigation"
+        },
+        {
+          "command": "unode.toggleMessagesCompact",
+          "when": "view == unode.activityPanel",
+          "group": "navigation"
+        },
+        {
+          "command": "unode.clearMessageLog",
+          "when": "view == unode.activityPanel",
+          "group": "navigation"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "unode.startSoloActive",
+          "when": "false"
+        },
+        {
+          "command": "unode.setDashboardTaskCount",
+          "when": "false"
+        },
+        {
+          "command": "unode.exportMessages",
+          "when": "false"
+        },
+        {
+          "command": "unode.exportRun",
+          "when": "false"
+        },
+        {
+          "command": "unode.exportPortableRun",
+          "when": "false"
+        },
+        {
+          "command": "unode.exportWorkerProgress",
+          "when": "false"
+        },
+        {
+          "command": "unode.generateEvidenceReport",
+          "when": "false"
+        },
+        {
+          "command": "unode.enableCommands",
+          "when": "false"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "unode.toggleWorkbenchComposerFocus",
+        "key": "ctrl+alt+enter",
+        "mac": "cmd+alt+enter",
+        "when": "editorTextFocus || webviewFocus"
+      }
+    ],
+    "configuration": {
+      "title": "UnodeAi",
+      "properties": {
+        "unode.maxConcurrentAgents": {
+          "type": "number",
+          "default": 10,
+          "minimum": 1,
+          "description": "Maximum number of agents running concurrently. Extra started agents queue and auto-start as slots free up. Raising this takes effect immediately (no reload)."
+        },
+        "unode.logLevel": {
+          "type": "string",
+          "default": "info",
+          "enum": [
+            "debug",
+            "info",
+            "warn",
+            "error"
+          ],
+          "description": "Log level for UnodeAi"
+        },
+        "unode.messageRetentionDays": {
+          "type": "number",
+          "default": 7,
+          "description": "Number of days to retain message history"
+        },
+        "unode.autoSaveInterval": {
+          "type": "number",
+          "default": 60,
+          "description": "Auto-save interval in seconds"
+        },
+        "unode.modelDefaults.temperature": {
+          "type": "number",
+          "default": 0.7,
+          "minimum": 0,
+          "maximum": 2,
+          "description": "Global default sampling temperature for agents that don't set their own (F2). Per-agent modelParams override this. OpenAI-compatible backends only."
+        },
+        "unode.modelDefaults.topP": {
+          "type": "number",
+          "default": 1,
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Global default nucleus-sampling top_p (F2). Per-agent modelParams override this. OpenAI-compatible backends only."
+        },
+        "unode.modelDefaults.maxTokens": {
+          "type": "integer",
+          "default": 32768,
+          "minimum": 1,
+          "description": "Global default max output tokens for agents that don't set their own (F2). Per-agent modelParams override this. Raised above 4096 so long tool-call arguments and generated documents are less likely to be truncated."
+        },
+        "unode.modelDefaults.reasoningEffort": {
+          "type": "string",
+          "default": "medium",
+          "enum": [
+            "",
+            "low",
+            "medium",
+            "high",
+            "xhigh",
+            "max"
+          ],
+          "enumDescriptions": [
+            "Provider default — do not send reasoning_effort (safest; avoids 400s on models that don't support it)",
+            "low",
+            "medium",
+            "high",
+            "xhigh (claude only)",
+            "max (claude only)"
+          ],
+          "description": "Global default reasoning effort (F2). Empty = do NOT send it (recommended — many models/gateways reject reasoning_effort). When set, OpenAI-compatible backends pass it in the request and the claude backend maps it to --effort. Per-agent/role values still apply."
+        },
+        "unode.modelDefaults.stream": {
+          "type": "boolean",
+          "default": true,
+          "description": "Global default for streaming responses where supported (F2). Note: the in-process tool loop currently issues non-streaming requests regardless."
+        },
+        "unode.modelDefaults.responseFormat": {
+          "type": "string",
+          "default": "",
+          "enum": [
+            "",
+            "text",
+            "json_object"
+          ],
+          "enumDescriptions": [
+            "Provider default — do not send response_format",
+            "text",
+            "json_object (force valid JSON output)"
+          ],
+          "description": "Global default response format (F2). Empty = do NOT send it. OpenAI-compatible backends only; per-agent modelParams override this."
+        },
+        "unode.smartMode.enabled": {
+          "type": "boolean",
+          "default": false,
+          "description": "Smart Mode (F3): auto-select a model tier per task instead of pinning one model per agent. Off = each agent uses its configured model."
+        },
+        "unode.smartMode.defaultTier": {
+          "type": "string",
+          "default": "standard",
+          "enum": [
+            "premium",
+            "standard",
+            "economy"
+          ],
+          "description": "Smart Mode default tier when nothing more specific (role override or task hint) matches."
+        },
+        "unode.smartMode.roleTiers": {
+          "type": "object",
+          "default": {},
+          "additionalProperties": {
+            "type": "string",
+            "enum": [
+              "premium",
+              "standard",
+              "economy"
+            ]
+          },
+          "description": "Smart Mode per-role tier override (role → tier), e.g. { \"reviewer\": \"economy\" }. Beats the role template's tier; loses to a per-task hint."
+        },
+        "unode.smartMode.taskTierHints": {
+          "type": "object",
+          "default": {},
+          "additionalProperties": {
+            "type": "string",
+            "enum": [
+              "premium",
+              "standard",
+              "economy"
+            ]
+          },
+          "description": "Smart Mode per-message-type tier hint (message type → tier), e.g. { \"review.request\": \"economy\" }."
+        },
+        "unode.modelTiers": {
+          "type": "object",
+          "default": {},
+          "description": "Override of the built-in tier→model tables (F3): { \"premium\": { \"roam\": \"...\", \"openai\": \"...\" }, ... }. Merged over the defaults per tier; empty = built-in tables."
+        },
+        "unode.modelTierParams": {
+          "type": "object",
+          "default": {},
+          "description": "Optional Smart Mode tier-level model parameters (F2/F3): { \"premium\": { \"reasoning_effort\": \"high\" }, \"economy\": { \"temperature\": 0.2 } }. Agent modelParams still win over these values.",
+          "properties": {
+            "premium": {
+              "type": "object"
+            },
+            "standard": {
+              "type": "object"
+            },
+            "economy": {
+              "type": "object"
+            }
+          },
+          "additionalProperties": false
+        },
+        "unode.defaultProvider": {
+          "type": "string",
+          "default": "unode",
+          "description": "Default connection id for new agents. Select a configured connection in UnodeAi Settings; custom gateway ids are validated by the local connection registry."
+        },
+        "unode.customBaseUrl": {
+          "type": "string",
+          "default": "",
+          "markdownDescription": "Deprecated migration-only setting for the retired singleton Custom gateway. It is read only by the trusted, user-confirmed migration into named local custom gateways and is never used for normal model routing."
+        },
+        "unode.baseUrl": {
+          "type": "string",
+          "default": "",
+          "description": "Deprecated compatibility setting. Roam model and model-catalog requests always use the registered Roam endpoint; use the Custom OpenAI-compatible connection for your own endpoint."
+        },
+        "unode.unodeBaseUrl": {
+          "type": "string",
+          "default": "https://www.unodetech.xyz/v1",
+          "description": "Deprecated compatibility setting. Unode model and model-catalog requests always use the registered Unode endpoint; use the Custom OpenAI-compatible connection for your own endpoint."
+        },
+        "unode.modelCatalogUrl": {
+          "type": "string",
+          "default": "",
+          "description": "Optional URL of a gateway-hosted model catalog JSON ({ providers: { <id>: { models: [{ id, name, vision, recommendedFor }] } } }). When set, the Add-Agent model picker merges it with the gateway's live /v1/models and the built-in defaults — so available models can be configured remotely without an extension update. Empty = use live /v1/models + built-in defaults only."
+        },
+        "unode.extraModels": {
+          "type": "object",
+          "default": {},
+          "description": "Add model ids to the Add-Agent / Settings model pickers without waiting for an extension update. Keys are connection ids (claude-cli, unode, roam, openai, openrouter, or a custom connection id); values are arrays of either a plain model id or { id, name, vision }. These are offered first, ahead of the hosted catalog and the built-in defaults, and are the only way to extend a connection that has no live /v1/models endpoint to query — Claude Headless, for instance, runs a CLI that cannot be asked what it serves. Example: { \"claude-cli\": [\"claude-opus-5\", { \"id\": \"claude-sonnet-5\", \"name\": \"Sonnet 5\", \"vision\": true }] }",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "object",
+                  "required": [
+                    "id"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "vision": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "unode.modelPrices": {
+          "type": "object",
+          "default": {},
+          "description": "Override or extend the cost-estimation price table. Keys are model ids (matched by substring), values are { \"input\": <USD per 1M input tokens>, \"output\": <USD per 1M output tokens> }. Manual overrides win over live-fetched prices — use this for platforms that don't expose a new-api /api/pricing endpoint. Example: { \"deepseek-v4-flash\": { \"input\": 0.14, \"output\": 0.28 } }",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "input": {
+                "type": "number"
+              },
+              "output": {
+                "type": "number"
+              }
+            }
+          }
+        },
+        "unode.pricingSources": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "description": "Extra new-api-compatible gateway URLs to fetch live model prices in addition to the registered Roam and Unode endpoints. Give either the gateway base URL (…/v1) or a full …/api/pricing URL; prices are converted from new-api ratios to USD and refreshed on startup, daily, and when picking a model. For platforms that do NOT expose a new-api /api/pricing endpoint, use unode.modelPrices instead."
+        },
+        "unode.priceGroup": {
+          "default": "",
+          "description": "Your billing group on each gateway, used to apply the right price multiplier (group_ratio). A group belongs to the KEY, not to the account: two keys on the same account can sit in different groups with different prices and different available models. Set an object keyed by connection id ({ \"roam\": \"vip\", \"unode\": \"default\" }) when your keys differ; a plain string applies one group to every gateway. Empty = no assumed discount: when a gateway offers several groups and will not say which one bills, the undiscounted rate is shown rather than a cheaper guess.",
+          "anyOf": [
+            {
+              "type": "string",
+              "description": "One group applied to every gateway. Correct only when every key you use is in the same group."
+            },
+            {
+              "type": "object",
+              "description": "A group per connection id, e.g. { \"roam\": \"vip\", \"unode\": \"default\" }.",
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          ]
+        },
+        "unode.lowBalanceThresholdUsd": {
+          "type": "number",
+          "default": 5,
+          "minimum": 0,
+          "description": "Show a low-balance warning in the Providers tab when a gateway account's remaining credit falls below this many USD. The balance is read live from each provider's billing endpoint using its stored key (new-api gateways like Unode; providers without a readable balance endpoint simply show nothing). Uncapped accounts show 'Unlimited' and never warn. Set to 0 to disable the warning (the balance still shows)."
+        },
+        "unode.additionalRoots": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "description": "Extra local folders (absolute paths) agents may READ and SEARCH, in addition to your workspace folders. Off by default. Not honored in an untrusted workspace. Writes always stay in the working folder."
+        },
+        "unode.codexCliPath": {
+          "type": "string",
+          "default": "",
+          "description": "Reserved for a future Codex Headless connection. Codex Headless is not available in this release, so this setting is not used to start a Codex process."
+        },
+        "unode.concurrencyStrategy": {
+          "type": "string",
+          "default": "optimistic",
+          "enum": [
+            "optimistic",
+            "worktree"
+          ],
+          "enumDescriptions": [
+            "No locks: agents work in parallel; a write is rejected if a teammate changed the file since you read it (re-read and retry). Best for small/medium teams.",
+            "Each eligible agent works in its own git worktree (true isolation); on turn completion its work is VERIFIED (unode.verifyCommand) and only merged into a unode/integration branch if it passes — failing work is held on the agent's branch and handed back to fix. Requires a git repo with a clean tree. Review per-lane status and land it with 'Finalize Worktree Merges'."
+          ],
+          "description": "How UnodeAi prevents agents from clobbering each other's file edits."
+        },
+        "unode.verifyCommand": {
+          "type": "string",
+          "default": "",
+          "description": "Command that build/type-check/tests the whole project — the only reliable detector of cross-file breakage. Set it to your project's real script (e.g. 'npm test' or 'npm run build'). Leave EMPTY and the PM's run_checks auto-detects it from your package.json scripts (test → build → lint); the automatic completion gate (unode.gate.enabled) stays off until you set a command here explicitly."
+        },
+        "unode.gate.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Verifier-as-gate: before a PM (coordinator) can report a goal done on the shared tree, run the objective project checks (unode.verifyCommand). If they fail, the PM is sent back to fix it (bounded retries → escalate to a stronger/different teammate → hand off to you), so it can't claim done while the build/tests are red. Requires unode.verifyCommand to be set. Worktree mode already gates at merge, so this applies only to the normal optimistic mode. OpenAI-compatible coordinators only."
+        },
+        "unode.gate.maxSelfRetries": {
+          "type": "number",
+          "default": 2,
+          "minimum": 0,
+          "description": "Verifier-as-gate: how many same-target fix cycles the PM gets when checks fail, before the gate escalates to a stronger/different teammate. Lower = hand off to you sooner."
+        },
+        "unode.gate.maxRedelegations": {
+          "type": "number",
+          "default": 1,
+          "minimum": 0,
+          "description": "Verifier-as-gate: how many escalated (stronger-model / reassigned) fix cycles follow the self-retries before the gate stops and hands the still-failing task back to you. The gate can never loop forever — once this budget is spent it always hands off."
+        },
+        "unode.commandApproval": {
+          "type": "string",
+          "default": "ask",
+          "enum": [
+            "none",
+            "ask",
+            "allowlist",
+            "all"
+          ],
+          "enumDescriptions": [
+            "Agents cannot run shell commands at all (most secure).",
+            "Prompt before each not-yet-allowed command: Allow once / Allow this session / Allow for project (whitelists it) / Deny with a note to the agent. Approved commands run automatically next time (recommended, default).",
+            "Agents may run a nonempty && or ; chain only when every segment matches unode.allowedCommands. Other shell control syntax remains blocked.",
+            "Agents may run any shell command except a few catastrophic patterns (DANGEROUS — only in a sandbox/VM)."
+          ],
+          "description": "Controls the run_command tool and PM run_checks. Defaults to 'ask' — you approve each not-yet-allowed command (once / this session / this project) or deny it with a note. 'allowlist' uses a fixed prefix list; 'none' disables command execution entirely. Catastrophic patterns are always blocked."
+        },
+        "unode.debug.promptedCommandLog": {
+          "type": "boolean",
+          "default": false,
+          "scope": "application",
+          "description": "Opt in to a local frequency table of command templates that reached an approval prompt. Stores only redacted CommandPolicy templates — filesystem paths become '<path>' and any value attached to a flag becomes '<redacted>', so no raw command line, absolute path, or inline credential is kept. Sends nothing. Shown by 'UnodeAi: Show Prompted Command Frequencies'."
+        },
+        "unode.allowedCommands": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "description": "Command prefixes agents may run WITHOUT prompting. Used in 'allowlist' mode (only these run) and as the pre-approved set in 'ask' mode (these run silently; anything else prompts). A command must start with one of these (verb + subcommand, e.g. 'git status'), or be a nonempty && or ; chain where every segment does. Other shell control syntax remains blocked. The reviewed safe list is never enabled silently: its first matching approval offers an explicit workspace-level enable, and you can inspect or remove every entry here. Never use bare 'npm'/'git'/'npx' (that would auto-run installs/pushes); use 'Allow for project' to add more per-repo."
+        },
+        "unode.writeApproval": {
+          "type": "string",
+          "default": "none",
+          "enum": [
+            "none",
+            "ask"
+          ],
+          "enumDescriptions": [
+            "Agents write files freely (changes are still checkpointed and can be restored).",
+            "Prompt before each file write with a diff preview: Approve / Approve all (session) / Deny."
+          ],
+          "description": "Controls the write_file tool. 'ask' shows a diff and asks before each write (symmetric with unode.commandApproval); 'none' writes freely — every write is still recorded as a restorable checkpoint."
+        },
+        "unode.webAccess": {
+          "type": "string",
+          "default": "ask",
+          "enum": [
+            "ask",
+            "allow",
+            "off"
+          ],
+          "enumDescriptions": [
+            "Ask before an agent first searches or fetches a public URL. 'Always allow' grants public web access to the whole crew for this VS Code session.",
+            "Allow public web search and URL fetches for agents with the read capability without a per-session prompt.",
+            "Deny public web search and URL fetches. Gateway fetch_url and Claude WebSearch/WebFetch are removed from the advertised tool set, and the host gate still denies stale direct requests."
+          ],
+          "description": "Controls public-web egress on both Claude Headless WebSearch/WebFetch and gateway fetch_url. A fetched URL is itself egress; 'off' prevents it."
+        },
+        "unode.engine.postWriteDiagnostics": {
+          "type": "boolean",
+          "default": true,
+          "description": "Execution Engine (v0.5.2): after an agent writes a file, automatically collect the editor's diagnostics (TypeScript/ESLint/…) for that file and feed any errors back into the agent's next turn — so it sees and fixes the problem it just created without having to remember to run a checker. OpenAI-compatible backends only (the Claude backend manages its own loop). Turn off to disable the write→feedback hook."
+        },
+        "unode.executionHooks": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "required": ["id", "point", "appliedBy", "timeoutMs", "maxOutputBytes", "onFailure"],
+            "properties": {
+              "id": { "type": "string" },
+              "point": { "type": "string", "enum": ["PreTool", "PostWrite", "EndTurn", "on-failure"] },
+              "appliedBy": { "type": "string", "enum": ["human"] },
+              "timeoutMs": { "type": "integer", "minimum": 1, "maximum": 60000 },
+              "maxOutputBytes": { "type": "integer", "minimum": 1, "maximum": 65536 },
+              "onFailure": { "type": "string", "enum": ["block"] }
+            },
+            "additionalProperties": false
+          },
+          "description": "Candidate declarations for restrictive host execution hooks. They are inert in every settings scope until you explicitly run 'UnodeAi: Apply Execution Hooks' and approve the full declaration. A changed declaration or source scope invalidates approval. Hooks may only block existing actions; they never grant permissions."
+        },
+        "unode.engine.verifyObligation": {
+          "type": "boolean",
+          "default": true,
+          "description": "Execution Engine (v0.5.2): when an agent's turn modified files but never verified them, nudge it once to run the project's checks (or state that verification is blocked) before finishing. If it still doesn't, the turn is marked '⚠ Changes not verified' rather than silently passing — it is never hard-blocked. OpenAI-compatible backends only."
+        },
+        "unode.engine.workspaceContext": {
+          "type": "boolean",
+          "default": false,
+          "description": "Opt-in: when enabled, UnodeAi gathers a small workspace context at turn start (active editor snippet + workspace Error/Warning diagnostics) and passes it to the backend on TurnAttachments.workspaceContext. Disabled by default for privacy/perf."
+        },
+        "unode.marketplace.fetchCatalog": {
+          "type": "boolean",
+          "default": false,
+          "description": "Marketplace: opt-in — when enabled AND a catalog URL is set, fetch the hosted catalog and merge it with the bundled one (hosted entries win on id collisions). Off by default so the extension performs no network fetch unless you turn this on; the bundled catalog always works offline. Fetch failures fall back to the bundled catalog."
+        },
+        "unode.worktree.autoMerge": {
+          "type": "boolean",
+          "default": false,
+          "description": "Worktree mode: after an agent's work merges into the integration branch, automatically merge integration into your branch and refresh the checkout. Off by default — merges accumulate on the integration branch and you land them with 'UnodeAi: Finalize Worktree Merges' when ready."
+        },
+        "unode.worktree.maxParallel": {
+          "type": "number",
+          "default": 4,
+          "minimum": 1,
+          "description": "Worktree mode: the maximum number of agents isolated in their own git worktree at once. Agents beyond this cap run on the shared workspace."
+        },
+        "unode.worktree.verifyBeforeMerge": {
+          "type": "boolean",
+          "default": true,
+          "description": "Worktree mode (verifier-as-gate): run your verify command (unode.verifyCommand — build/lint/test) in an agent's worktree before merging its work into the integration branch. If it fails, the work is held on the agent's own branch and handed back to fix — only verified work lands. Requires unode.verifyCommand to be set; with no command there's nothing to gate on and merges proceed. The command must be approved to run (it's in unode.allowedCommands by default for npm/test/build/tsc); a non-approved command is skipped rather than auto-run."
+        },
+        "unode.worktree.verifyTimeoutSeconds": {
+          "type": "number",
+          "default": 300,
+          "minimum": 10,
+          "maximum": 3600,
+          "description": "Worktree mode (verifier-as-gate): hard timeout for the verify command. If it doesn't exit within this many seconds (e.g. a watch-mode test, or one waiting for input), it's killed and treated as a failure — so a stuck command can't block the team's merges/finalize. Minimum 10s."
+        },
+        "unode.marketplace.catalogUrl": {
+          "type": "string",
+          "default": "https://raw.githubusercontent.com/UnodeTechxyz/unode-skills/main/catalog.json",
+          "description": "Marketplace: URL of a hosted catalog JSON ({ agents, mcp, skills }), merged over the bundled catalog at startup (hosted wins on id collisions) so offerings can grow without an extension update. Hosted in the PUBLIC unode-skills repo (the private code repo, so its raw URL can't be fetched). Publishing = commit catalog.json to unode-skills (a deliberate content-repo edit). Sensitive MCP servers (stdio/remote/env) always require approval before mount regardless of catalog flags. Fetch failures fall back to the bundled catalog. Hosted at UnodeTechxyz/unode-skills. Empty = bundled catalog only."
+        },
+        "unode.marketplace.skillLibraryUrl": {
+          "type": "string",
+          "default": "https://github.com/UnodeTechxyz/unode-skills",
+          "description": "Agent Builder: the full skill library to open when you click \"Browse the full skill library\" in the skill picker. The in-app catalog stays lean; the long tail lives here (download or copy-paste a skill's JSON)."
+        },
+        "unode.chatParticipant.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show UnodeAi in the VS Code Chat panel as @unode (in addition to the sidebar views — both run side by side). Type @unode <goal> to hand a task to your crew. Turn off to keep UnodeAi only in its own sidebar."
+        },
+        "unode.chat.smoothStreaming": {
+          "type": "boolean",
+          "default": true,
+          "description": "Smooth bursty streamed chat text over a few animation frames. Only already-arrived content is revealed, lag is bounded, and completed/interrupted turns flush immediately."
+        },
+        "unode.workbench.autoOpen": {
+          "type": "boolean",
+          "default": true,
+          "description": "Open the editor Workbench when you choose New Task. Turn this off to keep using the compact New Task sidebar; UnodeAi never opens the Workbench automatically at activation."
+        },
+        "unode.priceMultiplier": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0,
+              "description": "One multiplier applied to every gateway."
+            },
+            {
+              "type": "object",
+              "description": "A multiplier per connection id, e.g. { \"unode\": 0.33, \"roam\": 1 }.",
+              "additionalProperties": {
+                "type": "number",
+                "minimum": 0
+              }
+            }
+          ],
+          "default": {},
+          "markdownDescription": "Your key's price coefficient: **what fraction of the gateway's published price this key pays.** `1` = list price, `0.33` = a third of list, `0` = free.\n\nA gateway settles at a rate tied to your key and usually does not report it, so this is the number UnodeAi cannot discover and you can state. **When set, it is the only discount applied** — a group ratio the gateway does report is not multiplied on top of it, because both answer the same question.\n\nA coefficient belongs to the key, so connections differ: `{ \"unode\": 0.33, \"roam\": 1 }`. UnodeAi asks for this when you store a key, and fills in `1` for connections that already had one."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run build",
+    "compile": "tsc -p ./ && node scripts/copy-claude-tool-gate.mjs",
+    "watch": "tsc -watch -p ./",
+    "validate:skills": "node scripts/validate-skills.mjs",
+    "skill:ingest": "node tools/skill-ingest/index.mjs",
+    "skill:ingest:check": "node tools/skill-ingest/index.mjs check",
+    "skill:harvest:candidates": "node scripts/skill-harvest-candidates.mjs",
+    "check:notices": "node tools/skill-ingest/index.mjs check-notices skills THIRD_PARTY_NOTICES.md",
+    "build": "npm run validate:skills && npm run compile",
+    "build:bundle": "npm run validate:skills && node esbuild.config.mjs",
+    "lint": "eslint src --ext ts",
+    "pretest": "npm run check:custom-gateway-boundary && npm run check:provider-key-storage-boundary && npm run check:domain-boundary && npm run check:workspace-escape-boundary && npm run check:refusal-detail-literals && npm run check:orchestration-boundary && npm run check:chat-webview-protocol-boundary && npm run check:webview-theme-tokens",
+    "test": "vitest run",
+    "lab": "npm run compile && node out/harness/cli.js",
+    "lab:tier2": "npm run compile && node out/harness/tier2Cli.js",
+    "lab:ab": "npm run compile && node out/harness/abCli.js",
+    "test:watch": "vitest",
+    "benchmark:a0": "node scripts/run-a0-benchmark.mjs",
+    "test:rebrand": "vitest run src/__tests__/rebrand.smoke.test.ts",
+    "compile:e2e": "tsc -p ./test-e2e/tsconfig.json",
+    "test:e2e": "npm run compile:e2e && vscode-test",
+    "smoke:bundle": "npm run compile:e2e && node scripts/smoke-bundled-vsix.mjs",
+    "smoke:claude-readonly": "node scripts/live-claude-readonly-folder-access.cjs",
+    "smoke:claude-readonly-worktree": "node scripts/live-claude-readonly-worktree.cjs",
+    "smoke:claude-readonly-skill": "node scripts/live-claude-readonly-skill.cjs",
+    "smoke:claude-pm-delegation": "node scripts/live-claude-pm-delegation.cjs",
+    "measure:roam-similarity": "node scripts/measure-roam-similarity.mjs",
+    "probe:cache-ttl": "node scripts/probe-cache-ttl.mjs",
+    "probe:codex-appserver": "node scripts/probe-codex-appserver.cjs",
+    "check:vsix": "node scripts/check-vsix-boundary.mjs",
+    "check:public-doc-links": "vitest run src/__tests__/routeDocumentation.smoke.test.ts",
+    "check:package-doc-links": "node scripts/check-package-doc-links.mjs",
+    "check:docs-ui": "node scripts/check-docs-ui.mjs",
+    "check:doc-version-stamps": "node scripts/check-doc-version-stamps.mjs",
+    "check:internal-doc-refs": "node scripts/check-internal-doc-refs.mjs",
+    "check:tool-descriptions": "node scripts/check-tool-descriptions.mjs",
+    "test:tool-description-mutation": "node scripts/check-tool-descriptions.mjs --mutation-test",
+    "check:docs": "npm run check:package-doc-links && npm run check:docs-ui && npm run check:doc-version-stamps && npm run check:tool-descriptions",
+    "check:public-source-drop": "node scripts/check-public-source-drop.mjs",
+    "check:public-drop-scripts": "node scripts/check-public-drop-scripts.mjs",
+    "package": "npm run package:bundle",
+    "package:bundle": "node scripts/package-bundle.mjs",
+    "check:bundle-determinism": "node scripts/check-bundle-determinism.mjs",
+    "check:frozen-publish-guard": "node scripts/check-frozen-publish-guard.mjs",
+    "check:canonical-artifact-rehearsal": "node scripts/check-canonical-artifact-rehearsal.mjs",
+    "publish": "node scripts/publish-frozen.mjs --registry vsce",
+    "publish:bundle": "node scripts/publish-frozen.mjs --registry vsce",
+    "publish:ovsx": "node scripts/publish-frozen.mjs --registry ovsx",
+    "test:mutation": "node scripts/mutation-check.mjs && node scripts/mutation-check-v0973.mjs && npm run test:harness-sensor-mutation",
+    "test:release-authority-canaries": "node scripts/release-authority-canaries.mjs",
+    "test:harness-sensor-mutation": "node scripts/check-harness-sensor-mutations.mjs",
+    "check:custom-gateway-boundary": "node scripts/check-custom-gateway-boundary.mjs",
+    "check:provider-key-storage-boundary": "node scripts/check-provider-key-storage-boundary.mjs",
+    "check:domain-boundary": "node scripts/check-domain-boundary.mjs",
+    "check:workspace-escape-boundary": "node scripts/check-workspace-escape-boundary.mjs",
+    "check:refusal-detail-literals": "node scripts/check-refusal-detail-literals.mjs",
+    "check:orchestration-boundary": "node scripts/check-orchestration-boundary.mjs",
+    "check:chat-webview-protocol-boundary": "node scripts/check-chat-webview-protocol-boundary.mjs",
+    "check:webview-theme-tokens": "node scripts/check-webview-theme-tokens.mjs",
+    "live:codex": "node scripts/live-codex-turn.cjs",
+    "publish:frozen": "node scripts/publish-frozen.mjs"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.6",
+    "@types/node": "^20.11.0",
+    "@types/uuid": "^10.0.0",
+    "@types/vscode": "^1.93.0",
+    "@typescript-eslint/eslint-plugin": "^8.63.0",
+    "@typescript-eslint/parser": "^8.63.0",
+    "@vscode/test-cli": "^0.0.15",
+    "@vscode/test-electron": "^2.4.1",
+    "@vscode/vsce": "^3.9.2",
+    "esbuild": "^0.28.1",
+    "eslint": "^10.7.0",
+    "mocha": "^11.7.6",
+    "ovsx": "^1.0.2",
+    "typescript": "^5.3.0",
+    "vitest": "^4.1.8"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "@napi-rs/canvas": "0.1.100",
+    "ajv": "^8.20.0",
+    "ajv-formats": "^3.0.1",
+    "pdfjs-dist": "5.4.394",
+    "yauzl": "3.4.0",
+    "uuid": "^11.1.1"
+  },
+  "overrides": {
+    "hono": "^4.12.25",
+    "mocha": {
+      "diff": "8.0.3",
+      "serialize-javascript": "7.0.5",
+      "js-yaml": "4.3.1",
+      "minimatch": {
+        "brace-expansion": "2.1.4"
+      }
+    },
+    "@hono/node-server": "^2.0.11",
+    "@vscode/test-cli": {
+      "minimatch": {
+        "brace-expansion": "5.0.9"
+      }
+    },
+    "nanoid": "3.3.18",
+    "undici": "7.29.0"
+  }
+}

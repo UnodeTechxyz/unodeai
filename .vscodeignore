@@ -1,0 +1,74 @@
+.vscode/**
+.vscode-test/**
+.vscode-test.mjs
+.claude/**
+.codeep/**
+# Secrets & publishing tokens — MUST never be packaged (vsce uses .vscodeignore, not .gitignore)
+.ovsx*
+.env
+.env.*
+*.pat
+*.token
+# Per-workspace runtime/state dirs (current + legacy name) — never ship dogfood state
+.unode/**
+.unode-mcp.json
+.roam/**
+.roam-mcp.json
+.npm-cache/**
+tmp/**
+.tmp-*/**
+.bundle-package/**
+.bundle-smoke/**
+.public-drop/**
+.worktrees/**
+_xmltest*/**
+_v0*test*/**
+bench/**
+_runtest.js
+_testout.txt
+_tmp*
+_smoke*
+src/**
+# The @unode/serve remote-control package is a SEPARATE npm package and MUST NEVER ship in the VSIX
+# (Marketplace-safety guarantee: all remote/networking code lives outside the extension). vsce does not
+# auto-exclude sibling workspace packages, so exclude the whole tree explicitly.
+packages/**
+out/**/__tests__/**
+out-e2e/**
+test-e2e/**
+docs/**
+.gitignore
+.git/**
+.github/**
+tsconfig.json
+vitest.config.ts
+esbuild.config.mjs
+.vscodeignore.bundle
+scripts/**
+tools/**
+images/_brand/**
+tsc_output.txt
+*.vsix
+*.md
+!skills/**
+!images/icon.png
+!README.md
+!USAGE.md
+!CHANGELOG.md
+!LICENSE
+!THIRD_PARTY_NOTICES.md
+!SECURITY.md
+
+# NOTE: docs/** stays excluded — it's internal planning/review material (PRD, DevPlan, Codex
+# logs, review handoffs). Only README/USAGE/CHANGELOG ship to users.
+
+# NOTE: node_modules is intentionally NOT ignored — this extension is not
+# bundled (build = tsc only), so it ships its production dependencies (uuid,
+# @modelcontextprotocol/sdk). vsce automatically excludes devDependencies.
+
+# ...but a dependency's own TypeScript sources and test files are never needed at
+# runtime (we ship compiled JS), so trim them to keep the VSIX lean (e.g. zod ships
+# src/**/*.test.ts). Safe: these are never require()'d by the extension.
+node_modules/**/*.test.ts
+node_modules/**/*.spec.ts
+node_modules/zod/src/**

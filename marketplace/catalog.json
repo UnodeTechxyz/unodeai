@@ -1,0 +1,693 @@
+{
+  "_comment": "UnodeAi hosted marketplace catalog (agents/mcp/skills). SOURCE OF TRUTH lives here in the private UnodeTechxyz/unodeai repo with CI validation. TO PUBLISH: copy this file to the PUBLIC UnodeTechxyz/unode-skills repo as catalog.json on main — that public raw URL is what installs fetch. Merged OVER the bundled catalog at runtime (hosted wins on id); offline-safe fallback to bundled. SECURITY: sensitive MCP servers (stdio/remote/env) ALWAYS show the approval modal before mount regardless of requiresApproval.",
+  "agents": [
+    {
+      "id": "security-auditor",
+      "name": "Security Auditor",
+      "role": "security",
+      "summary": "Audits code for OWASP Top 10 vulnerabilities, secrets exposure, and dependency risks.",
+      "icon": "🔒",
+      "color": "#78909C",
+      "skills": [
+        "dependency-risk-triage",
+        "owasp-top10-review",
+        "secrets-scanning"
+      ],
+      "model": "claude-opus-4-8",
+      "tier": "premium",
+      "systemPrompt": "You are a Security Auditor. You audit codebases for security vulnerabilities including OWASP Top 10 issues, exposed secrets, unsafe dependency patterns, and authentication/authorization flaws. Review every code path with an attacker mindset — assume the adversary is sophisticated. Produce a ranked finding list with severity, exploitability, and concrete remediation steps. You never introduce new code; your output is analysis and guidance only."
+    },
+    {
+      "id": "api-designer",
+      "name": "API Designer",
+      "role": "architect",
+      "summary": "Designs REST and GraphQL APIs with contracts, versioning, and backward-compatibility guarantees.",
+      "icon": "🏗️",
+      "color": "#4FC3F7",
+      "skills": [
+        "api-contract-review",
+        "openapi-lint"
+      ],
+      "model": "claude-opus-4-8",
+      "tier": "premium",
+      "systemPrompt": "You are an API Designer. You design REST and GraphQL APIs from requirements, producing OpenAPI 3.1 schemas, GraphQL SDL, and explicit versioning policies. Every endpoint includes request/response shapes, error codes, auth requirements, rate-limit guidance, and deprecation paths. You prioritize backward compatibility and publish API contracts BEFORE implementation begins so frontend and backend teams stay aligned."
+    },
+    {
+      "id": "test-engineer",
+      "name": "Test Engineer",
+      "role": "tester",
+      "summary": "Writes comprehensive test suites — unit, integration, E2E — and hunts edge cases.",
+      "icon": "🧪",
+      "color": "#FFA726",
+      "skills": [
+        "test-coverage-gap"
+      ],
+      "model": "claude-haiku-4-5-20251001",
+      "tier": "economy",
+      "systemPrompt": "You are a Test Engineer. You write thorough, maintainable test suites — unit tests for logic, integration tests for component wiring, and E2E tests for critical user flows. You hunt edge cases: nulls, empty inputs, boundary values, race conditions. Every test has a clear arrange-act-assert structure and a descriptive name. You measure coverage but value meaningful assertions over coverage percentage alone."
+    },
+    {
+      "id": "performance-optimizer",
+      "name": "Performance Optimizer",
+      "role": "developer",
+      "summary": "Profiles and optimizes bottlenecks — queries, bundles, latency, and memory.",
+      "icon": "⚡",
+      "color": "#FFD54F",
+      "skills": [
+        "perf-budget-audit"
+      ],
+      "model": "claude-sonnet-4-6",
+      "tier": "standard",
+      "systemPrompt": "You are a Performance Optimizer. You profile applications to find bottlenecks: slow database queries, large bundles, excessive re-renders, memory leaks, and network waterfall issues. For each bottleneck you measure baseline metrics first, propose a targeted fix with expected improvement, implement it, and re-measure to confirm. You never optimize without data — always show before/after numbers."
+    },
+    {
+      "id": "devops-engineer",
+      "name": "DevOps Engineer",
+      "role": "devops",
+      "summary": "Configures CI/CD pipelines, infrastructure-as-code, and deployment automation.",
+      "icon": "⚙️",
+      "color": "#AB47BC",
+      "skills": [
+        "ci-pipeline-review"
+      ],
+      "model": "claude-haiku-4-5-20251001",
+      "tier": "economy",
+      "systemPrompt": "You are a DevOps Engineer. You design and maintain CI/CD pipelines (GitHub Actions, GitLab CI), write infrastructure-as-code (Terraform, Pulumi), and automate deployments with canary and rollback strategies. You configure monitoring, alerting, and log aggregation. Every pipeline step is idempotent and every deployment is repeatable. You treat infrastructure changes with the same review rigor as code changes."
+    },
+    {
+      "id": "technical-writer",
+      "name": "Technical Writer",
+      "role": "tech-writer",
+      "summary": "Creates clear READMEs, API docs, architecture decision records, and runbooks.",
+      "icon": "📝",
+      "color": "#EF5350",
+      "skills": [
+        "documentation-lint",
+        "readme-quickstart-quality"
+      ],
+      "model": "claude-sonnet-4-6",
+      "tier": "standard",
+      "systemPrompt": "You are a Technical Writer. You produce clear, well-structured documentation for developers: READMEs with quick-start sections, API reference docs with request/response examples, architecture decision records (ADRs) with context and trade-offs, and operational runbooks with step-by-step procedures. You write in plain language, use consistent terminology, and include working code snippets. Your audience is other developers — be precise, concise, and actionable."
+    },
+    {
+      "id": "hermes-operator",
+      "name": "Hermes Operator",
+      "role": "pm",
+      "summary": "Coordinates long-running work through a Hermes-compatible bridge with persistent memory and reusable skills.",
+      "icon": "H",
+      "color": "#7E57C2",
+      "skills": [
+        "task-decomposition"
+      ],
+      "mcpServers": [
+        "hermes-bridge"
+      ],
+      "model": "claude-sonnet-4-6",
+      "tier": "standard",
+      "systemPrompt": "You are Hermes Operator, a project manager specialized in routing durable, memory-heavy, or skill-evolving work to a connected Hermes-compatible bridge. Before delegating, clarify the outcome, constraints, files, and safety boundary. Prefer small, auditable tasks over broad autonomous runs. Summarize what you asked Hermes to do, what came back, and what still needs human or team review. If the Hermes bridge is not installed or available, say so plainly and continue with normal UnodeAi project-management behavior."
+    },
+    {
+      "id": "data-engineer",
+      "name": "Data Engineer",
+      "role": "data-engineer",
+      "summary": "Designs data pipelines, ETL workflows, database schemas, and analytical models.",
+      "icon": "📊",
+      "color": "#8D6E63",
+      "skills": [
+        "schema-migration-safety"
+      ],
+      "model": "claude-haiku-4-5-20251001",
+      "tier": "economy",
+      "systemPrompt": "You are a Data Engineer. You design efficient database schemas (OLTP and OLAP), build ETL/ELT pipelines with clear data lineage, and optimize query performance through indexing and partitioning. You enforce data quality checks at ingest and every transformation stage. You design for scalability — partition strategies, materialized views, and cost-aware storage tiers. Treat data as a product with documented schemas and SLAs."
+    },
+    {
+      "id": "debugger",
+      "name": "Debugger",
+      "role": "developer",
+      "summary": "Diagnoses and fixes bugs — reproduces, isolates the root cause, and verifies the fix.",
+      "icon": "🐞",
+      "color": "#26A69A",
+      "skills": [
+        "root-cause-analysis"
+      ],
+      "model": "claude-sonnet-4-6",
+      "tier": "standard",
+      "systemPrompt": "You are a Debugger. Given a bug report or failing test, you first reproduce it, then isolate the root cause by reading the relevant code and narrowing the failure — never guessing. You propose the smallest correct fix, explain why the bug happened, and add or update a test that would have caught it. You verify the fix actually resolves the issue before declaring done."
+    },
+    {
+      "id": "code-reviewer",
+      "name": "Code Reviewer",
+      "role": "reviewer",
+      "summary": "Reviews changes for correctness, security, and maintainability with specific, actionable feedback.",
+      "icon": "🔎",
+      "color": "#42A5F5",
+      "skills": [
+        "commit-message-quality",
+        "pr-review-checklist"
+      ],
+      "model": "claude-sonnet-4-6",
+      "tier": "standard",
+      "systemPrompt": "You are a Code Reviewer. You review diffs for correctness bugs, security issues, and maintainability problems, citing specific file:line locations. You distinguish blocking issues from nits, suggest concrete improvements, and acknowledge what's done well. You never rubber-stamp — but you keep feedback respectful and focused on the code, not the author."
+    },
+    {
+      "id": "frontend-developer",
+      "name": "Frontend Developer",
+      "role": "developer",
+      "summary": "Builds accessible, responsive UI with clean component structure and predictable state.",
+      "icon": "🎨",
+      "color": "#EC407A",
+      "skills": [
+        "accessibility-audit",
+        "component-a11y"
+      ],
+      "model": "claude-sonnet-4-6",
+      "tier": "standard",
+      "systemPrompt": "You are a Frontend Developer. You build UI components that are accessible (WCAG AA), responsive, and consistent with the existing design system. You keep components small and composable, manage state predictably, and avoid unnecessary re-renders. You write component tests for behavior, not implementation, and follow the project's existing framework conventions."
+    },
+    {
+      "id": "backend-developer",
+      "name": "Backend Developer",
+      "role": "developer",
+      "summary": "Implements APIs, services, and data access with sound architecture and robust error handling.",
+      "icon": "🔧",
+      "color": "#66BB6A",
+      "skills": [
+        "code-generation",
+        "architecture",
+        "debugging",
+        "testing"
+      ],
+      "model": "claude-sonnet-4-6",
+      "tier": "standard",
+      "systemPrompt": "You are a Backend Developer. You implement APIs, services, and data-access layers with clear separation of concerns, input validation, and robust error handling. You think about idempotency, transactions, and failure modes. You write integration tests for the contract and unit tests for the logic, and you follow the project's existing patterns rather than introducing new frameworks unprompted."
+    },
+    {
+      "id": "qa-analyst",
+      "name": "QA Analyst",
+      "role": "qa",
+      "summary": "Plans test strategy, validates acceptance criteria, and catches regressions before release.",
+      "icon": "✅",
+      "color": "#FFA000",
+      "skills": [
+        "test-coverage-gap"
+      ],
+      "model": "claude-haiku-4-5-20251001",
+      "tier": "economy",
+      "systemPrompt": "You are a QA Analyst. You turn requirements into a concrete test plan: happy paths, edge cases, error conditions, and acceptance criteria. You validate that changes meet their stated criteria, hunt for regressions, and document clear, reproducible repro steps for any defect you find. You advocate for testability and observability."
+    }
+  ],
+  "mcp": [
+    {
+      "id": "filesystem",
+      "name": "Filesystem",
+      "summary": "Secure file operations within an allowed root directory — read, write, list, and search.",
+      "transport": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "${WORKDIR}"
+      ],
+      "requiresApproval": true,
+      "source": "https://github.com/modelcontextprotocol/servers/tree/main/src/filesystem"
+    },
+    {
+      "id": "git",
+      "name": "Git",
+      "summary": "Read and query local Git repositories — log, diff, status, blame, and branch operations.",
+      "transport": "stdio",
+      "command": "uvx",
+      "args": [
+        "mcp-server-git",
+        "--repository",
+        "${WORKDIR}"
+      ],
+      "requiresApproval": true,
+      "prerequisite": "uv",
+      "source": "https://github.com/modelcontextprotocol/servers/tree/main/src/git"
+    },
+    {
+      "id": "github",
+      "name": "GitHub",
+      "summary": "Interact with GitHub — issues, PRs, repos, and code search via the GitHub API.",
+      "transport": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-github"
+      ],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_TOKEN}"
+      },
+      "requiresApproval": true,
+      "source": "https://github.com/modelcontextprotocol/servers-archived/tree/main/src/github"
+    },
+    {
+      "id": "fetch",
+      "name": "Fetch",
+      "summary": "Fetch and convert web content to markdown for LLM consumption — URLs only, no scripting.",
+      "transport": "stdio",
+      "command": "uvx",
+      "args": [
+        "mcp-server-fetch"
+      ],
+      "requiresApproval": true,
+      "prerequisite": "uv",
+      "source": "https://github.com/modelcontextprotocol/servers/tree/main/src/fetch"
+    },
+    {
+      "id": "memory",
+      "name": "Memory",
+      "summary": "Persistent knowledge graph for cross-session memory — entities, relations, and observations.",
+      "transport": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-memory"
+      ],
+      "requiresApproval": false,
+      "source": "https://github.com/modelcontextprotocol/servers/tree/main/src/memory"
+    },
+    {
+      "id": "hermes-bridge",
+      "name": "Hermes Bridge",
+      "summary": "Connect a local or remote Hermes-compatible MCP bridge for persistent memory, skills, and long-running agent tools without bundling the Hermes runtime.",
+      "icon": "H",
+      "transport": "streamable-http",
+      "urlPrompt": {
+        "title": "Hermes Bridge MCP URL",
+        "prompt": "Enter the streamable HTTP MCP endpoint exposed by your Hermes bridge.",
+        "placeHolder": "http://127.0.0.1:8765/mcp"
+      },
+      "requiresApproval": true
+    },
+    {
+      "id": "sqlite",
+      "name": "SQLite",
+      "summary": "Query and mutate local SQLite databases with full SQL — schema inspection, SELECT, DML.",
+      "transport": "stdio",
+      "command": "uvx",
+      "args": [
+        "mcp-server-sqlite",
+        "--db-path",
+        "${WORKDIR}/data.sqlite"
+      ],
+      "requiresApproval": true,
+      "prerequisite": "uv",
+      "source": "https://github.com/modelcontextprotocol/servers-archived/tree/main/src/sqlite"
+    },
+    {
+      "id": "puppeteer",
+      "name": "Puppeteer",
+      "summary": "Headless browser automation — navigate pages, take screenshots, and run in-page JavaScript.",
+      "transport": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-puppeteer"
+      ],
+      "requiresApproval": true,
+      "source": "https://github.com/modelcontextprotocol/servers-archived/tree/main/src/puppeteer"
+    },
+    {
+      "id": "brave-search",
+      "name": "Brave Search",
+      "summary": "Web and local search via the Brave Search API — web results, news, images, and places.",
+      "transport": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-brave-search"
+      ],
+      "env": {
+        "BRAVE_API_KEY": "${BRAVE_API_KEY}"
+      },
+      "requiresApproval": true,
+      "source": "https://github.com/modelcontextprotocol/servers-archived/tree/main/src/brave-search"
+    },
+    {
+      "id": "time",
+      "name": "Time",
+      "summary": "Current time and timezone conversions.",
+      "transport": "stdio",
+      "command": "uvx",
+      "args": [
+        "mcp-server-time"
+      ],
+      "requiresApproval": false,
+      "prerequisite": "uv",
+      "source": "https://github.com/modelcontextprotocol/servers/tree/main/src/time"
+    },
+    {
+      "id": "sequential-thinking",
+      "name": "Sequential Thinking",
+      "summary": "A structured step-by-step reasoning scratchpad for breaking down complex, multi-step problems.",
+      "transport": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-sequential-thinking"
+      ],
+      "requiresApproval": false,
+      "source": "https://github.com/modelcontextprotocol/servers/tree/main/src/sequentialthinking"
+    },
+    {
+      "id": "slack",
+      "name": "Slack",
+      "summary": "Read channels and post messages in a Slack workspace.",
+      "transport": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-slack"
+      ],
+      "env": {
+        "SLACK_BOT_TOKEN": "${SLACK_BOT_TOKEN}",
+        "SLACK_TEAM_ID": "${SLACK_TEAM_ID}"
+      },
+      "requiresApproval": true,
+      "source": "https://github.com/modelcontextprotocol/servers-archived/tree/main/src/slack"
+    },
+    {
+      "id": "gitlab",
+      "name": "GitLab",
+      "summary": "Manage GitLab projects, issues, and merge requests via the GitLab API.",
+      "transport": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-gitlab"
+      ],
+      "env": {
+        "GITLAB_PERSONAL_ACCESS_TOKEN": "${GITLAB_TOKEN}"
+      },
+      "requiresApproval": true,
+      "source": "https://github.com/modelcontextprotocol/servers-archived/tree/main/src/gitlab"
+    },
+    {
+      "id": "google-maps",
+      "name": "Google Maps",
+      "summary": "Geocoding, place search, directions, and distance via the Google Maps API.",
+      "transport": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-google-maps"
+      ],
+      "env": {
+        "GOOGLE_MAPS_API_KEY": "${GOOGLE_MAPS_API_KEY}"
+      },
+      "requiresApproval": true,
+      "source": "https://github.com/modelcontextprotocol/servers-archived/tree/main/src/google-maps"
+    },
+    {
+      "id": "everything",
+      "name": "Everything (Reference)",
+      "summary": "MCP reference server exercising prompts, tools, and resources — useful for testing an MCP setup.",
+      "transport": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-everything"
+      ],
+      "requiresApproval": false,
+      "source": "https://github.com/modelcontextprotocol/servers/tree/main/src/everything"
+    }
+  ],
+  "skills": [
+    {
+      "id": "api-contract-review",
+      "name": "API Contract Review",
+      "summary": "Review API changes for backward compatibility, versioning, and schema violations.",
+      "category": "development",
+      "capabilities": [
+        "read",
+        "search"
+      ],
+      "body": "# API Contract Review\n\nWhen reviewing an API change:\n1. Compare the new schema against the previous version — flag any breaking changes (removed fields, changed types, renamed endpoints).\n2. Verify versioning policy: is this a major, minor, or patch change per semver? Does the version header/URL path match?\n3. Check that every endpoint documents its request body, response shape, error codes, and auth requirements.\n4. Confirm backward-compatible additions (new optional fields, new endpoints) don't break existing clients.\n5. Validate the OpenAPI/GraphQL schema against the spec (swagger-parser / graphql-inspector).\n\nReturn: a change classification (breaking/non-breaking) and a list of violations with file:line references."
+    },
+    {
+      "id": "accessibility-audit",
+      "name": "Accessibility Audit",
+      "summary": "Evaluate UI components against WCAG 2.1 AA — contrast, labels, keyboard nav, ARIA.",
+      "category": "design",
+      "capabilities": [
+        "read",
+        "search"
+      ],
+      "body": "# Accessibility Audit\n\nAudit a UI component against WCAG 2.1 AA:\n1. **Color contrast**: all text meets 4.5:1 (normal) / 3:1 (large) ratio. Run a contrast checker on the color tokens.\n2. **Keyboard navigation**: every interactive element is reachable via Tab, has a visible focus indicator, and doesn't trap focus.\n3. **Labels and names**: every input, button, and link has an accessible name (aria-label, aria-labelledby, or visible text).\n4. **ARIA roles**: landmarks (banner, main, navigation) are used correctly; no aria-* attributes violate the spec.\n5. **Screen-reader flow**: the reading order matches the visual order; dynamic content announces via aria-live regions.\n\nFor each violation, provide the file:line, the WCAG criterion number, and a concrete fix."
+    },
+    {
+      "id": "commit-message-quality",
+      "name": "Commit Message Quality",
+      "summary": "Enforce Conventional Commits format and meaningful body content in commit messages.",
+      "category": "development",
+      "capabilities": [
+        "read",
+        "search"
+      ],
+      "body": "# Commit Message Quality\n\nReview commit messages against these rules:\n1. **Format**: `type(scope): description` per Conventional Commits. Types: feat, fix, docs, style, refactor, perf, test, chore, ci.\n2. **Description**: imperative mood, ≤ 72 characters, starts lowercase, no period at end.\n3. **Body** (if present): wrapped at 72 chars, explains WHY and WHAT (not how). References issues with `Fixes #123` or `Refs #456`.\n4. **Breaking changes**: flagged with `!` after type/scope AND a `BREAKING CHANGE:` footer.\n5. **Single concern**: one logical change per commit; no mixed refactoring + features.\n\nFlag violations with the commit hash and the specific rule broken."
+    },
+    {
+      "id": "test-coverage-gap",
+      "name": "Test Coverage Gap Analysis",
+      "summary": "Find untested code paths, missing edge cases, and low-coverage modules.",
+      "category": "development",
+      "capabilities": [
+        "read",
+        "search",
+        "execute"
+      ],
+      "body": "# Test Coverage Gap Analysis\n\nIdentifying coverage gaps:\n1. Run the project's coverage tool (`npm test -- --coverage`) and parse the output.\n2. Flag files below the project's coverage threshold (default 80% line coverage).\n3. For each low-coverage file, identify the largest uncovered function/branch — that's the highest-priority gap.\n4. Scan source for `TODO`, `FIXME`, error-handling branches, and edge-case comments — these often signal untested paths.\n5. For API endpoints, check that every status code in the spec has at least one test.\n\nOutput: a ranked gap list (file, uncovered lines, risk level) with a one-sentence test suggestion per gap."
+    },
+    {
+      "id": "dependency-risk-triage",
+      "name": "Dependency Risk Triage",
+      "summary": "Audit third-party dependencies for vulnerabilities, staleness, license issues, and bloat.",
+      "category": "security",
+      "capabilities": [
+        "read",
+        "search",
+        "execute"
+      ],
+      "body": "# Dependency Risk Triage\n\nTriage dependencies with `npm audit` and manual review:\n1. Run `npm audit --json` and parse the output. Flag every critical/high vulnerability with its CVE, affected package, and fix version.\n2. Check staleness: any dependency more than 12 months behind its latest major? Flag it with the lag and a migration feasibility note.\n3. Scan licenses via `license-checker` — flag any GPL/AGPL in a proprietary project, or any unlicensed package.\n4. Check for bloat: dependencies with < 10% usage (e.g. importing 1 function from a 500 KB package). Suggest tree-shakeable alternatives.\n5. Review transitive dependency depth — flag chains deeper than 5 levels (high maintenance risk).\n\nOutput: a risk-ranked dependency report with clear action items."
+    },
+    {
+      "id": "documentation-lint",
+      "name": "Documentation Lint",
+      "summary": "Check markdown docs for broken links, stale content, readability, and style consistency.",
+      "category": "documentation",
+      "capabilities": [
+        "read"
+      ],
+      "body": "# Documentation Lint\n\nLint markdown documentation:\n1. **Broken links**: check every relative and absolute link; flag any that return 404 or point to missing files.\n2. **Stale content**: compare documented commands/flags against the actual CLI `--help` output or code. Flag mismatches.\n3. **Readability**: run a Flesch-Kincaid check — target grade 8–10 for developer docs. Flag sentences over 25 words.\n4. **Style consistency**: check that code blocks have language tags, headings use sentence case, and terminology matches the project glossary.\n5. **Coverage**: ensure every public API function/endpoint and every CLI command has a corresponding doc section.\n\nOutput: a violation list (file:line, rule, fix suggestion) suitable for a CI doc-lint gate."
+    },
+    {
+      "id": "owasp-top10-review",
+      "name": "OWASP Top 10 Review",
+      "summary": "Screen code changes for the OWASP Top 10 web application security risks.",
+      "category": "security",
+      "capabilities": [
+        "read",
+        "search"
+      ],
+      "body": "# OWASP Top 10 Review\n\nScreen changes for the current OWASP Top 10:\n1. **Broken Access Control**: verify every endpoint checks authentication and authorization; flag missing ownership checks on resource IDs.\n2. **Cryptographic Failures**: ensure sensitive data is encrypted at rest and in transit; no hardcoded keys or weak algorithms (MD5, SHA1).\n3. **Injection**: inspect SQL, NoSQL, command, and LDAP queries for unsanitized input. Verify parameterized queries or ORM use.\n4. **Insecure Design**: flag features that lack rate limiting, input validation, or fail-secure defaults.\n5. **Security Misconfiguration**: check for default credentials, verbose error messages, and unnecessary enabled features.\n6. **Vulnerable Components**: cross-reference changed dependencies with known CVEs.\n7. **Identification and Authentication Failures**: verify password policies, MFA, session handling, and token expiry.\n8. **Software and Data Integrity Failures**: ensure CI/CD pipelines verify signatures and dependencies are pinned.\n9. **Security Logging and Monitoring Failures**: confirm security events are logged with enough context for incident response.\n10. **Server-Side Request Forgery (SSRF)**: validate and restrict URLs fetched by the server; no user-controlled raw URLs.\n\nOutput: a finding list with OWASP category, severity, file:line, and remediation."
+    },
+    {
+      "id": "secrets-scanning",
+      "name": "Secrets Scanning",
+      "summary": "Detect exposed API keys, tokens, passwords, and private certificates in source and config.",
+      "category": "security",
+      "capabilities": [
+        "read",
+        "search"
+      ],
+      "body": "# Secrets Scanning\n\nHunt for exposed secrets in code, config, and history:\n1. Search for high-entropy strings matching common patterns: `AWS_ACCESS_KEY_ID`, `ghp_`, `sk-`, `PRIVATE KEY`, `-----BEGIN`.\n2. Check `.env`, `.env.local`, `config.json`, and YAML files for plaintext credentials.\n3. Review recent commits for accidentally committed secrets (use `git log -p` or a secret scanner).\n4. Verify that secrets are loaded from environment variables or a vault, never hardcoded.\n5. Confirm that `.gitignore` excludes secrets and that pre-commit hooks block new leaks.\n\nOutput: a list of leaks with file:line, secret type, and a rotation/remediation plan."
+    },
+    {
+      "id": "perf-budget-audit",
+      "name": "Performance Budget Audit",
+      "summary": "Measure bundle size, load time, and runtime metrics against a performance budget.",
+      "category": "development",
+      "capabilities": [
+        "read",
+        "search",
+        "execute"
+      ],
+      "body": "# Performance Budget Audit\n\nAudit the project against a performance budget:\n1. Define or read the budget: max first-party JS bundle size, first contentful paint (FCP), largest contentful paint (LCP), and total blocking time (TBT).\n2. Run production build and capture bundle sizes per route/chunk. Flag any chunk exceeding its budget.\n3. Measure load metrics with a tool like Lighthouse or WebPageTest. Record FCP, LCP, TBT, and CLS.\n4. Identify the largest contributors: oversized images, unminified code, duplicate dependencies, or excessive third-party scripts.\n5. Recommend concrete fixes: code splitting, lazy loading, image optimization, tree shaking, or dependency replacement.\n\nOutput: a budget report with current vs. target values, the largest offenders, and a prioritized fix list."
+    },
+    {
+      "id": "ci-pipeline-review",
+      "name": "CI Pipeline Review",
+      "summary": "Review CI/CD workflows for speed, security, reliability, and maintainability.",
+      "category": "infrastructure",
+      "capabilities": [
+        "read",
+        "search"
+      ],
+      "body": "# CI Pipeline Review\n\nReview a CI/CD pipeline definition (GitHub Actions, GitLab CI, etc.):\n1. **Triggers**: confirm jobs run on the right events (push, PR, release) and avoid unnecessary runs on every file change.\n2. **Speed**: check for parallel jobs, caching of dependencies and build output, and minimal redundant steps.\n3. **Security**: pin third-party actions to a commit SHA, never use `pull_request_target` with untrusted checks, and inject secrets only via environment variables.\n4. **Reliability**: ensure jobs have timeouts, idempotent steps, and clear failure notifications.\n5. **Maintainability**: prefer reusable workflows or composite actions over copy-pasted YAML; document non-obvious steps.\n\nOutput: a pipeline review with risk items and concrete YAML improvements."
+    },
+    {
+      "id": "task-decomposition",
+      "name": "Task Decomposition",
+      "summary": "Break large requirements into small, independent, assignable tasks with clear acceptance criteria.",
+      "category": "management",
+      "capabilities": [
+        "read"
+      ],
+      "body": "# Task Decomposition\n\nDecompose a large requirement into actionable tasks:\n1. Read the requirement and identify the core user outcome or business goal.\n2. Split the work by vertical slice (end-to-end feature) rather than horizontal layer (all frontend, then all backend).\n3. Ensure each task is small enough to complete in one focused session and produces a verifiable result.\n4. Write a clear acceptance criterion for each task: given/when/then or a concrete observable output.\n5. Identify dependencies and order tasks so blockers come first; mark parallelizable tasks.\n6. Flag risks, unknowns, and decisions that need human input before implementation starts.\n\nOutput: a numbered task list with owner role, acceptance criteria, and dependencies."
+    },
+    {
+      "id": "schema-migration-safety",
+      "name": "Schema Migration Safety",
+      "summary": "Validate database schema changes for backward compatibility and safe rollout.",
+      "category": "data",
+      "capabilities": [
+        "read",
+        "search"
+      ],
+      "body": "# Schema Migration Safety\n\nReview a database schema change for safe rollout:\n1. **Additive first**: new columns/tables should be nullable or have sensible defaults; never drop a column in the same deploy that stops writing it.\n2. **Backward compatibility**: the old application version must still run against the new schema until all instances are rolled out.\n3. **Index strategy**: new indexes are created `CONCURRENTLY` in Postgres to avoid table locks; verify index usage with `EXPLAIN`.\n4. **Data migration**: if data must be backfilled, do it in batches with a resumable script and idempotency checks.\n5. **Rollback**: ensure the migration can be reversed or that a compensating migration is ready before deploy.\n\nOutput: a migration risk assessment with safe/unsafe steps and suggested ordering."
+    },
+    {
+      "id": "root-cause-analysis",
+      "name": "Root Cause Analysis",
+      "summary": "Systematically narrow a bug to its root cause using failure trees and evidence.",
+      "category": "development",
+      "capabilities": [
+        "read",
+        "search"
+      ],
+      "body": "# Root Cause Analysis\n\nDiagnose a bug or failure systematically:\n1. **State the symptom**: what exactly failed, under what conditions, and what was observed? Include logs, stack traces, and reproduction steps.\n2. **Form hypotheses**: list the possible causes ranked by likelihood and ease of verification.\n3. **Test hypotheses**: design the smallest experiment that can falsify each hypothesis (e.g., isolate a function, mock a dependency).\n4. **Identify the root cause**: find the earliest decision or change that allowed the failure to occur, not just the proximate trigger.\n5. **Propose fix and prevention**: suggest the smallest correct fix and a test or guardrail that prevents recurrence.\n\nOutput: a concise RCA document with evidence, rejected hypotheses, root cause, and action items."
+    },
+    {
+      "id": "pr-review-checklist",
+      "name": "PR Review Checklist",
+      "summary": "Run a standardized checklist over a pull request before approval.",
+      "category": "development",
+      "capabilities": [
+        "read",
+        "search"
+      ],
+      "body": "# PR Review Checklist\n\nRun this checklist on every pull request:\n1. **Purpose**: does the PR description clearly state what changed and why? Is it linked to an issue or ticket?\n2. **Scope**: is the change focused? Are unrelated refactorings split out?\n3. **Correctness**: does the code handle errors, edge cases, and concurrency correctly?\n4. **Tests**: are new behaviors covered by tests? Do tests fail if the behavior regresses?\n5. **Security**: are inputs validated, secrets not exposed, and dependencies free of known CVEs?\n6. **Style**: does the code follow the project style and naming conventions?\n7. **Documentation**: are README, API docs, or comments updated if behavior changed?\n8. **Performance**: are there obvious N+1 queries, large allocations, or blocking calls?\n\nOutput: a checklist result with blockers, nits, and an approval recommendation."
+    },
+    {
+      "id": "component-a11y",
+      "name": "Component Accessibility",
+      "summary": "Verify a frontend component is keyboard, screen-reader, and focus friendly.",
+      "category": "design",
+      "capabilities": [
+        "read",
+        "search"
+      ],
+      "body": "# Component Accessibility\n\nVerify a frontend component meets accessibility expectations:\n1. **Semantic HTML**: use the correct element (`<button>` for actions, `<a>` for navigation, `<label>` for inputs).\n2. **Keyboard**: all interactive parts are reachable via Tab, have visible focus, and support Enter/Space activation.\n3. **Screen reader**: the component has a meaningful accessible name, role, and state (e.g., `aria-expanded` for toggles).\n4. **Focus management**: focus moves sensibly when the component opens/closes; focus traps are avoided or documented.\n5. **Color independence**: information is not conveyed by color alone; icons have labels or are hidden from assistive tech when decorative.\n\nOutput: an accessibility report with file:line references and fix suggestions."
+    },
+    {
+      "id": "authz-check",
+      "name": "Authorization Check",
+      "summary": "Verify that access-control decisions enforce ownership, least privilege, and deny-by-default.",
+      "category": "security",
+      "capabilities": [
+        "read",
+        "search"
+      ],
+      "body": "# Authorization Check\n\nBased on OWASP Broken Access Control:\n1. List every changed route/handler/method that touches a resource; record file:line.\n2. Confirm authentication is checked before authorization on every endpoint.\n3. Verify the subject can only access resources they own or are explicitly granted.\n4. Ensure role/permission enforcement is at the service layer, not just the UI.\n5. Check for deny-by-default fallthrough on every branch.\n\nReturn: authorization gaps with file:line and concrete fixes."
+    },
+    {
+      "id": "flaky-test-triage",
+      "name": "Flaky Test Triage",
+      "summary": "Identify root causes of unstable tests and recommend a fix or quarantine plan.",
+      "category": "testing",
+      "capabilities": [
+        "read",
+        "search"
+      ],
+      "body": "# Flaky Test Triage\n\nBased on public test-engineering practice:\n1. Collect recent CI failures and reruns for the same test name.\n2. Inspect for non-deterministic inputs: time, random seeds, unordered collections, or concurrency.\n3. Check for unreset external dependencies: network, database, or shared state.\n4. Verify async assertions wait for conditions instead of assuming immediate results.\n5. Recommend isolation, mocks, retries as last resort, or quarantine.\n\nReturn: root cause, suspect file:line, and remediation plan."
+    },
+    {
+      "id": "readme-quickstart-quality",
+      "name": "README Quickstart Quality",
+      "summary": "Check that a README quickstart is complete, runnable, and free of broken links.",
+      "category": "documentation",
+      "capabilities": [
+        "read"
+      ],
+      "body": "# README Quickstart Quality\n\nBased on Write the Docs and Divio best practice:\n1. Confirm a one-sentence purpose and target audience appear at the top.\n2. Verify install steps are copy-pasteable and work on a clean machine.\n3. Check prerequisites are stated before the first command.\n4. Include a minimal runnable example that produces output in three steps or fewer.\n5. Validate links, current API names, and troubleshooting for common failures.\n\nReturn: quality score and missing/broken quickstart items with line references."
+    },
+    {
+      "id": "acceptance-criteria-authoring",
+      "name": "Acceptance Criteria Authoring",
+      "summary": "Write clear, testable acceptance criteria for a user story or requirement.",
+      "category": "management",
+      "capabilities": [
+        "read"
+      ],
+      "body": "# Acceptance Criteria Authoring\n\nBased on Given/When/Then and INVEST:\n1. Restate the story as who, what, and why in one sentence.\n2. Write scenarios as Given (precondition), When (action), Then (observable outcome).\n3. Keep one scenario per business rule and avoid implementation details.\n4. Check INVEST: Independent, Negotiable, Valuable, Estimable, Small, Testable.\n5. Add negative scenarios for errors, unauthorized access, and empty states.\n\nReturn: acceptance scenarios and INVEST violations with suggested splits."
+    },
+    {
+      "id": "diff-risk-triage",
+      "name": "Diff Risk Triage",
+      "summary": "Rate each changed file by risk to focus review effort and catch dangerous changes early.",
+      "category": "development",
+      "capabilities": [
+        "read",
+        "search"
+      ],
+      "body": "# Diff Risk Triage\n\nBased on Google code-review heuristics:\n1. Categorize changed files by layer: data, API, logic, UI, infra, test.\n2. Flag auth, payments, security headers, secrets, and schema migrations as high risk.\n3. Measure blast radius: count call sites and consumers of changed public interfaces.\n4. Check for removed or renamed public symbols without deprecation.\n5. Verify new dependencies are pinned, justified, and licensed compatibly.\n\nReturn: risk rating per file with reviewer recommendations and blockers."
+    },
+    {
+      "id": "openapi-lint",
+      "name": "OpenAPI Lint",
+      "summary": "Validate an OpenAPI document for spec compliance, consistency, and completeness.",
+      "category": "development",
+      "capabilities": [
+        "read",
+        "search"
+      ],
+      "body": "# OpenAPI Lint\n\nBased on OpenAPI 3.1 and Spectral rules:\n1. Validate the document parses and matches the declared openapi version.\n2. Ensure every operation has a unique operationId, summary, description, and tag.\n3. Check paths use consistent casing and plural nouns for collections.\n4. Verify every response has a schema and 4xx/5xx errors share a common structure.\n5. Confirm security schemes are declared globally and referenced per operation.\n\nReturn: lint report with file:line, rule, and fix suggestion."
+    },
+    {
+      "id": "api-versioning-semver",
+      "name": "API Versioning (SemVer)",
+      "summary": "Classify API changes and map them to the correct semantic version bump.",
+      "category": "development",
+      "capabilities": [
+        "read",
+        "search"
+      ],
+      "body": "# API Versioning (SemVer)\n\nBased on semver.org 2.0.0:\n1. Classify each change as breaking, additive, or fix.\n2. Map to a version bump: breaking→MAJOR, additive→MINOR, fix→PATCH.\n3. Verify the URL/header version matches the release notes.\n4. Ensure breaking changes include a migration guide and deprecation window.\n5. Confirm additive changes use optional fields without altering existing semantics.\n\nReturn: recommended bump, changelog snippet, and semver violations."
+    },
+    {
+      "id": "dockerfile-best-practices",
+      "name": "Dockerfile Best Practices",
+      "summary": "Check a Dockerfile against the official Docker best-practices checklist.",
+      "category": "infrastructure",
+      "capabilities": [
+        "read",
+        "search"
+      ],
+      "body": "# Dockerfile Best Practices\n\nBased on Docker official best practices:\n1. Use a minimal, pinned base image; avoid latest in production.\n2. Order layers from least-frequent to most-frequent change to maximize cache hits.\n3. Combine related commands with && and clean up package caches in the same layer.\n4. Run as a non-root user and drop privileges explicitly.\n5. Copy only required artifacts; never copy secrets or build caches.\n\nReturn: Dockerfile issues with line references and safer alternatives."
+    },
+    {
+      "id": "data-quality-checks",
+      "name": "Data Quality Checks",
+      "summary": "Define versioned, repeatable data-quality checks for a dataset or pipeline stage.",
+      "category": "data",
+      "capabilities": [
+        "read",
+        "search"
+      ],
+      "body": "# Data Quality Checks\n\nBased on dbt and Great Expectations patterns:\n1. Identify the dataset, schema, and columns that changed or are consumed.\n2. Verify row count, freshness, and schema drift against the declared contract.\n3. Check for nulls, duplicates, and out-of-range values in key columns.\n4. Validate referential integrity across foreign-key relationships.\n5. Confirm distributions and categorical values match historical baselines.\n\nReturn: data-quality report with failed checks, affected columns, and remediation steps."
+    },
+    {
+      "id": "api-error-handling",
+      "name": "API Error Handling",
+      "summary": "Check API error responses conform to RFC 7807 Problem Details and don't leak internals.",
+      "category": "development",
+      "capabilities": [
+        "read",
+        "search"
+      ],
+      "body": "# API Error Handling\n\nBased on RFC 7807 Problem Details:\n1. Confirm all error responses use `application/problem+json`.\n2. Verify each error includes type, title, status, and detail; instance is recommended.\n3. Ensure 4xx/5xx status codes match the failure class.\n4. Check that messages do not leak stack traces, secrets, or internals.\n5. Document expected errors in the OpenAPI schema with example payloads.\n\nReturn: error-handling gaps with file:line and required Problem Details fields to add."
+    }
+  ]
+}
