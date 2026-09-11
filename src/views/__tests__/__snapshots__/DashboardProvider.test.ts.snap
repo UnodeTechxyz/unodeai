@@ -1,0 +1,114 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Dashboard agent lanes > keeps the body equal to the pre-shell snapshot captured at 6feb05d > body at 6feb05d 1`] = `
+"
+  <h1>UnodeAi Dashboard</h1>
+  <p class="subtitle">Multi-Agent AI Team Management</p>
+  <p class="subtitle" title="Concurrency mode — change it from the chip in the Team panel or Settings → unode.concurrencyStrategy">Concurrency: ⚙ Optimistic — agents share this workspace folder</p>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-value">1</div>
+      <div class="stat-label">Total Agents</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value stat-running">1</div>
+      <div class="stat-label">Active Agents</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">0</div>
+      <div class="stat-label">Messages</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">0.1k</div>
+      <div class="stat-label">Tokens</div>
+      <div class="stat-breakdown">
+        <span title="Prompt tokens sent to the model. Inclusive of anything served from cache.">in 100</span>
+        <span title="Tokens the model generated. Output is 3-5x the price of input on most models.">out 50</span>
+        <span class="cached unknown" title="No provider on this team reported a cache-hit field (prompt_tokens_details.cached_tokens / prompt_cache_hit_tokens / cache_read_input_tokens). That is NOT the same as a 0% hit rate — it means we cannot see the hit rate at all, so we cannot tell whether the prompt prefix is being cached or re-billed in full every turn.">cached: not reported</span>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" title="Billed cost.">$0.42 billed</div>
+      <div class="stat-label">Cost basis</div>
+    </div>
+  </div>
+
+
+  <div class="mission-header">
+    <div>
+      <div class="mission-title">Team activity</div>
+      <div class="mission-sub">See who is doing what, where it is stuck, and whether it can land.</div>
+    </div>
+    <div class="mission-actions">
+      <a class="cmd-link" href="command:unode.generateEvidenceReport">Evidence Report</a>
+      <a class="cmd-link secondary" href="command:unode.openChat">New Task</a>
+    </div>
+  </div>
+  <section class="lane-board no-worktree"><div class="lane-head">
+    <div>Agent</div>
+    <div>Status</div>
+    <div>Current task</div>
+    <div>Files</div>
+    <div>Cost</div>
+    <div>Context</div>
+
+    <div>Actions</div>
+  </div><div class="lane-row lane-working">
+    <div class="agent-cell">
+      <span class="agent-icon">AI</span>
+      <span style="min-width:0">
+        <div class="agent-name" title="Senior Dev">Senior Dev</div>
+        <div class="agent-role" title="senior-dev">senior-dev</div>
+      </span>
+    </div>
+    <div><span class="status-pill"><span class="status-dot"></span>working</span></div>
+    <div class="task-cell " title="Implement the checkout flow and update tests">Implement the checkout flow and update tests</div>
+    <div class="files-cell" title="No files touched yet">
+      <span class="files-count">0</span>
+
+    </div>
+    <div class="metric cost-cell">$0.42</div>
+    <div class="metric context-cell" title="25% of 8k tokens">25%</div>
+
+    <div class="lane-actions">
+      <a class="cmd-link secondary" href="command:unode.chatWithAgent?%5B%22dev-1%22%5D">New Task</a>
+      <a class="cmd-link secondary" href="command:unode.showAgentTerminal?%5B%22dev-1%22%5D">Terminal</a>
+    </div>
+  </div></section>
+
+  <div class="panels">
+    <div class="panel wide">
+      <h3>Cost Trend</h3>
+      <div class="empty">Cost trend appears once agents complete a few turns.</div>
+    </div>
+    <div class="panel">
+      <h3>Cost by Agent</h3>
+
+        <div class="bar-row">
+          <span class="bar-label" title="Senior Dev">Senior Dev</span>
+          <span class="bar-track"><span class="bar-fill" style="width:100.0%"></span></span>
+          <span class="bar-value">$0.420</span>
+        </div>
+    </div>
+    <div class="panel">
+      <h3>Provider Distribution</h3>
+
+        <div class="bar-row">
+          <span class="bar-label" title="roam">roam</span>
+          <span class="bar-track"><span class="bar-fill tok" style="width:100.0%"></span></span>
+          <span class="bar-value">100%</span>
+        </div>
+    </div>
+  </div>
+
+  <div class="panel wide">
+        <h3>Latest tasks <span class="task-ctl">Show last: <a href="command:unode.setDashboardTaskCount?%5B3%5D">3</a> · <b>5</b> · <a href="command:unode.setDashboardTaskCount?%5B10%5D">10</a> · <a href="command:unode.setDashboardTaskCount?%5B20%5D">20</a></span></h3>
+        <div class="empty">No completed tasks yet — run a task and its token usage appears here, broken down by agent.</div>
+      </div>
+
+  <div class="footer">
+    UnodeAi &bull; Multi-model AI team for VS Code &bull; Bring your own model provider
+  </div>
+"
+`;

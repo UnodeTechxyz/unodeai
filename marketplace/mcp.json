@@ -1,0 +1,341 @@
+[
+  {
+    "id": "filesystem",
+    "name": "Filesystem",
+    "summary": "Secure file operations within an allowed root directory — read, write, list, and search.",
+    "transport": "stdio",
+    "command": "npx",
+    "args": [
+      "-y",
+      "@modelcontextprotocol/server-filesystem",
+      "${WORKDIR}"
+    ],
+    "requiresApproval": true,
+    "source": "https://github.com/modelcontextprotocol/servers/tree/main/src/filesystem"
+  },
+  {
+    "id": "git",
+    "name": "Git",
+    "summary": "Read and query local Git repositories — log, diff, status, blame, and branch operations.",
+    "transport": "stdio",
+    "command": "uvx",
+    "args": [
+      "mcp-server-git",
+      "--repository",
+      "${WORKDIR}"
+    ],
+    "requiresApproval": true,
+    "prerequisite": "uv",
+    "source": "https://github.com/modelcontextprotocol/servers/tree/main/src/git"
+  },
+  {
+    "id": "github",
+    "name": "GitHub",
+    "summary": "Interact with GitHub — issues, PRs, repos, and code search via the GitHub API.",
+    "transport": "stdio",
+    "command": "npx",
+    "args": [
+      "-y",
+      "@modelcontextprotocol/server-github"
+    ],
+    "env": {
+      "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_TOKEN}"
+    },
+    "requiresApproval": true,
+    "source": "https://github.com/modelcontextprotocol/servers-archived/tree/main/src/github"
+  },
+  {
+    "id": "fetch",
+    "name": "Fetch",
+    "summary": "Fetch and convert web content to markdown for LLM consumption — URLs only, no scripting.",
+    "transport": "stdio",
+    "command": "uvx",
+    "args": [
+      "mcp-server-fetch"
+    ],
+    "requiresApproval": true,
+    "prerequisite": "uv",
+    "source": "https://github.com/modelcontextprotocol/servers/tree/main/src/fetch"
+  },
+  {
+    "id": "memory",
+    "name": "Memory",
+    "summary": "Persistent knowledge graph for cross-session memory — entities, relations, and observations.",
+    "transport": "stdio",
+    "command": "npx",
+    "args": [
+      "-y",
+      "@modelcontextprotocol/server-memory"
+    ],
+    "requiresApproval": false,
+    "source": "https://github.com/modelcontextprotocol/servers/tree/main/src/memory"
+  },
+  {
+    "id": "hermes-bridge",
+    "name": "Hermes Bridge",
+    "summary": "Connect a local or remote Hermes-compatible MCP bridge for persistent memory, skills, and long-running agent tools without bundling the Hermes runtime.",
+    "icon": "H",
+    "transport": "streamable-http",
+    "urlPrompt": {
+      "title": "Hermes Bridge MCP URL",
+      "prompt": "Enter the streamable HTTP MCP endpoint exposed by your Hermes bridge.",
+      "placeHolder": "http://127.0.0.1:8765/mcp"
+    },
+    "requiresApproval": true
+  },
+  {
+    "id": "sqlite",
+    "name": "SQLite",
+    "summary": "Query and mutate local SQLite databases with full SQL — schema inspection, SELECT, DML.",
+    "transport": "stdio",
+    "command": "uvx",
+    "args": [
+      "mcp-server-sqlite",
+      "--db-path",
+      "${WORKDIR}/data.sqlite"
+    ],
+    "requiresApproval": true,
+    "prerequisite": "uv",
+    "source": "https://github.com/modelcontextprotocol/servers-archived/tree/main/src/sqlite"
+  },
+  {
+    "id": "puppeteer",
+    "name": "Puppeteer",
+    "summary": "Headless browser automation — navigate pages, take screenshots, and run in-page JavaScript.",
+    "transport": "stdio",
+    "command": "npx",
+    "args": [
+      "-y",
+      "@modelcontextprotocol/server-puppeteer"
+    ],
+    "requiresApproval": true,
+    "source": "https://github.com/modelcontextprotocol/servers-archived/tree/main/src/puppeteer"
+  },
+  {
+    "id": "brave-search",
+    "name": "Brave Search",
+    "summary": "Web and local search via the Brave Search API — web results, news, images, and places.",
+    "transport": "stdio",
+    "command": "npx",
+    "args": [
+      "-y",
+      "@modelcontextprotocol/server-brave-search"
+    ],
+    "env": {
+      "BRAVE_API_KEY": "${BRAVE_API_KEY}"
+    },
+    "requiresApproval": true,
+    "source": "https://github.com/modelcontextprotocol/servers-archived/tree/main/src/brave-search"
+  },
+  {
+    "id": "time",
+    "name": "Time",
+    "summary": "Current time and timezone conversions.",
+    "transport": "stdio",
+    "command": "uvx",
+    "args": [
+      "mcp-server-time"
+    ],
+    "requiresApproval": false,
+    "prerequisite": "uv",
+    "source": "https://github.com/modelcontextprotocol/servers/tree/main/src/time"
+  },
+  {
+    "id": "sequential-thinking",
+    "name": "Sequential Thinking",
+    "summary": "A structured step-by-step reasoning scratchpad for breaking down complex, multi-step problems.",
+    "transport": "stdio",
+    "command": "npx",
+    "args": [
+      "-y",
+      "@modelcontextprotocol/server-sequential-thinking"
+    ],
+    "requiresApproval": false,
+    "source": "https://github.com/modelcontextprotocol/servers/tree/main/src/sequentialthinking"
+  },
+  {
+    "id": "slack",
+    "name": "Slack",
+    "summary": "Read channels and post messages in a Slack workspace.",
+    "transport": "stdio",
+    "command": "npx",
+    "args": [
+      "-y",
+      "@modelcontextprotocol/server-slack"
+    ],
+    "env": {
+      "SLACK_BOT_TOKEN": "${SLACK_BOT_TOKEN}",
+      "SLACK_TEAM_ID": "${SLACK_TEAM_ID}"
+    },
+    "requiresApproval": true,
+    "source": "https://github.com/modelcontextprotocol/servers-archived/tree/main/src/slack"
+  },
+  {
+    "id": "gitlab",
+    "name": "GitLab",
+    "summary": "Manage GitLab projects, issues, and merge requests via the GitLab API.",
+    "transport": "stdio",
+    "command": "npx",
+    "args": [
+      "-y",
+      "@modelcontextprotocol/server-gitlab"
+    ],
+    "env": {
+      "GITLAB_PERSONAL_ACCESS_TOKEN": "${GITLAB_TOKEN}"
+    },
+    "requiresApproval": true,
+    "source": "https://github.com/modelcontextprotocol/servers-archived/tree/main/src/gitlab"
+  },
+  {
+    "id": "google-maps",
+    "name": "Google Maps",
+    "summary": "Geocoding, place search, directions, and distance via the Google Maps API.",
+    "transport": "stdio",
+    "command": "npx",
+    "args": [
+      "-y",
+      "@modelcontextprotocol/server-google-maps"
+    ],
+    "env": {
+      "GOOGLE_MAPS_API_KEY": "${GOOGLE_MAPS_API_KEY}"
+    },
+    "requiresApproval": true,
+    "source": "https://github.com/modelcontextprotocol/servers-archived/tree/main/src/google-maps"
+  },
+  {
+    "id": "everything",
+    "name": "Everything (Reference)",
+    "summary": "MCP reference server exercising prompts, tools, and resources — useful for testing an MCP setup.",
+    "transport": "stdio",
+    "command": "npx",
+    "args": [
+      "-y",
+      "@modelcontextprotocol/server-everything"
+    ],
+    "requiresApproval": false,
+    "source": "https://github.com/modelcontextprotocol/servers/tree/main/src/everything"
+  },
+  {
+    "id": "playwright",
+    "name": "Playwright",
+    "summary": "Drive a real browser — navigate, click, fill, assert, and capture pages via Playwright's accessibility tree.",
+    "transport": "stdio",
+    "command": "npx",
+    "args": [
+      "-y",
+      "@playwright/mcp@latest"
+    ],
+    "requiresApproval": true,
+    "source": "https://github.com/microsoft/playwright-mcp"
+  },
+  {
+    "id": "context7",
+    "name": "Context7",
+    "summary": "Fetch current, version-specific documentation and code examples for a library instead of relying on training data.",
+    "transport": "stdio",
+    "command": "npx",
+    "args": [
+      "-y",
+      "@upstash/context7-mcp"
+    ],
+    "requiresApproval": true,
+    "source": "https://github.com/upstash/context7"
+  },
+  {
+    "id": "figma",
+    "name": "Figma",
+    "summary": "Read Figma files, frames and design tokens so an agent builds from the design rather than from a screenshot.",
+    "transport": "stdio",
+    "command": "npx",
+    "args": [
+      "-y",
+      "figma-developer-mcp",
+      "--stdio"
+    ],
+    "env": {
+      "FIGMA_API_KEY": "${FIGMA_API_KEY}"
+    },
+    "requiresApproval": true,
+    "source": "https://github.com/GLips/Figma-Context-MCP"
+  },
+  {
+    "id": "sentry",
+    "name": "Sentry",
+    "summary": "Investigate a production error against Sentry: issues, stack traces and event detail. The token you supply decides what it can change.",
+    "transport": "stdio",
+    "command": "npx",
+    "args": [
+      "-y",
+      "@sentry/mcp-server@latest"
+    ],
+    "requiresApproval": true,
+    "source": "https://github.com/getsentry/sentry-mcp",
+    "env": {
+      "SENTRY_ACCESS_TOKEN": "${SENTRY_ACCESS_TOKEN}"
+    }
+  },
+  {
+    "id": "notion",
+    "name": "Notion",
+    "summary": "Read and update Notion pages and databases through the official Notion MCP server.",
+    "transport": "stdio",
+    "command": "npx",
+    "args": [
+      "-y",
+      "@notionhq/notion-mcp-server"
+    ],
+    "requiresApproval": true,
+    "source": "https://github.com/makenotion/notion-mcp-server",
+    "env": {
+      "NOTION_TOKEN": "${NOTION_TOKEN}"
+    }
+  },
+  {
+    "id": "firecrawl",
+    "name": "Firecrawl",
+    "summary": "Scrape, crawl and search the web, returning page content as clean Markdown.",
+    "transport": "stdio",
+    "command": "npx",
+    "args": [
+      "-y",
+      "firecrawl-mcp"
+    ],
+    "env": {
+      "FIRECRAWL_API_KEY": "${FIRECRAWL_API_KEY}"
+    },
+    "requiresApproval": true,
+    "source": "https://github.com/firecrawl/firecrawl-mcp-server"
+  },
+  {
+    "id": "tavily",
+    "name": "Tavily Search",
+    "summary": "Search-engine access built for agents — web search and extraction with source URLs.",
+    "transport": "stdio",
+    "command": "npx",
+    "args": [
+      "-y",
+      "tavily-mcp"
+    ],
+    "env": {
+      "TAVILY_API_KEY": "${TAVILY_API_KEY}"
+    },
+    "requiresApproval": true,
+    "source": "https://github.com/tavily-ai/tavily-mcp"
+  },
+  {
+    "id": "exa",
+    "name": "Exa Search",
+    "summary": "Neural web search and content retrieval for research tasks that need sources, not summaries.",
+    "transport": "stdio",
+    "command": "npx",
+    "args": [
+      "-y",
+      "exa-mcp-server"
+    ],
+    "env": {
+      "EXA_API_KEY": "${EXA_API_KEY}"
+    },
+    "requiresApproval": true,
+    "source": "https://github.com/exa-labs/exa-mcp-server"
+  }
+]

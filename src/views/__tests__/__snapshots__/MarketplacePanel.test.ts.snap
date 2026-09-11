@@ -1,0 +1,180 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`renderMarketplaceHtml > keeps the body equal to the pre-shell snapshot captured at 6feb05d > body at 6feb05d 1`] = `
+"
+  <div class="topbar">
+    <h1>Marketplace</h1>
+  </div>
+  <div class="tabs" role="tablist">
+    <button class="tab active" data-tab="agents" type="button">Agents</button>
+    <button class="tab" data-tab="mcp" type="button">MCP</button>
+  </div>
+  <div class="toolbar">
+    <input class="search" type="search" placeholder="Search" aria-label="Search marketplace">
+  </div>
+  <section class="section active" id="agents">
+    <div class="tab-action"><button class="btn" type="button" data-command="openAgentBuilder">Build an agent</button></div>
+    <div class="grid">
+      <article class="card" data-entry-id="dev" data-search="developer writes code review">
+        <div class="card-head">
+          <span class="icon">D</span>
+          <div>
+            <div class="name">Developer</div>
+            <div class="meta">developer / standard</div>
+          </div>
+        </div>
+        <p class="summary">Writes code</p>
+        <div class="meta">Model: claude-sonnet-4-20250514</div>
+        <div class="meta includes">Includes: Review</div>
+        <div class="actions">
+          <select data-scope aria-label="Agent install target">
+            <option value="current-team">Current team</option>
+            <option value="new-team">New team</option>
+          </select>
+          <button class="btn" type="button" data-install-kind="agent">Add</button>
+        </div>
+      </article>
+      <article class="card" data-entry-id="empty" data-search="empty skills agent empty skills list">
+        <div class="card-head">
+          <span class="icon">E</span>
+          <div>
+            <div class="name">Empty Skills Agent</div>
+            <div class="meta">developer / standard</div>
+          </div>
+        </div>
+        <p class="summary">Empty skills list</p>
+        <div class="meta">Model: claude-sonnet-4-20250514</div>
+
+        <div class="actions">
+          <select data-scope aria-label="Agent install target">
+            <option value="current-team">Current team</option>
+            <option value="new-team">New team</option>
+          </select>
+          <button class="btn" type="button" data-install-kind="agent">Add</button>
+        </div>
+      </article>
+      <article class="card" data-entry-id="plain" data-search="plain agent no declared skills">
+        <div class="card-head">
+          <span class="icon">P</span>
+          <div>
+            <div class="name">Plain Agent</div>
+            <div class="meta">developer / standard</div>
+          </div>
+        </div>
+        <p class="summary">No declared skills</p>
+        <div class="meta">Model: claude-sonnet-4-20250514</div>
+
+        <div class="actions">
+          <select data-scope aria-label="Agent install target">
+            <option value="current-team">Current team</option>
+            <option value="new-team">New team</option>
+          </select>
+          <button class="btn" type="button" data-install-kind="agent">Add</button>
+        </div>
+      </article></div>
+  </section>
+  <section class="section" id="mcp">
+    <div class="tab-action"><button class="btn" type="button" data-command="addMcpServer">Add MCP server</button></div>
+    <div class="grid">
+      <article class="card" data-entry-id="git" data-search="git works with local repositories">
+        <div class="card-head">
+          <span class="icon">M</span>
+          <div>
+            <div class="name">Git</div>
+            <div class="meta">stdio</div>
+          </div>
+        </div>
+        <p class="summary">Works with local repositories</p>
+        <div class="meta prerequisite">&#9888; Requires uv</div>
+
+        <div class="actions">
+          <span class="meta scope-note">Adds to this team</span>
+          <button class="btn" type="button" data-install-kind="mcp">Add</button>
+        </div>
+      </article>
+      <article class="card" data-entry-id="github" data-search="github works with issues and pull requests">
+        <div class="card-head">
+          <span class="icon">M</span>
+          <div>
+            <div class="name">GitHub</div>
+            <div class="meta">stdio</div>
+          </div>
+        </div>
+        <p class="summary">Works with issues and pull requests</p>
+
+        <div class="meta">Source: <a href="https://github.com/modelcontextprotocol/servers">https://github.com/modelcontextprotocol/servers</a></div>
+        <div class="actions">
+          <span class="meta scope-note">Adds to this team</span>
+          <button class="btn" type="button" data-install-kind="mcp">Add</button>
+        </div>
+      </article></div>
+  </section>
+  <script nonce="<nonce>">
+    const vscode = acquireVsCodeApi();
+    const search = document.querySelector('.search');
+    let activeTab = 'agents';
+
+    function setTab(tab) {
+      activeTab = tab;
+      document.querySelectorAll('.tab').forEach((node) => node.classList.toggle('active', node.dataset.tab === tab));
+      document.querySelectorAll('.section').forEach((node) => node.classList.toggle('active', node.id === tab));
+      filterCards();
+    }
+
+    function filterCards() {
+      const q = (search.value || '').trim().toLowerCase();
+      document.querySelectorAll('#' + activeTab + ' [data-search]').forEach((card) => {
+        card.hidden = q !== '' && !card.dataset.search.includes(q);
+      });
+    }
+
+    document.addEventListener('click', (event) => {
+      const tab = event.target.closest('.tab[data-tab]:not(:disabled)');
+      if (tab) {
+        setTab(tab.dataset.tab);
+        return;
+      }
+      const commandButton = event.target.closest('button[data-command]');
+      if (commandButton) {
+        vscode.postMessage({ command: commandButton.dataset.command });
+        return;
+      }
+      const button = event.target.closest('button[data-install-kind]');
+      if (!button || button.disabled) return;
+      const card = button.closest('[data-entry-id]');
+      if (!card) return;
+      const kind = button.dataset.installKind;
+      const entryId = card.dataset.entryId;
+      let action;
+      if (kind === 'agent') {
+        const scope = card.querySelector('[data-scope]')?.value;
+        if (!scope) return;
+        action = { kind, entryId, target: scope };
+      } else {
+        action = { kind, entryId, scope: 'current-team' }; // MCP installs into the current team
+      }
+      // Reflect the real outcome (see 'installResult' below) instead of a blind timer: lock the button
+      // while the host works, then show success/retry.
+      button.disabled = true;
+      button.textContent = 'Installing…';
+      vscode.postMessage({ command: 'install', action });
+    });
+    search.addEventListener('input', filterCards);
+
+    // The host replies with the true result for the exact card; update only that button.
+    window.addEventListener('message', (event) => {
+      const m = event.data;
+      if (!m || m.command !== 'installResult') return;
+      const sectionId = m.kind === 'mcp' ? 'mcp' : 'agents';
+      let btn = null;
+      document.querySelectorAll('#' + sectionId + ' [data-entry-id]').forEach((c) => {
+        if (c.dataset.entryId === m.entryId) btn = c.querySelector('button[data-install-kind]');
+      });
+      if (!btn) return;
+      btn.disabled = false;
+      btn.textContent = m.ok ? 'Added ✓' : 'Retry';
+      setTimeout(() => { btn.textContent = 'Add'; }, 2200);
+    });
+  </script>
+"
+`;

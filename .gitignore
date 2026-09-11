@@ -1,0 +1,117 @@
+# Dependencies
+node_modules/
+
+# Build output
+out/
+out-e2e/
+
+# Agent/worktree scratch (transient git worktrees created at runtime)
+.worktrees/
+# @unode/serve esbuild bundle (packages/serve/dist/cli.cjs) — build artifact, never committed
+dist/
+
+# Packaged extension
+*.vsix
+
+# Test / coverage / VS Code test runner
+.vscode-test/
+coverage/
+.npm-cache/
+
+# Logs & OS cruft
+*.log
+.DS_Store
+Thumbs.db
+
+# Local editor settings (keep .vscode/ out of the package and repo by default)
+.vscode/
+
+# NOTE: package-lock.json IS tracked (reproducible installs).
+# NOTE: .claude/ (local agent config) is intentionally NOT committed.
+.claude/
+
+# Local runtime / external-tool dirs (created when the extension or other tools run against this repo)
+.unode/
+.roam/
+.codeep/
+# Kilo Code extension workspace state (installed alongside Unode for competitive comparison)
+.kilo/
+tools/
+# Keep the scratch-heavy tools/ tree ignored, except reviewed skill-ingest governance tooling.
+!tools/
+tools/*
+!tools/skill-ingest/
+!tools/skill-ingest/**
+!tools/skill-harvest/
+!tools/skill-harvest/README.md
+# Claude-backend MCP bridge config written to the agent cwd (contains a local loopback bridge token);
+# normally cleaned up on teardown, but ignore it so an abnormal-exit leftover can never be committed.
+.unode-mcp.json
+
+# Stray root-level scratch/debug files (e.g. _find_methods.ts, _verify_v0231.txt)
+/_*.ts
+/_*.js
+/_*.txt
+
+# Dogfood/test scratch (e.g. tmp_demo/add.js from agent multi-step tests)
+/tmp_demo/
+/_*/
+/tmp/
+
+# Active-agent scratch (never ship)
+scripts/patch_chatview*.js
+
+# Secrets — never commit publishing tokens / env files (OVSX_PAT, VSCE_PAT, etc.)
+.env
+.env.*
+*.token
+*.pat
+.ovsx*
+
+# Temp extraction/checks
+.tmp-*
+
+# Product message/chat exports. These are raw team traffic written by `unode.exportMessages` /
+# `unode.exportChat` into whatever folder the user picks — frequently the repo root. They are audit
+# EXHIBITS, not source: v0.9.46's badge audit ran on one, and it sat untracked and un-ignored at the root
+# where a single `git add -A` would have committed a full delegation transcript. Raw exhibits live in the
+# Owner-controlled evidence store outside this repository; the repository keeps only their SHA-256 and the
+# reconstructed test fixtures (see docs/RELEASE_v0946.md).
+/unode-messages-*.json
+/unode-chat-*.json
+# The evidence file that rides with a downloaded canonical artifact. It is run output like the .vsix beside
+# it (ignored above by *.vsix), and its content is transcribed into that release's note under docs/, which
+# is the copy that has to survive. Keeping the file in the root is deliberate — it is what a hash gets
+# checked against — but it is not source.
+/unodeai-*-canonical-release-artifact.txt
+
+# Evidence reports the user saved into the repo root. `Generate Evidence Report` writes
+# `unode-evidence-report-<timestamp>.md` since v0.9.54; before that it opened an untitled document whose
+# first line VS Code turned into the file name, which is where the `# Evidence Report ...` form comes from.
+# Both are run output, not source, and both were sitting untracked in a release tree.
+/unode-evidence-report-*.md
+/# Evidence Report *.md
+
+# Release staging. `.public-drop/` is built by scripts/build-public-drop.mjs and contains its OWN .git
+# pointing at the public repo — a nested repo nobody should ever commit into this one. `release-vX/`
+# holds the canonical VSIX downloaded from the tag build (the .vsix itself is already covered by *.vsix,
+# but its evidence .txt is not).
+.public-drop/
+/release-v*/
+# Same purpose, the name the runbook actually uses when downloading a tag build's artifact.
+/release-artifact/
+
+# Probe/run logs are never source. scripts/probe-claude-e2e.log sat UNTRACKED in the working tree for
+# months and never shipped - but nothing stopped the next one being swept into a release by `git add -A`.
+*.log
+*.jsonl
+scripts/probe-codex-appserver.jsonl
+# A committed Lab baseline IS source: it is the record every later harness change is measured against,
+# and 0.9.39's A/B rig diffs against these exact bytes. Un-ignore only the baseline directories.
+!docs/lab-baseline-*/*.jsonl
+
+# The P2 A/B fixture ships its own project-knowledge source. The rule above keeps a USER's runtime
+# state out of git; a checked-in test fixture is not that, and CI checks out from git — without this
+# negation the controlled arm runs against a knowledge source that is not there.
+!src/harness/fixtures/**/.unode/
+!src/harness/fixtures/**/.unode/**

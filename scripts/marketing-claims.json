@@ -1,0 +1,133 @@
+{
+  "schemaVersion": 1,
+  "claims": [
+    {
+      "id": "claude-cli-local-pdf-limit",
+      "class": "capability-limit",
+      "path": "src/backend/ClaudeHeadlessBackend.ts",
+      "text": "Local PDF attachments require an OpenAI-compatible agent in this release; the Claude CLI backend did not receive PDF bytes.",
+      "occurrence": 1,
+      "lastAffirmed": "0.9.79"
+    },
+    {
+      "id": "codex-cli-local-pdf-limit",
+      "class": "capability-limit",
+      "path": "src/backend/CodexBackend.ts",
+      "text": "Local PDF attachments require an OpenAI-compatible agent in this release; the Codex CLI backend did not receive PDF bytes.",
+      "occurrence": 1,
+      "lastAffirmed": "0.9.79"
+    },
+    {
+      "id": "rich-content-image-limit",
+      "class": "capability-limit",
+      "path": "src/content/RichContentCapabilities.ts",
+      "text": "Image analysis is unsupported in this release. The image was not converted to binary text or uploaded to a vision provider.",
+      "occurrence": 1,
+      "lastAffirmed": "0.9.79"
+    },
+    {
+      "id": "rich-content-video-limit",
+      "class": "capability-limit",
+      "path": "src/content/RichContentCapabilities.ts",
+      "text": "Video analysis is unsupported in this release. The video was not transcribed, frame-sampled, or uploaded to a provider.",
+      "occurrence": 1,
+      "lastAffirmed": "0.9.79"
+    },
+    {
+      "id": "extension-unavailable-fallback",
+      "class": "availability",
+      "path": "src/extension.ts",
+      "text": "This connection is not available in this release.",
+      "occurrence": 1,
+      "lastAffirmed": "0.9.79"
+    },
+    {
+      "id": "extension-profile-unavailable-fallback",
+      "class": "availability",
+      "path": "src/extension.ts",
+      "text": "${…} is not available in this release.",
+      "occurrence": 1,
+      "lastAffirmed": "0.9.79"
+    },
+    {
+      "id": "tier2-route-limit",
+      "class": "capability-limit",
+      "path": "src/harness/tier2.ts",
+      "text": "Tier 2 route connection \"${…}\" is not supported by this release.",
+      "occurrence": 1,
+      "lastAffirmed": "0.9.79"
+    },
+    {
+      "id": "capability-guard-unavailable-fallback",
+      "class": "availability",
+      "path": "src/routes/CapabilityGuard.ts",
+      "text": "${…} is not available in this release.",
+      "occurrence": 1,
+      "lastAffirmed": "0.9.79"
+    },
+    {
+      "id": "codex-headless-coming-soon",
+      "class": "availability",
+      "path": "src/routes/ConnectionRegistry.ts",
+      "text": "Codex Headless is coming soon and is not available in this release.",
+      "occurrence": 1,
+      "lastAffirmed": "0.9.79"
+    },
+    {
+      "id": "codex-headless-privacy-summary",
+      "class": "availability",
+      "path": "src/routes/ConnectionRegistry.ts",
+      "text": "Codex Headless is not available in this release.",
+      "occurrence": 1,
+      "lastAffirmed": "0.9.79"
+    },
+    {
+      "id": "codex-headless-group-description",
+      "class": "availability",
+      "path": "src/routes/ConnectionRegistry.ts",
+      "text": "This connection is planned but not available in this release.",
+      "occurrence": 1,
+      "lastAffirmed": "0.9.79"
+    },
+    {
+      "id": "agent-builder-unavailable-fallback",
+      "class": "availability",
+      "path": "src/views/AgentBuilderPanel.ts",
+      "text": "? (provider.availabilityMessage || (provider.name + ' is coming soon and is not available in this release.'))",
+      "occurrence": 1,
+      "lastAffirmed": "0.9.79"
+    },
+    {
+      "id": "onboarding-unavailable-status-save",
+      "class": "availability",
+      "path": "src/views/OnboardingWizard.ts",
+      "text": "This connection is not available in this release.",
+      "occurrence": 1,
+      "lastAffirmed": "0.9.79"
+    },
+    {
+      "id": "onboarding-unavailable-status-setup",
+      "class": "availability",
+      "path": "src/views/OnboardingWizard.ts",
+      "text": "This connection is not available in this release.",
+      "occurrence": 2,
+      "lastAffirmed": "0.9.79"
+    },
+    {
+      "id": "onboarding-unavailable-summary",
+      "class": "availability",
+      "path": "src/views/OnboardingWizard.ts",
+      "text": ": (connection.availabilityMessage || 'This connection is coming soon and is not available in this release.');",
+      "occurrence": 1,
+      "lastAffirmed": "0.9.79"
+    },
+    {
+      "id": "settings-unavailable-fallback",
+      "class": "availability",
+      "path": "src/views/SettingsPanel.ts",
+      "text": "This connection is not available in this release.",
+      "occurrence": 1,
+      "lastAffirmed": "0.9.79"
+    }
+  ]
+}
