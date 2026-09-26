@@ -1,0 +1,6 @@
+{
+  "name": "a4-v0938-broken-instrument",
+  "fixtureOverrides": {
+    "A4": "src/harness/fixtures/A4-v0938-broken"
+  }
+}

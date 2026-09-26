@@ -1,0 +1,28 @@
+{
+  "minimumFiles": 263,
+  "minimumTests": 3085,
+  "testRunner": {
+    "package": "vitest",
+    "version": "4.1.11",
+    "treeSha256": "66258d214e72d479e31fa18c31bc3b3dc5c2952c831cf1b98e0cb282816fb136"
+  },
+  "allowedSkippedTests": {
+    "win32": [
+      "resolveInsideRootPhysical with real links REFUSES a symlinked file pointing outside"
+    ],
+    "linux": [
+      "real Windows lookup never runs planted claude.cmd or git.cmd from cwd",
+      "detectOutsideRootPath: URLs are not filesystem paths still flags a drive letter glued to a short flag",
+      "detectOutsideRootPath: URLs are not filesystem paths still flags a drive path written with two slashes",
+      "detectOutsideRootPath: URLs are not filesystem paths resumes scanning inside a file:// URL and flags its real drive path",
+      "detectOutsideRootPath: URLs are not filesystem paths flags Windows extended-length and forward-slash UNC paths"
+    ],
+    "darwin": [
+      "real Windows lookup never runs planted claude.cmd or git.cmd from cwd",
+      "detectOutsideRootPath: URLs are not filesystem paths still flags a drive letter glued to a short flag",
+      "detectOutsideRootPath: URLs are not filesystem paths still flags a drive path written with two slashes",
+      "detectOutsideRootPath: URLs are not filesystem paths resumes scanning inside a file:// URL and flags its real drive path",
+      "detectOutsideRootPath: URLs are not filesystem paths flags Windows extended-length and forward-slash UNC paths"
+    ]
+  }
+}

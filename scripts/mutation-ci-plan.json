@@ -1,0 +1,14 @@
+{
+  "schema": "unode-mutation-ci-plan/v1",
+  "minimumPopulation": {
+    "main": 52,
+    "v0973": 41,
+    "sensors": 43,
+    "shared-memory": 1
+  },
+  "jobs": [
+    { "key": "focused-main", "runner": "focused", "group": "main" },
+    { "key": "focused-v0973", "runner": "focused", "group": "v0973" },
+    { "key": "auxiliary", "runner": "auxiliary", "groups": ["sensors", "shared-memory"] }
+  ]
+}

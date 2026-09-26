@@ -1,0 +1,799 @@
+{
+  "schema": "unode-main-mutation-proofs/v1",
+  "calibration": {
+    "source": "Claude focused-proof calibration evidence, extended for saved-team trust boundaries 2026-09-25 and the automatic rework cap 2026-09-26",
+    "calibratedPopulation": 77,
+    "addedRedProvenCases": [
+      "main-15f0e77cd4",
+      "main-7910df5203",
+      "main-ef12bbb30a",
+      "main-23bcc4fc73",
+      "main-e953b7728d",
+      "main-7d14314383",
+      "main-v0984-codex-decision",
+      "main-v0984-codex-malformed-upward",
+      "main-v0984-codex-danger-without-full",
+      "main-v0984-codex-folder-full-access",
+      "main-v0984-codex-read-root-writable",
+      "main-v0984-codex-tmp-writable",
+      "main-v0984-codex-environments-disabled",
+      "main-v0984-codex-trust-cwd",
+      "main-v0987-fingerprint-location",
+      "main-v0987-unrecognised-project-review",
+      "main-v0987-rework-cap"
+    ],
+    "rule": "Each case selects one assertion identity from the narrowest assertion-failing test file; the streaming case uses its saved red/green proof."
+  },
+  "cases": [
+    {
+      "id": "main-v0987-fingerprint-location",
+      "boundary": "fingerprint match ignores location",
+      "sourceFile": "src/state/PersistenceManager.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/state/__tests__/TeamLibraryPersistence.test.ts",
+        "testName": "saving a team and bringing it back recognises only the exact project save at its original path (PelagoWebsite two-folder case)"
+      }
+    },
+    {
+      "id": "main-v0987-unrecognised-project-review",
+      "boundary": "an unrecognised project file restores without review",
+      "sourceFile": "src/state/SavedPermissionReview.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/state/__tests__/SavedPermissionReview.test.ts",
+        "testName": "pre-0.9.87 saved permission review requires an unticked review for every unrecognised project save, never for the personal library"
+      }
+    },
+    {
+      "id": "main-v0987-rework-cap",
+      "boundary": "automatic rework is never capped",
+      "sourceFile": "src/backend/TeamTools.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/backend/__tests__/assignmentCloseout.test.ts",
+        "testName": "automatic rework is bounded until the user writes sends two rounds, holds the third with a host line, ignores wakes, and re-arms on a user message"
+      }
+    },
+    {
+      "id": "main-46159b7648",
+      "boundary": "verdict crosses routes (a Smart Mode model switch inherits another gateway's accounting)",
+      "sourceFile": "src/backend/OpenAICompatBackend.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/backend/__tests__/OpenAICompatBackend.test.ts",
+        "testName": "OpenAICompatBackend usage reconciliation — invariants across the whole state space does not carry a verdict across a model switch"
+      }
+    },
+    {
+      "id": "main-v0984-codex-decision",
+      "boundary": "Plan mode honors a stored Full access profile instead of resolving downward to Read only",
+      "sourceFile": "src/backend/CodexPermissionProfile.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/backend/__tests__/CodexPermissionProfile.test.ts",
+        "testName": "Codex permission profiles forces Plan and every host ceiling to Read only"
+      }
+    },
+    {
+      "id": "main-v0984-codex-malformed-upward",
+      "boundary": "a malformed persisted Codex permission profile resolves upward to Full access",
+      "sourceFile": "src/backend/CodexPermissionProfile.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/backend/__tests__/CodexPermissionProfile.test.ts",
+        "testName": "Codex permission profiles defaults missing and malformed stored values downward to Ask for approval"
+      }
+    },
+    {
+      "id": "main-v0984-codex-danger-without-full",
+      "boundary": "danger-full-access reaches the Codex argv without the resolved Full access profile",
+      "sourceFile": "src/backend/CodexSpawnArgs.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/backend/__tests__/CodexPermissionProfile.test.ts",
+        "testName": "Codex permission profiles allows the unsandboxed argv only for the resolved Full access profile"
+      }
+    },
+    {
+      "id": "main-v0984-codex-trust-cwd",
+      "boundary": "a subfolder Codex agent is missing from the trust override, so Codex writes trust into the user config",
+      "sourceFile": "src/backend/CodexBackend.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/backend/__tests__/CodexBackend.test.ts",
+        "testName": "CodexBackend App Server covers the working directory and every folder up to the workspace root in the trust override"
+      }
+    },
+    {
+      "id": "main-v0984-codex-environments-disabled",
+      "boundary": "Codex turns disable environment access, which removes the escalated-retry path",
+      "sourceFile": "src/backend/CodexBackend.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/backend/__tests__/CodexBackend.test.ts",
+        "testName": "CodexBackend App Server pins thread and turn policy and refuses a response that weakens it"
+      }
+    },
+    {
+      "id": "main-v0984-codex-read-root-writable",
+      "boundary": "a read-only root is sent as a Codex workspace root, which thread/resume makes writable",
+      "sourceFile": "src/backend/CodexBackend.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/backend/__tests__/CodexBackend.test.ts",
+        "testName": "CodexBackend App Server never sends a read-only root as a Codex workspace root, because resume makes it writable"
+      }
+    },
+    {
+      "id": "main-v0984-codex-tmp-writable",
+      "boundary": "a workspace-write Codex thread with writable temp folders is accepted",
+      "sourceFile": "src/backend/CodexBackend.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/backend/__tests__/CodexBackend.test.ts",
+        "testName": "CodexBackend App Server refuses a workspace-write thread whose temp folders are writable"
+      }
+    },
+    {
+      "id": "main-v0984-codex-folder-full-access",
+      "boundary": "an agent limited by Folder Access grants resolves to an unsandboxed Full access process",
+      "sourceFile": "src/backend/CodexPermissionProfile.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/backend/__tests__/CodexPermissionProfile.test.ts",
+        "testName": "Codex permission profiles never gives an agent limited by Folder Access an unsandboxed process"
+      }
+    },
+    {
+      "id": "main-v0984-codex-command-binding",
+      "boundary": "a partial Codex command action can authorize a different transported command",
+      "sourceFile": "src/backend/CodexBackend.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/backend/__tests__/CodexBackend.test.ts",
+        "testName": "CodexBackend App Server checks the full transported command when a single Codex action summarizes only part of it"
+      }
+    },
+    {
+      "id": "main-v0984-start-turn-pending",
+      "boundary": "a refused CLI start leaves the queued chat turn pending",
+      "sourceFile": "src/session/SessionManager.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/session/__tests__/consentLifecycle.test.ts",
+        "testName": "SessionManager egress-consent start lifecycle (B6) terminates the queued chat turn with the refusal reason and starts the next message as a fresh turn"
+      }
+    },
+    {
+      "id": "main-a0682355d5",
+      "boundary": "inclusive can be re-declared exclusive (retroactively reinterprets everything the gateway said)",
+      "sourceFile": "src/backend/OpenAICompatBackend.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/backend/__tests__/OpenAICompatBackend.test.ts",
+        "testName": "OpenAICompatBackend usage reconciliation — invariants across the whole state space only ever declares a route inverted on a proof, never on a guess"
+      }
+    },
+    {
+      "id": "main-e51f6052a6",
+      "boundary": "reconstruction drops the gateway's own figure (under-reports the prompt)",
+      "sourceFile": "src/backend/OpenAICompatBackend.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/backend/__tests__/OpenAICompatBackend.test.ts",
+        "testName": "OpenAICompatBackend usage reconciliation — reference-model conformance agrees with the reference model on EVERY sequence to depth 4 over the order-type alphabet"
+      }
+    },
+    {
+      "id": "main-39e53cbe32",
+      "boundary": "declares exclusive without the append-only witness (libels an honest gateway on a legitimate trim)",
+      "sourceFile": "src/backend/OpenAICompatBackend.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/backend/__tests__/OpenAICompatBackend.test.ts",
+        "testName": "OpenAICompatBackend does not mistake a hash-colliding rewrite (Aa→BB) for an append-only request"
+      }
+    },
+    {
+      "id": "main-da978514b3",
+      "boundary": "append-only witness degraded back to a token-estimate comparison (Codex: ceil() is not order-preserving)",
+      "sourceFile": "src/backend/OpenAICompatBackend.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/backend/__tests__/OpenAICompatBackend.test.ts",
+        "testName": "OpenAICompatBackend does not mistake a hash-colliding rewrite (Aa→BB) for an append-only request"
+      }
+    },
+    {
+      "id": "main-4c6b9ac229",
+      "boundary": "the money estimator stops leaning high (under-counts CJK, code, images)",
+      "sourceFile": "src/backend/TokenCounter.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/backend/__tests__/TokenCounter.test.ts",
+        "testName": "TokenCounter (P2 context gates) estimates higher for the money path than for the context guard"
+      }
+    },
+    {
+      "id": "main-be5c58af54",
+      "boundary": "images priced at 256 tokens again (a high-detail image is ~1,100-1,600)",
+      "sourceFile": "src/backend/TokenCounter.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/backend/__tests__/TokenCounter.test.ts",
+        "testName": "TokenCounter (P2 context gates) prices an image like an image on the money path — 256 tokens was fiction"
+      }
+    },
+    {
+      "id": "main-f561d4b935",
+      "boundary": "the runtime invariant guard is bypassed (a future bug reaches the bill)",
+      "sourceFile": "src/backend/OpenAICompatBackend.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/backend/__tests__/OpenAICompatBackend.test.ts",
+        "testName": "OpenAICompatBackend usage reconciliation — reference-model conformance repairs an invariant-violating candidate upward, never letting it reach the bill"
+      }
+    },
+    {
+      "id": "main-876a751a33",
+      "boundary": "a gateway that reports no usage books the turn at zero (the JSON-fallback path)",
+      "sourceFile": "src/backend/OpenAICompatBackend.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/backend/__tests__/OpenAICompatBackend.test.ts",
+        "testName": "OpenAICompatBackend books a turn honestly when the stream dies and the JSON fallback reports no usage at all"
+      }
+    },
+    {
+      "id": "main-2288e06f50",
+      "boundary": "a repaired nonsense report (cached > prompt) is passed off as the gateway's own bill",
+      "sourceFile": "src/backend/OpenAICompatBackend.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/backend/__tests__/OpenAICompatBackend.test.ts",
+        "testName": "OpenAICompatBackend flags a repaired nonsense usage report as an estimate rather than showing it as a bill"
+      }
+    },
+    {
+      "id": "main-842fb3d546",
+      "boundary": "the cache breakpoint is left in the append-only witness (its own movement reads as a rewrite)",
+      "sourceFile": "src/backend/OpenAICompatBackend.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/backend/__tests__/OpenAICompatBackend.test.ts",
+        "testName": "OpenAICompatBackend reconstructs a usage report that is secretly counting in Anthropic units"
+      }
+    },
+    {
+      "id": "main-fd17c07ce2",
+      "boundary": "the witness stores a 32-bit hash of the bytes instead of the bytes (Aa/BB collide; honest rewrite latches exclusive)",
+      "sourceFile": "src/backend/OpenAICompatBackend.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/backend/__tests__/OpenAICompatBackend.test.ts",
+        "testName": "OpenAICompatBackend does not mistake a hash-colliding rewrite (Aa→BB) for an append-only request"
+      }
+    },
+    {
+      "id": "main-404df74a75",
+      "boundary": "the final OpenAI-compatible route assertion is removed before fetch",
+      "sourceFile": "src/backend/OpenAICompatBackend.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/backend/__tests__/OpenAICompatBackend.test.ts",
+        "testName": "OpenAICompatBackend checks the final route boundary before fetch and proves the identical positive path fetches once"
+      }
+    },
+    {
+      "id": "main-15f0e77cd4",
+      "boundary": "the final OpenAI-compatible route assertion is removed before streaming fetch",
+      "sourceFile": "src/backend/OpenAICompatBackend.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/backend/__tests__/OpenAICompatBackend.test.ts",
+        "testName": "OpenAICompatBackend checks the final route boundary before streaming fetch and proves the identical positive path streams once"
+      }
+    },
+    {
+      "id": "main-0bcc2e7db8",
+      "boundary": "a forged Custom route reads another registered connection key",
+      "sourceFile": "src/backend/OpenAICompatBackend.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/backend/__tests__/OpenAICompatBackend.test.ts",
+        "testName": "OpenAICompatBackend refuses a forged custom profile key before it can make a request"
+      }
+    },
+    {
+      "id": "main-a467a60db0",
+      "boundary": "the final route boundary trusts the config key name instead of the registered connection",
+      "sourceFile": "src/extension.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/routes/__tests__/RouteContracts.test.ts",
+        "testName": "E0 route contracts keeps the host-side final boundary on registry-derived credential identities"
+      }
+    },
+    {
+      "id": "main-41ec0c445c",
+      "boundary": "the final Codex route assertion is removed before spawn",
+      "sourceFile": "src/backend/CodexBackend.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/backend/__tests__/CodexBackend.test.ts",
+        "testName": "CodexBackend App Server CodexBackend Track A does not spawn when the final route boundary rejects, while an identical positive path spawns once"
+      }
+    },
+    {
+      "id": "main-7910df5203",
+      "boundary": "Codex App Server starts without the direct-OpenAI consent gate",
+      "sourceFile": "src/backend/CodexBackend.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/backend/__tests__/CodexBackend.test.ts",
+        "testName": "CodexBackend App Server asks for consent before preflight or spawn and declining creates no process"
+      }
+    },
+    {
+      "id": "main-ef12bbb30a",
+      "boundary": "Codex launches without asking about repository configuration",
+      "sourceFile": "src/backend/CodexBackend.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/backend/__tests__/CodexBackend.test.ts",
+        "testName": "CodexBackend App Server reviews repository configuration before consent and revalidates immediately before spawn"
+      }
+    },
+    {
+      "id": "main-bfd36c63fa",
+      "boundary": "Codex is prewarmed during restore after consent was stored",
+      "sourceFile": "src/session/prewarmPolicy.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/session/__tests__/prewarmPolicy.test.ts",
+        "testName": "shouldPrewarmBackend never starts any backend during activation, selection, reload, or restore"
+      }
+    },
+    {
+      "id": "main-23bcc4fc73",
+      "boundary": "repository approval remains valid after its configuration digest changes",
+      "sourceFile": "src/security/RepositoryCliConfig.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/security/__tests__/RepositoryCliConfig.test.ts",
+        "testName": "repository CLI configuration boundary binds approval to the canonical workspace, actual cwd, CLI kind, and all configuration bytes"
+      }
+    },
+    {
+      "id": "main-c41a82d9e7",
+      "boundary": "repository CLI configuration discovery stops at the opened subfolder again",
+      "sourceFile": "src/security/RepositoryCliConfig.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/security/__tests__/RepositoryCliConfig.test.ts",
+        "testName": "repository CLI configuration boundary discovers executable CLI configuration above an opened repository subfolder"
+      }
+    },
+    {
+      "id": "main-e953b7728d",
+      "boundary": "declining Claude project automation still loads project settings",
+      "sourceFile": "src/backend/ClaudeHeadlessBackend.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/backend/__tests__/ClaudeHeadlessBackend.test.ts",
+        "testName": "ClaudeHeadlessBackend repository automation boundary asks before egress, disables only the project layer on decline, and revalidates before spawn"
+      }
+    },
+    {
+      "id": "main-7d14314383",
+      "boundary": "an unknown Codex App Server request is accepted instead of declined",
+      "sourceFile": "src/backend/CodexBackend.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/backend/__tests__/CodexBackend.test.ts",
+        "testName": "CodexBackend App Server declines unknown, malformed, timed-out, and host-forbidden requests without inventing approval"
+      }
+    },
+    {
+      "id": "main-6682b8a984",
+      "boundary": "the final Claude route assertion is removed before spawn",
+      "sourceFile": "src/backend/ClaudeHeadlessBackend.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/backend/__tests__/ClaudeHeadlessBackend.test.ts",
+        "testName": "ClaudeHeadlessBackend fail-closed PreToolUse gate checks the final route boundary before the Claude process spawns"
+      }
+    },
+    {
+      "id": "main-eed1ba1c1b",
+      "boundary": "canonical endpoint comparison is weakened to hostname-only (base-path crossing)",
+      "sourceFile": "src/routes/RouteContracts.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/routes/__tests__/RouteContracts.test.ts",
+        "testName": "E0 route contracts rejects a mismatched resolved envelope before an egress caller can use it"
+      }
+    },
+    {
+      "id": "main-d40bf1f283",
+      "boundary": "canonical endpoint folds path case (distinct bases become equal)",
+      "sourceFile": "src/routes/RouteContracts.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/routes/__tests__/RouteContracts.test.ts",
+        "testName": "E0 route contracts canonicalizes only the pinned endpoint components, never a lossy path form"
+      }
+    },
+    {
+      "id": "main-74f1ddca05",
+      "boundary": "command capability is allowed without an approval mechanism",
+      "sourceFile": "src/routes/RouteContracts.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/routes/__tests__/RouteContracts.test.ts",
+        "testName": "E0 route contracts makes credentials unrepresentable in serialized routes and rejects dynamic invalid capabilities"
+      }
+    },
+    {
+      "id": "main-ec1b23daed",
+      "boundary": "a stale custom profile revision is allowed to reuse its old endpoint and key",
+      "sourceFile": "src/routes/ConnectionRegistry.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/routes/__tests__/RouteContracts.test.ts",
+        "testName": "E0 route contracts rejects a stale custom runtime profile after endpoint or key identity changes"
+      }
+    },
+    {
+      "id": "main-f790d315e3",
+      "boundary": "a custom gateway borrows a global list price without connection-specific provenance",
+      "sourceFile": "src/models/ModelPricing.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/models/__tests__/ModelPricing.test.ts",
+        "testName": "ModelPricing never borrows global list prices for a custom connection"
+      }
+    },
+    {
+      "id": "main-73f997beda",
+      "boundary": "an empty tool-active delegation is treated as verified again",
+      "sourceFile": "src/backend/TeamTools.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/backend/__tests__/TeamTools.test.ts",
+        "testName": "TeamTools role-spread (multiple same-role teammates) does not mark a real tool-active delegated reply verified when the coordinator receives no delivery (T4)"
+      }
+    },
+    {
+      "id": "main-38dc7a619f",
+      "boundary": "F2 tool activity is over-credited as a green delivery verdict",
+      "sourceFile": "src/backend/TeamTools.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/backend/__tests__/TeamTools.test.ts",
+        "testName": "TeamTools (PM coordinator) classifies delegated replies from framework evidence, not the teammate's Done text"
+      }
+    },
+    {
+      "id": "main-fd029c2add",
+      "boundary": "a task-scope refusal is collapsed into a terminal workspace escape",
+      "sourceFile": "src/backend/WorkspaceTools.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/backend/__tests__/WorkspaceToolsFolderAccess.test.ts",
+        "testName": "WorkspaceTools folder access write roots distinguishes a recoverable task-scope refusal from an escape outside the configured workspace"
+      }
+    },
+    {
+      "id": "main-edffc1e62f",
+      "boundary": "a task-scope refusal again terminates the model turn",
+      "sourceFile": "src/backend/OpenAICompatBackend.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/backend/__tests__/OpenAICompatBackend.test.ts",
+        "testName": "OpenAICompatBackend keeps a task-scope refusal recoverable so the next turn iteration can read a granted input"
+      }
+    },
+    {
+      "id": "main-8a52397dcb",
+      "boundary": "a real workspace escape is made recoverable as task scope",
+      "sourceFile": "src/backend/WorkspaceTools.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/backend/__tests__/WorkspaceToolsFolderAccess.test.ts",
+        "testName": "WorkspaceTools folder access write roots allows writes in any configured write root and blocks outside them"
+      }
+    },
+    {
+      "id": "main-49d96a8e03",
+      "boundary": "a declined local read consent is reported as a task-scope refusal",
+      "sourceFile": "src/backend/WorkspaceTools.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/backend/__tests__/WorkspaceToolsLocalReadScope.test.ts",
+        "testName": "WorkspaceTools local read scope fails closed, suppresses an immediate retry, and re-asks on a new user request"
+      }
+    },
+    {
+      "id": "main-9c3cbfa6fc",
+      "boundary": "task-scope prose falls through to a false consent denial",
+      "sourceFile": "src/backend/WorkspaceTools.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/backend/__tests__/WorkspaceToolsFolderAccess.test.ts",
+        "testName": "WorkspaceTools folder access write roots distinguishes a recoverable task-scope refusal from an escape outside the configured workspace"
+      }
+    },
+    {
+      "id": "main-d22690ccd4",
+      "boundary": "directory listings are rendered as reads again",
+      "sourceFile": "src/backend/toolSummary.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/backend/__tests__/toolSummary.test.ts",
+        "testName": "toolSummary classifies built-in tools for chat cards"
+      }
+    },
+    {
+      "id": "main-1b0ccae5fe",
+      "boundary": "configured-but-not-granted writes are made terminal again",
+      "sourceFile": "src/backend/WorkspaceTools.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/backend/__tests__/OpenAICompatBackend.test.ts",
+        "testName": "OpenAICompatBackend keeps a write inside the configured workspace but outside a task scope recoverable, while a real write escape remains terminal"
+      }
+    },
+    {
+      "id": "main-9b5f0b2d4e",
+      "boundary": "configured-but-not-granted symlink targets are made terminal again",
+      "sourceFile": "src/backend/WorkspaceTools.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/backend/__tests__/OpenAICompatBackend.test.ts",
+        "testName": "OpenAICompatBackend distinguishes task-scope and real-escape symlink targets without weakening the physical-path boundary"
+      }
+    },
+    {
+      "id": "main-a37597888d",
+      "boundary": "an unavailable image asset is again allowed to terminate the turn",
+      "sourceFile": "src/backend/OpenAICompatBackend.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/backend/__tests__/OpenAICompatBackend.test.ts",
+        "testName": "OpenAICompatBackend visibly omits an image asset when the route capability is unknown without opening media consent"
+      }
+    },
+    {
+      "id": "main-08135cc90a",
+      "boundary": "a coordinator brief bypasses destination-specific consent",
+      "sourceFile": "src/backend/TeamTools.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/backend/__tests__/TeamTools.test.ts",
+        "testName": "TeamTools (PM coordinator) refuses a declined coordinator-brief egress before creating an attempt or starting a worker"
+      }
+    },
+    {
+      "id": "main-13192857ab",
+      "boundary": "an ungranted coordinator brief basis is dispatched anyway",
+      "sourceFile": "src/backend/TaskContract.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/backend/__tests__/TaskContract.test.ts",
+        "testName": "v0.9.61 Task Contract rejects an otherwise optional brief basis that was not actually granted"
+      }
+    },
+    {
+      "id": "main-834b1f9870",
+      "boundary": "an optional input silently restores the no-web substitution rule",
+      "sourceFile": "src/backend/TaskContract.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/backend/__tests__/TaskContract.test.ts",
+        "testName": "v0.9.61 Task Contract makes input-substitution guidance conditional on required inputs, not any input"
+      }
+    },
+    {
+      "id": "main-6f4d2847c7",
+      "boundary": "a coordinator brief leaks into persisted activity or conversation history",
+      "sourceFile": "src/bus/MessageBus.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/bus/__tests__/MessageBusPersistence.test.ts",
+        "testName": "MessageBus persistence (P1#5) keeps coordinator briefs in the live task attempt but not activity or conversation persistence"
+      }
+    },
+    {
+      "id": "main-a29d5a71b3",
+      "boundary": "an unresolved manual route inherits equality from a provider label instead of its exact endpoint",
+      "sourceFile": "src/routes/RouteContracts.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/routes/__tests__/RouteContracts.test.ts",
+        "testName": "E0 route contracts compares coordinator brief destinations by privacy domain, with exact execution fallback only for unresolved manual routes"
+      }
+    },
+    {
+      "id": "main-560ad68158",
+      "boundary": "the live-task artifact detail is dropped after the generic refusal is rendered",
+      "sourceFile": "src/backend/WorkspaceTools.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/backend/__tests__/WorkspaceToolsSecurity.test.ts",
+        "testName": "WorkspaceTools sandbox hardening keeps generic refusals byte-identical and appends only the reviewed artifact detail"
+      }
+    },
+    {
+      "id": "main-52dbdae9cf",
+      "boundary": "a refusal detail interpolates host state instead of remaining literal-only",
+      "sourceFile": "src/backend/WorkspaceTools.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/backend/__tests__/WorkspaceToolsSecurity.test.ts",
+        "testName": "WorkspaceTools sandbox hardening keeps generic refusals byte-identical and appends only the reviewed artifact detail"
+      }
+    },
+    {
+      "id": "main-9d05ce1e62",
+      "boundary": "the unknown-input refusal discloses that an unauthorised source exists",
+      "sourceFile": "src/backend/WorkspaceTools.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/backend/__tests__/TaskContract.test.ts",
+        "testName": "v0.9.61 attempt-bound Input Resolver enforces grants through the real content tools without adding write, command, or network authority"
+      }
+    },
+    {
+      "id": "main-acdd7d0512",
+      "boundary": "a stale unadvertised task tool is misclassified as another harness tool",
+      "sourceFile": "src/backend/OpenAICompatBackend.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/backend/__tests__/OpenAICompatBackend.test.ts",
+        "testName": "OpenAICompatBackend hides task-only tools without an attempt but routes a stale artifact call to its guarded refusal"
+      }
+    },
+    {
+      "id": "main-ee626f75f9",
+      "boundary": "the frozen Claude bridge loses its no-live-attempt artifact handler guard",
+      "sourceFile": "src/backend/WorkspaceTools.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/backend/__tests__/ClaudeHeadlessBackend.test.ts",
+        "testName": "ClaudeHeadlessBackend read-only files bridge keeps the artifact handler guard on the frozen bridge when no task attempt is live"
+      }
+    },
+    {
+      "id": "main-7cb468062f",
+      "boundary": "Claude stops advertising the task artifact in its one-time bridge schema",
+      "sourceFile": "src/backend/ClaudeHeadlessBackend.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/backend/__tests__/ClaudeHeadlessBackend.test.ts",
+        "testName": "ClaudeHeadlessBackend read-only files bridge keeps its one-time tools/list schema, including task tools whose handlers still require a live attempt"
+      }
+    },
+    {
+      "id": "main-dc80ac02dd",
+      "boundary": "a Codex Playbook grants workspace-write authority",
+      "sourceFile": "src/backend/CodexBackend.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/backend/__tests__/CodexBackend.test.ts",
+        "testName": "CodexBackend App Server never lets a Playbook grant workspace-write or persist roots into Codex configuration"
+      }
+    },
+    {
+      "id": "main-05de87d60a",
+      "boundary": "Codex extra Skill roots persist into user configuration",
+      "sourceFile": "src/backend/CodexBackend.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/backend/__tests__/CodexBackend.test.ts",
+        "testName": "CodexBackend App Server never lets a Playbook grant workspace-write or persist roots into Codex configuration"
+      }
+    },
+    {
+      "id": "main-d497f1c0e5",
+      "boundary": "one Codex agent receives another agent's Playbook namespace",
+      "sourceFile": "src/backend/CodexSkillRoot.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/backend/__tests__/CodexBackend.test.ts",
+        "testName": "CodexBackend App Server gives two Codex agents disjoint native-Skill names and roots"
+      }
+    },
+    {
+      "id": "main-8ee633296b",
+      "boundary": "a safety-stopped worker reaches the coordinator as completed work",
+      "sourceFile": "src/session/SessionManager.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/session/__tests__/routing.test.ts",
+        "testName": "SessionManager <-> MessageBus routing routes a safety stop as typed partial work, never task.complete or worker failure"
+      }
+    },
+    {
+      "id": "main-caf5c42d60",
+      "boundary": "the forced safety-stop final request offers tools again",
+      "sourceFile": "src/backend/OpenAICompatBackend.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/backend/__tests__/OpenAICompatBackend.test.ts",
+        "testName": "OpenAICompatBackend turns a custom maxToolIterations cap into a typed stop and a tool-free forced answer"
+      }
+    },
+    {
+      "id": "main-36176705e0",
+      "boundary": "continuing a stopped task re-dispatches the original prompt from scratch",
+      "sourceFile": "src/backend/TeamTools.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/backend/__tests__/TeamTools.test.ts",
+        "testName": "TeamTools (PM coordinator) continues a safety-stopped task on the same worker conversation with fresh attempt authority"
+      }
+    },
+    {
+      "id": "main-217d4f075d",
+      "boundary": "a typed safety stop increments the model-fallback failure streak",
+      "sourceFile": "src/session/SessionManager.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/session/__tests__/routing.test.ts",
+        "testName": "SessionManager model fallback (P1#6) leaves the fallback failure counter unchanged for a typed stopped turn"
+      }
+    },
+    {
+      "id": "main-7dc0012995",
+      "boundary": "a quarantined MCP connection never enters recovery",
+      "sourceFile": "src/mcp/MCPHub.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/mcp/__tests__/MCPHub.test.ts",
+        "testName": "MCPHub discards a late response after post-dispatch cancellation, then remounts before the next call"
+      }
+    },
+    {
+      "id": "main-ab23de387c",
+      "boundary": "the tool-free safety closeout replays structured tool history",
+      "sourceFile": "src/backend/OpenAICompatBackend.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/backend/__tests__/OpenAICompatBackend.test.ts",
+        "testName": "OpenAICompatBackend turns a custom maxToolIterations cap into a typed stop and a tool-free forced answer"
+      }
+    },
+    {
+      "id": "main-e93efbf10c",
+      "boundary": "Claude managed MCP calls lose opaque-bridge audit attribution",
+      "sourceFile": "src/mcp/ClaudeMcpConfig.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/mcp/__tests__/ClaudeMcpConfig.test.ts",
+        "testName": "buildClaudeMcpConfig attributes Claude managed calls through only an exact opaque integrations bridge"
+      }
+    },
+    {
+      "id": "main-c41706d590",
+      "boundary": "closeout tool results lose the untrusted framing",
+      "sourceFile": "src/backend/OpenAICompatBackend.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/backend/__tests__/OpenAICompatBackend.test.ts",
+        "testName": "OpenAICompatBackend frames safety-closeout tool results as untrusted data in the outgoing request"
+      }
+    },
+    {
+      "id": "main-a42b07ccab",
+      "boundary": "attribution accepts a bridge ID other than the session's",
+      "sourceFile": "src/mcp/ClaudeMcpConfig.ts",
+      "proof": {
+        "kind": "vitest",
+        "testFile": "src/mcp/__tests__/ClaudeMcpConfig.test.ts",
+        "testName": "buildClaudeMcpConfig attributes Claude managed calls through only an exact opaque integrations bridge"
+      }
+    }
+  ]
+}

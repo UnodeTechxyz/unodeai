@@ -1,0 +1,246 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`renderMarketplaceHtml > keeps the body equal to the pre-shell snapshot captured at 6feb05d > body at 6feb05d 1`] = `
+"
+  <div class="topbar">
+    <h1>Marketplace</h1>
+  </div>
+  <div class="tabs" role="tablist">
+    <button class="tab active" data-tab="agents" type="button">Agents</button>
+    <button class="tab" data-tab="mcp" type="button">Integrations</button>
+  </div>
+  <div class="toolbar">
+    <input class="search" type="search" placeholder="Search" aria-label="Search marketplace">
+  </div>
+  <section class="section active" id="agents">
+    <div class="tab-action"><button class="btn" type="button" data-command="openAgentBuilder">Build an agent</button></div>
+    <h2 class="subsection-title">Role Templates</h2>
+    <div class="grid">
+      <article class="card" data-entry-id="dev" data-search="developer writes code review">
+        <div class="card-head">
+          <span class="icon">D</span>
+          <div>
+            <div class="name">Developer</div>
+            <div class="meta">developer / standard</div>
+          </div>
+        </div>
+        <p class="summary">Writes code</p>
+        <div class="meta">Model: claude-sonnet-4-20250514</div>
+        <div class="meta includes">Includes: Review</div>
+
+        <div class="actions">
+          <select data-scope aria-label="Agent install target">
+            <option value="current-team">Current team</option>
+            <option value="new-team">New team</option>
+          </select>
+          <button class="btn" type="button" data-install-kind="agent">Add</button>
+        </div>
+      </article>
+      <article class="card" data-entry-id="empty" data-search="empty skills agent empty skills list">
+        <div class="card-head">
+          <span class="icon">E</span>
+          <div>
+            <div class="name">Empty Skills Agent</div>
+            <div class="meta">developer / standard</div>
+          </div>
+        </div>
+        <p class="summary">Empty skills list</p>
+        <div class="meta">Model: claude-sonnet-4-20250514</div>
+
+
+        <div class="actions">
+          <select data-scope aria-label="Agent install target">
+            <option value="current-team">Current team</option>
+            <option value="new-team">New team</option>
+          </select>
+          <button class="btn" type="button" data-install-kind="agent">Add</button>
+        </div>
+      </article>
+      <article class="card" data-entry-id="plain" data-search="plain agent no declared skills">
+        <div class="card-head">
+          <span class="icon">P</span>
+          <div>
+            <div class="name">Plain Agent</div>
+            <div class="meta">developer / standard</div>
+          </div>
+        </div>
+        <p class="summary">No declared skills</p>
+        <div class="meta">Model: claude-sonnet-4-20250514</div>
+
+
+        <div class="actions">
+          <select data-scope aria-label="Agent install target">
+            <option value="current-team">Current team</option>
+            <option value="new-team">New team</option>
+          </select>
+          <button class="btn" type="button" data-install-kind="agent">Add</button>
+        </div>
+      </article></div>
+    <h2 class="subsection-title">Your Agents</h2>
+    <div data-marketplace-roster><div class="empty">No agents in the current roster.</div></div>
+  </section>
+  <section class="section" id="mcp">
+    <div class="tab-action"><button class="btn" type="button" data-command="addMcpServer">Add MCP server</button></div>
+    <h2 class="subsection-title">Your integrations</h2>
+    <div data-owned-integrations><div class="empty">No integrations configured for this workspace.</div></div>
+    <h2 class="subsection-title">Catalog</h2>
+    <div class="grid">
+      <article class="card" data-entry-id="git" data-search="git works with local repositories" data-configured="false">
+        <div class="card-head">
+          <span class="icon">M</span>
+          <div>
+            <div class="name">Git <span class="protocol">MCP</span></div>
+            <div class="meta">stdio / local process / approval required</div>
+          </div>
+        </div>
+        <p class="summary">Works with local repositories</p>
+        <div class="meta prerequisite">&#9888; Requires uv</div>
+
+        <div class="meta">Source: <a href="https://github.com/modelcontextprotocol/servers/tree/main/src/git">https://github.com/modelcontextprotocol/servers/tree/main/src/git</a></div>
+        <div class="meta">reference · verified 2026-09-11 · pypi:mcp-server-git</div>
+        <div class="lifecycle" aria-label="Integration lifecycle"><span class="state done" data-lifecycle-state="listed">listed ✓</span><span class="state" data-lifecycle-state="configured">configured</span><span class="state" data-lifecycle-state="approved">approved</span><span class="state" data-lifecycle-state="mounted">mounted</span><span class="state" data-lifecycle-state="exercised">exercised</span><span class="state" data-lifecycle-state="succeeded">succeeded</span></div>
+        <div class="actions">
+          <span class="meta scope-note">Adds configuration to this team; grants no agent access</span>
+          <button class="btn" type="button" data-command="checkIntegration">Check setup</button>
+          <button class="btn" type="button" data-install-kind="mcp">Add configuration</button>
+        </div>
+      </article>
+      <article class="card" data-entry-id="github" data-search="github works with issues and pull requests" data-configured="false">
+        <div class="card-head">
+          <span class="icon">M</span>
+          <div>
+            <div class="name">GitHub <span class="protocol">MCP</span></div>
+            <div class="meta">stdio / local process / approval required</div>
+          </div>
+        </div>
+        <p class="summary">Works with issues and pull requests</p>
+
+        <div class="meta">Credentials: GITHUB_TOKEN</div>
+        <div class="meta">Source: <a href="https://github.com/example/github-mcp">https://github.com/example/github-mcp</a></div>
+        <div class="meta">community · verified 2026-09-11 · npm:@example/github-mcp</div>
+        <div class="lifecycle" aria-label="Integration lifecycle"><span class="state done" data-lifecycle-state="listed">listed ✓</span><span class="state" data-lifecycle-state="configured">configured</span><span class="state" data-lifecycle-state="approved">approved</span><span class="state" data-lifecycle-state="mounted">mounted</span><span class="state" data-lifecycle-state="exercised">exercised</span><span class="state" data-lifecycle-state="succeeded">succeeded</span></div>
+        <div class="actions">
+          <span class="meta scope-note">Adds configuration to this team; grants no agent access</span>
+          <button class="btn" type="button" data-command="checkIntegration">Check setup</button>
+          <button class="btn" type="button" data-install-kind="mcp">Add configuration</button>
+        </div>
+      </article></div>
+  </section>
+  <script nonce="<nonce>">
+    const vscode = acquireVsCodeApi();
+    const search = document.querySelector('.search');
+    let activeTab = 'agents';
+
+    function setTab(tab) {
+      activeTab = tab;
+      document.querySelectorAll('.tab').forEach((node) => node.classList.toggle('active', node.dataset.tab === tab));
+      document.querySelectorAll('.section').forEach((node) => node.classList.toggle('active', node.id === tab));
+      filterCards();
+    }
+
+    function filterCards() {
+      const q = (search.value || '').trim().toLowerCase();
+      document.querySelectorAll('#' + activeTab + ' [data-search]').forEach((card) => {
+        card.hidden = q !== '' && !card.dataset.search.includes(q);
+      });
+    }
+
+    function installLabel(kind, card) {
+      return kind === 'mcp'
+        ? (card?.dataset.configured === 'true' ? 'Reconfigure' : 'Add configuration')
+        : 'Add';
+    }
+
+    function applyViewState(message) {
+      const roster = document.querySelector('[data-marketplace-roster]');
+      if (roster && typeof message.agentsHtml === 'string') roster.innerHTML = message.agentsHtml;
+      const owned = document.querySelector('[data-owned-integrations]');
+      if (owned && typeof message.ownedIntegrationsHtml === 'string') owned.innerHTML = message.ownedIntegrationsHtml;
+      const integrations = message.integrations || {};
+      document.querySelectorAll('#mcp [data-entry-id]').forEach((card) => {
+        const state = integrations[card.dataset.entryId] || {
+          listed: true, configured: false, approved: false, mounted: false, exercised: false, succeeded: false,
+        };
+        card.dataset.configured = state.configured === true ? 'true' : 'false';
+        card.querySelectorAll('[data-lifecycle-state]').forEach((chip) => {
+          const name = chip.dataset.lifecycleState;
+          const done = state[name] === true;
+          chip.classList.toggle('done', done);
+          chip.textContent = name + (done ? ' ✓' : '');
+        });
+        const button = card.querySelector('button[data-install-kind="mcp"]');
+        if (button && button.dataset.feedback !== 'true') button.textContent = installLabel('mcp', card);
+      });
+      filterCards();
+    }
+
+    document.addEventListener('click', (event) => {
+      const tab = event.target.closest('.tab[data-tab]:not(:disabled)');
+      if (tab) {
+        setTab(tab.dataset.tab);
+        return;
+      }
+      const commandButton = event.target.closest('button[data-command]');
+      if (commandButton) {
+        const command = commandButton.dataset.command;
+        if (command === 'editAgent') {
+          vscode.postMessage({ command, agentId: commandButton.dataset.agentId });
+        } else if (command === 'removeIntegration') {
+          vscode.postMessage({ command, serverId: commandButton.dataset.serverId });
+        } else if (command === 'checkIntegration') {
+          const card = commandButton.closest('[data-entry-id]');
+          if (card) vscode.postMessage({ command, entryId: card.dataset.entryId });
+        } else {
+          vscode.postMessage({ command });
+        }
+        return;
+      }
+      const button = event.target.closest('button[data-install-kind]');
+      if (!button || button.disabled) return;
+      const card = button.closest('[data-entry-id]');
+      if (!card) return;
+      const kind = button.dataset.installKind;
+      const entryId = card.dataset.entryId;
+      let action;
+      if (kind === 'agent') {
+        const scope = card.querySelector('[data-scope]')?.value;
+        if (!scope) return;
+        action = { kind, entryId, target: scope };
+      } else {
+        action = { kind, entryId, scope: 'current-team' }; // MCP installs into the current team
+      }
+      // Reflect the real outcome (see 'installResult' below) instead of a blind timer: lock the button
+      // while the host works, then show success/retry.
+      button.disabled = true;
+      button.dataset.feedback = 'true';
+      button.textContent = kind === 'mcp' ? 'Adding configuration…' : 'Adding agent…';
+      vscode.postMessage({ command: 'install', action });
+    });
+    search.addEventListener('input', filterCards);
+
+    // The host replies with the true result for the exact card; update only that button.
+    window.addEventListener('message', (event) => {
+      const m = event.data;
+      if (!m) return;
+      if (m.command === 'viewState') {
+        applyViewState(m);
+        return;
+      }
+      if (m.command !== 'installResult') return;
+      const sectionId = m.kind === 'mcp' ? 'mcp' : 'agents';
+      let btn = null;
+      document.querySelectorAll('#' + sectionId + ' [data-entry-id]').forEach((c) => {
+        if (c.dataset.entryId === m.entryId) btn = c.querySelector('button[data-install-kind]');
+      });
+      if (!btn) return;
+      btn.disabled = false;
+      btn.dataset.feedback = 'true';
+      btn.textContent = m.ok ? (m.kind === 'mcp' ? 'Configured' : 'Added') : 'Retry';
+      setTimeout(() => {
+        delete btn.dataset.feedback;
+        btn.textContent = installLabel(m.kind, btn.closest('[data-entry-id]'));
+      }, 2200);
+    });
+  </script>
+"
+`;
