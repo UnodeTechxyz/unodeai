@@ -1,0 +1,13 @@
+{
+  "schema": "unode-mutation-ci-plan/v1",
+  "minimumPopulation": {
+    "main": 595,
+    "terminal-outcome": 41,
+    "sensors": 43,
+    "shared-memory": 1
+  },
+  "jobs": [
+    { "key": "warm-1", "runner": "warm", "groups": ["main", "terminal-outcome", "sensors", "shared-memory"], "partition": "1/2" },
+    { "key": "warm-2", "runner": "warm", "groups": ["main", "terminal-outcome"], "partition": "2/2" }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "ecc-synthetic-fixture",
+  "repositoryUrl": "https://example.invalid/ecc-fixture",
+  "pinnedCommit": "1111111111111111111111111111111111111111",
+  "snapshotLabel": "synthetic",
+  "snapshotDate": "2026-09-07T00:00:00Z",
+  "expectedSkillCount": 5,
+  "skillRoots": [
+    "skills"
+  ],
+  "skillFile": "SKILL.md",
+  "defaultAuthor": "Fixture Author",
+  "rootLicense": {
+    "spdxLicenseId": "MIT",
+    "path": "LICENSE",
+    "sha256": "fixture-identity-is-injected-by-self-test",
+    "url": "https://example.invalid/ecc-fixture/LICENSE"
+  },
+  "limits": {
+    "bodyChars": 24000,
+    "sourceFileBytes": 100000
+  }
+}

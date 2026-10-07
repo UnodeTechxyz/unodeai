@@ -1,0 +1,164 @@
+{
+  "schemaVersion": 1,
+  "catalogId": "roam-2026-09-27-def91389d075",
+  "provider": "roam",
+  "capturedAt": "2026-09-27T21:13:20.000Z",
+  "sourceUrl": "https://ai.weroam.xyz/api/pricing",
+  "aliases": {},
+  "models": [
+    {
+      "modelId": "MiniMax-M3",
+      "inputNanoUsdPerMillion": "510000000",
+      "outputNanoUsdPerMillion": "2040000000",
+      "cachedInputNanoUsdPerMillion": "102000000"
+    },
+    {
+      "modelId": "claude-fable-5",
+      "inputNanoUsdPerMillion": "2000000000",
+      "outputNanoUsdPerMillion": "10000000000",
+      "cachedInputNanoUsdPerMillion": "200000000"
+    },
+    {
+      "modelId": "claude-fable-5-1",
+      "inputNanoUsdPerMillion": "2000000000",
+      "outputNanoUsdPerMillion": "10000000000",
+      "cachedInputNanoUsdPerMillion": "50000000"
+    },
+    {
+      "modelId": "claude-opus-5",
+      "inputNanoUsdPerMillion": "1000000000",
+      "outputNanoUsdPerMillion": "5000000000",
+      "cachedInputNanoUsdPerMillion": "100000000"
+    },
+    {
+      "modelId": "claude-opus-5-5",
+      "inputNanoUsdPerMillion": "800000000",
+      "outputNanoUsdPerMillion": "4000000000",
+      "cachedInputNanoUsdPerMillion": "80000000"
+    },
+    {
+      "modelId": "claude-sonnet-5",
+      "inputNanoUsdPerMillion": "400000000",
+      "outputNanoUsdPerMillion": "2000000000",
+      "cachedInputNanoUsdPerMillion": "40000000"
+    },
+    {
+      "modelId": "deepseek-v4-flash",
+      "inputNanoUsdPerMillion": "220000000",
+      "outputNanoUsdPerMillion": "660000000",
+      "cachedInputNanoUsdPerMillion": "7326000"
+    },
+    {
+      "modelId": "deepseek-v4-pro",
+      "inputNanoUsdPerMillion": "661700000",
+      "outputNanoUsdPerMillion": "1985100000",
+      "cachedInputNanoUsdPerMillion": "22034610"
+    },
+    {
+      "modelId": "deepseek-v4.1-flash",
+      "inputNanoUsdPerMillion": "37500000000",
+      "outputNanoUsdPerMillion": "37500000000"
+    },
+    {
+      "modelId": "doubao-seedance-2-0-260128",
+      "inputNanoUsdPerMillion": "7458000000",
+      "outputNanoUsdPerMillion": "7458000000"
+    },
+    {
+      "modelId": "doubao-seedance-2-0-fast-260128",
+      "inputNanoUsdPerMillion": "6000000000",
+      "outputNanoUsdPerMillion": "6000000000"
+    },
+    {
+      "modelId": "doubao-seedance-2-5-260628",
+      "inputNanoUsdPerMillion": "11200000000",
+      "outputNanoUsdPerMillion": "11200000000"
+    },
+    {
+      "modelId": "dreamina-seedance-2-0-260128",
+      "inputNanoUsdPerMillion": "7700000000",
+      "outputNanoUsdPerMillion": "7700000000"
+    },
+    {
+      "modelId": "dreamina-seedance-2-0-fast-260128",
+      "inputNanoUsdPerMillion": "6160000000",
+      "outputNanoUsdPerMillion": "6160000000"
+    },
+    {
+      "modelId": "dreamina-seedance-2-5-260628",
+      "inputNanoUsdPerMillion": "11560000000",
+      "outputNanoUsdPerMillion": "11560000000"
+    },
+    {
+      "modelId": "gemini-3.1-pro-preview",
+      "inputNanoUsdPerMillion": "1600000000",
+      "outputNanoUsdPerMillion": "9600000000",
+      "cachedInputNanoUsdPerMillion": "160000000"
+    },
+    {
+      "modelId": "gemini-3.8-flash",
+      "inputNanoUsdPerMillion": "600000000",
+      "outputNanoUsdPerMillion": "3000000000",
+      "cachedInputNanoUsdPerMillion": "60000000"
+    },
+    {
+      "modelId": "glm-5.3",
+      "inputNanoUsdPerMillion": "1400000000",
+      "outputNanoUsdPerMillion": "4396000000",
+      "cachedInputNanoUsdPerMillion": "260400000"
+    },
+    {
+      "modelId": "glm-5.3-flash",
+      "inputNanoUsdPerMillion": "63750000000",
+      "outputNanoUsdPerMillion": "63750000000"
+    },
+    {
+      "modelId": "gpt-5.6-luna",
+      "inputNanoUsdPerMillion": "60000000",
+      "outputNanoUsdPerMillion": "360000000",
+      "cachedInputNanoUsdPerMillion": "6000000"
+    },
+    {
+      "modelId": "gpt-5.6-sol",
+      "inputNanoUsdPerMillion": "1500000000",
+      "outputNanoUsdPerMillion": "9000000000",
+      "cachedInputNanoUsdPerMillion": "150000000"
+    },
+    {
+      "modelId": "gpt-5.6-terra",
+      "inputNanoUsdPerMillion": "600000000",
+      "outputNanoUsdPerMillion": "3600000000",
+      "cachedInputNanoUsdPerMillion": "60000000"
+    },
+    {
+      "modelId": "gpt-6-astra",
+      "inputNanoUsdPerMillion": "3000000000",
+      "outputNanoUsdPerMillion": "15000000000",
+      "cachedInputNanoUsdPerMillion": "300000000"
+    },
+    {
+      "modelId": "gpt-image-2",
+      "inputNanoUsdPerMillion": "2400000000",
+      "outputNanoUsdPerMillion": "9000000000"
+    },
+    {
+      "modelId": "grok-4.6",
+      "inputNanoUsdPerMillion": "1700000000",
+      "outputNanoUsdPerMillion": "5100000000",
+      "cachedInputNanoUsdPerMillion": "425000000"
+    },
+    {
+      "modelId": "kimi-k3",
+      "inputNanoUsdPerMillion": "3000000000",
+      "outputNanoUsdPerMillion": "15000000000",
+      "cachedInputNanoUsdPerMillion": "300000000"
+    },
+    {
+      "modelId": "qwen3.8-max",
+      "inputNanoUsdPerMillion": "1600000000",
+      "outputNanoUsdPerMillion": "4800000000",
+      "cachedInputNanoUsdPerMillion": "200000000"
+    }
+  ],
+  "contentDigest": "bb05791f0e6b26b68edfa5ca7828ef40345dab7633505c8ae73a3598c0aa5bb6"
+}
