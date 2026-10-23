@@ -1,0 +1,115 @@
+{
+  "schemaVersion": 1,
+  "revision": "v0.9.90/2",
+  "customDefaults": {
+    "windowPercent": 70,
+    "ceilingTokens": 250000,
+    "recentTailTokens": 48000,
+    "postCompactTargetTokens": 80000
+  },
+  "profiles": {
+    "balanced": {
+      "windowPercent": 70,
+      "ceilingTokens": 250000,
+      "recentTailTokens": 48000,
+      "postCompactTargetTokens": 80000
+    },
+    "iterative-delivery": {
+      "windowPercent": 70,
+      "ceilingTokens": 220000,
+      "recentTailTokens": 48000,
+      "postCompactTargetTokens": 90000
+    },
+    "research-synthesis": {
+      "windowPercent": 70,
+      "ceilingTokens": 275000,
+      "recentTailTokens": 60000,
+      "postCompactTargetTokens": 110000
+    },
+    "qa-debugging": {
+      "windowPercent": 75,
+      "ceilingTokens": 300000,
+      "recentTailTokens": 64000,
+      "postCompactTargetTokens": 120000
+    },
+    "deep-build": {
+      "windowPercent": 75,
+      "ceilingTokens": 350000,
+      "recentTailTokens": 80000,
+      "postCompactTargetTokens": 150000
+    }
+  },
+  "profileByRoleTemplate": {
+    "pm": "balanced",
+    "product-manager": "balanced",
+    "program-manager": "balanced",
+    "solo": "balanced",
+    "senior-dev": "iterative-delivery",
+    "tech-writer": "iterative-delivery",
+    "content-strategist": "iterative-delivery",
+    "growth-marketer": "iterative-delivery",
+    "sales-development-rep": "iterative-delivery",
+    "account-executive": "iterative-delivery",
+    "sales-engineer": "iterative-delivery",
+    "customer-success-manager": "iterative-delivery",
+    "product-designer": "iterative-delivery",
+    "frontend-engineer": "iterative-delivery",
+    "backend-api-engineer": "iterative-delivery",
+    "mobile-engineer": "iterative-delivery",
+    "conversation-designer": "iterative-delivery",
+    "lifecycle-crm-marketer": "iterative-delivery",
+    "partner-channel-manager": "iterative-delivery",
+    "workflow-automation-specialist": "iterative-delivery",
+    "developer-advocate": "iterative-delivery",
+    "localization-i18n-specialist": "iterative-delivery",
+    "business-analyst": "research-synthesis",
+    "market-researcher": "research-synthesis",
+    "financial-analyst": "research-synthesis",
+    "strategy-lead": "research-synthesis",
+    "seo-analyst": "research-synthesis",
+    "ux-researcher": "research-synthesis",
+    "product-analyst": "research-synthesis",
+    "contract-analyst": "research-synthesis",
+    "data-analyst": "research-synthesis",
+    "knowledge-manager": "research-synthesis",
+    "support-operations-analyst": "research-synthesis",
+    "brand-strategist": "research-synthesis",
+    "revenue-operations-analyst": "research-synthesis",
+    "fpa-analyst": "research-synthesis",
+    "procurement-analyst": "research-synthesis",
+    "tester": "qa-debugging",
+    "devops": "qa-debugging",
+    "security": "qa-debugging",
+    "reviewer": "qa-debugging",
+    "sre": "qa-debugging",
+    "performance-engineer": "qa-debugging",
+    "application-security-engineer": "qa-debugging",
+    "cloud-security-engineer": "qa-debugging",
+    "privacy-data-protection-officer": "qa-debugging",
+    "grc-analyst": "qa-debugging",
+    "customer-support-agent": "qa-debugging",
+    "technical-support-engineer": "qa-debugging",
+    "architect": "deep-build",
+    "data-engineer": "deep-build",
+    "ai-ml-engineer": "deep-build"
+  },
+  "profileBySkillCategory": {
+    "development": "iterative-delivery",
+    "testing": "qa-debugging",
+    "design": "deep-build",
+    "documentation": "iterative-delivery",
+    "management": "balanced",
+    "security": "qa-debugging",
+    "infrastructure": "qa-debugging",
+    "data": "research-synthesis",
+    "external": "balanced"
+  },
+  "routeEvidenceCaps": [
+    {
+      "connectionId": "openrouter",
+      "modelId": "deepseek/deepseek-v4-pro-0813",
+      "capTokens": 200000,
+      "evidence": "2026-09-28 field session: a teammate at about 247,000 input tokens got two empty replies (16 output tokens, no text, no tool call) on each of two turns; OpenRouter did not name the serving provider."
+    }
+  ]
+}
