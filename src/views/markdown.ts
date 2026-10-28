@@ -1,0 +1,528 @@
+import { classifyLinkDestination, FILE_LINK_LIMITS, fileReferenceId, linkRefusalNote } from './fileLinks';
+
+export type MarkdownInline =
+  | { type: 'text'; text: string }
+  | { type: 'strong'; text: string }
+  | { type: 'em'; text: string }
+  | { type: 'code'; text: string }
+  /** A web link: only an absolute http(s) address. */
+  | { type: 'link'; text: string; href: string }
+  /**
+   * v0.9.97: a link to a path on this computer, as written. `ref` is the host-issued id of the link and is present
+   * only in a reply, where the host can find the link again; elsewhere the link is shown as text.
+   */
+  | { type: 'fileLink'; text: string; target: string; ref?: string }
+  /**
+   * v0.9.97: a link that is never followed (another scheme, a share, an escape). Shown as its text with the reason.
+   * The destination itself is not carried, so nothing on the page can follow it.
+   */
+  | { type: 'linkRefused'; text: string; note: string };
+
+/** v0.9.97: a reply's transcript sequence makes its file links clickable; other Markdown gets none. */
+export interface MarkdownOptions {
+  fileReferences?: number;
+}
+
+export type TableAlign = 'left' | 'center' | 'right' | null;
+
+export type MarkdownBlock =
+  | { type: 'heading'; level: 1 | 2 | 3; spans: MarkdownInline[] }
+  | { type: 'paragraph'; spans: MarkdownInline[] }
+  | { type: 'list'; items: MarkdownInline[][] }
+  | { type: 'code'; language: string; code: string }
+  | { type: 'table'; align: TableAlign[]; header: MarkdownInline[][]; rows: MarkdownInline[][][] }
+  /** Host-published exact content (v0.9.88 §5.5). Built by the host from a typed span, never parsed from text. */
+  | { type: 'verbatim'; text: string; caption: string };
+
+const FENCE_RE = /^```([A-Za-z0-9_-]*)\s*$/;
+/**
+ * ONE regex for "this line is a heading" — used both to build the heading block and to tell the paragraph
+ * fallback to keep its hands off. They used to be two different regexes, and the gap between them was fatal:
+ * the heading branch required text after the hashes (`(.+)`), the paragraph guard did not. So `# ` — the
+ * state EVERY streamed heading passes through, for one frame, before its title arrives — was claimed by
+ * neither. The paragraph loop consumed nothing, `i` never advanced, and the outer loop pushed empty
+ * paragraphs until V8 died with "Ineffective mark-compacts near heap limit" and took the extension host with
+ * it. If you change this, change it once.
+ */
+const HEADING_RE = /^(#{1,3})\s+(.+)$/;
+const LIST_ITEM_RE = /^\s*[-*]\s+/;
+
+let renderHookForTest: ((source: string) => void) | undefined;
+
+export function setMarkdownRenderHookForTest(hook: ((source: string) => void) | undefined): void {
+  renderHookForTest = hook;
+}
+
+export function renderMarkdown(source: string, options: MarkdownOptions = {}): MarkdownBlock[] {
+  renderHookForTest?.(String(source));
+  const lines = String(source).replace(/\r\n/g, '\n').split('\n');
+  const blocks: MarkdownBlock[] = [];
+  const scope = options.fileReferences;
+  const parseInline = (text: string) => parseInlineSpans(text, scope);
+  let i = 0;
+
+  while (i < lines.length) {
+    const line = lines[i];
+    if (line.trim() === '') {
+      i++;
+      continue;
+    }
+
+    const fence = line.match(FENCE_RE);
+    if (fence) {
+      const language = fence[1] ?? '';
+      const codeLines: string[] = [];
+      i++;
+      while (i < lines.length && !FENCE_RE.test(lines[i])) {
+        codeLines.push(lines[i]);
+        i++;
+      }
+      if (i < lines.length) {
+        i++;
+      }
+      blocks.push({ type: 'code', language, code: codeLines.join('\n') });
+      continue;
+    }
+
+    const heading = line.match(HEADING_RE);
+    if (heading) {
+      blocks.push({
+        type: 'heading',
+        level: heading[1].length as 1 | 2 | 3,
+        spans: parseInline(heading[2].trim()),
+      });
+      i++;
+      continue;
+    }
+
+    if (LIST_ITEM_RE.test(line)) {
+      const items: MarkdownInline[][] = [];
+      while (i < lines.length && LIST_ITEM_RE.test(lines[i])) {
+        items.push(parseInline(lines[i].replace(LIST_ITEM_RE, '').trim()));
+        i++;
+      }
+      blocks.push({ type: 'list', items });
+      continue;
+    }
+
+    // GFM table: a header row (contains a pipe) immediately followed by a separator row (| --- | :--: |).
+    if (line.includes('|') && i + 1 < lines.length && isTableSeparator(lines[i + 1])) {
+      const header = parseTableRow(line, scope);
+      const cols = header.length;
+      const align = fitColumns(parseTableAlign(lines[i + 1]), cols, () => null as TableAlign);
+      i += 2;
+      const rows: MarkdownInline[][][] = [];
+      while (i < lines.length && lines[i].trim() !== '' && lines[i].includes('|') && !isTableSeparator(lines[i])) {
+        rows.push(fitColumns(parseTableRow(lines[i], scope), cols, () => [{ type: 'text', text: '' }]));
+        i++;
+      }
+      blocks.push({ type: 'table', align, header, rows });
+      continue;
+    }
+
+    const paragraph: string[] = [];
+    while (
+      i < lines.length &&
+      lines[i].trim() !== '' &&
+      !FENCE_RE.test(lines[i]) &&
+      !HEADING_RE.test(lines[i]) &&
+      !LIST_ITEM_RE.test(lines[i])
+    ) {
+      paragraph.push(lines[i].trim());
+      i++;
+    }
+    if (paragraph.length === 0) {
+      // Paragraph is the FALLBACK: every other branch is entered by a positive match and consumes its line,
+      // so if we reach here and take nothing, no branch owns this line and `i` never moves — an infinite
+      // loop that fills the heap. This parser runs on PARTIAL text, 60 times a second, so a line no rule
+      // claims is not a hypothetical. Consume it as literal text and move on. Belt and braces: the regex gap
+      // that caused this is closed above, and this makes a future one impossible rather than fatal.
+      paragraph.push(line.trim());
+      i++;
+    }
+    blocks.push({ type: 'paragraph', spans: parseInline(paragraph.join(' ')) });
+  }
+
+  return blocks;
+}
+
+export interface LiveMarkdownFrame {
+  replaceFrom: number;
+  blocks: MarkdownBlock[];
+  allBlocks: MarkdownBlock[];
+}
+
+/**
+ * A streaming markdown buffer that re-renders only what can still change.
+ *
+ * The first version re-parsed the ENTIRE accumulated text on every frame, and `firstChangedBlockIndex`
+ * JSON.stringify'd every block twice to diff it — all at 60 fps (LIVE_MARKDOWN_FRAME_MS = 16). That is O(n)
+ * work per frame over a buffer that only grows, i.e. O(n²) per turn, and it killed the extension host: a
+ * long streamed reply drove the allocation rate past what GC could reclaim and V8 died with
+ * "Ineffective mark-compacts near heap limit" at a 4 GB heap. The CPU profile was unambiguous — 83.9% of
+ * samples in snapshot(), 16% in GC, nothing else running.
+ *
+ * The fix rests on a property of the parser: `renderMarkdown` is line-local. Its only cross-line state is
+ * the code fence, so once a blank line closes a block OUTSIDE a fence, nothing before it can ever change
+ * again. Everything up to that boundary is parsed exactly once into `stableBlocks` and never touched again,
+ * and those blocks are kept as the SAME objects — so the diff can compare them by reference instead of
+ * stringifying them. Each frame then costs O(unstable tail), not O(everything).
+ */
+export class LiveMarkdown {
+  private text = '';
+  private sentBlocks: MarkdownBlock[] = [];
+  private dirty = false;
+  /** Blocks before `stableChars`: parsed once, reused by identity forever. */
+  private stableBlocks: MarkdownBlock[] = [];
+  private stableChars = 0;
+  /** Incremental scan for the stable boundary — advanced only over the bytes that just arrived, so finding
+   *  it never costs O(text) either. */
+  private boundary = 0;
+  private scanPos = 0;
+  private scanLineStart = 0;
+  private scanFenceOpen = false;
+
+  constructor(private readonly parse: (source: string) => MarkdownBlock[] = renderMarkdown) {}
+
+  push(delta: string): void {
+    if (delta) {
+      this.text += String(delta).replace(/\r\n/g, '\n');
+      this.dirty = true;
+      this.advanceBoundary();
+    }
+  }
+
+  getText(): string {
+    return this.text;
+  }
+
+  /**
+   * How much text EVERY future frame must re-parse — the region past the last settled boundary.
+   *
+   * Deliberately measured from `boundary`, not `stableChars`: text between them is settled and will be
+   * parsed exactly once, on the next frame, and then never again. Only the region beyond the boundary is
+   * re-parsed frame after frame. Getting this wrong makes a perfectly ordinary 17k-character prose reply
+   * look "expensive" the instant it arrives, when in truth it settles on its first frame and every frame
+   * after that is trivial.
+   *
+   * The caller backs off the frame rate when this is large — which happens only when a single enormous
+   * block (a long code fence, a wide table) leaves the boundary unable to advance, so the live tail really
+   * IS the whole document.
+   */
+  liveTailLength(): number {
+    return this.text.length - this.boundary;
+  }
+
+  snapshot(): LiveMarkdownFrame | undefined {
+    if (!this.dirty) {
+      return undefined;
+    }
+    const next = this.renderIncrementally();
+    const replaceFrom = firstChangedBlockIndex(this.sentBlocks, next);
+    this.dirty = false;
+    if (replaceFrom === this.sentBlocks.length && replaceFrom === next.length) {
+      this.sentBlocks = next;
+      return undefined;
+    }
+    const frame = {
+      replaceFrom,
+      blocks: next.slice(replaceFrom),
+      allBlocks: next,
+    };
+    this.sentBlocks = next;
+    return frame;
+  }
+
+  finish(): MarkdownBlock[] {
+    if (!this.dirty) {
+      return this.sentBlocks;
+    }
+    const next = this.renderIncrementally();
+    this.sentBlocks = next;
+    this.dirty = false;
+    return next;
+  }
+
+  /** Settle everything the boundary has passed, then parse ONLY the live tail. Splitting at a blank line
+   *  outside a fence is safe precisely because every block type here is a run of adjacent lines terminated
+   *  by one: parsing the halves and concatenating gives the same blocks as parsing the whole. */
+  private renderIncrementally(): MarkdownBlock[] {
+    if (this.boundary > this.stableChars) {
+      const settled = this.parse(this.text.slice(this.stableChars, this.boundary));
+      if (settled.length > 0) {
+        this.stableBlocks = this.stableBlocks.concat(settled);
+      }
+      this.stableChars = this.boundary;
+    }
+    const tail = this.parse(this.text.slice(this.stableChars));
+    return tail.length > 0 ? this.stableBlocks.concat(tail) : this.stableBlocks;
+  }
+
+  /** Scan only the newly-arrived bytes for the last blank line that is not inside a code fence. Uses the
+   *  raw (untrimmed) line for the fence test, exactly as renderMarkdown does, so the two agree on what is
+   *  fenced — disagreeing would settle a boundary INSIDE a code block and corrupt it. */
+  private advanceBoundary(): void {
+    for (let i = this.scanPos; i < this.text.length; i++) {
+      if (this.text[i] !== '\n') {
+        continue;
+      }
+      const line = this.text.slice(this.scanLineStart, i);
+      if (FENCE_RE.test(line)) {
+        this.scanFenceOpen = !this.scanFenceOpen;
+      } else if (!this.scanFenceOpen && line.trim() === '') {
+        this.boundary = i + 1;
+      }
+      this.scanLineStart = i + 1;
+    }
+    this.scanPos = this.text.length;
+  }
+}
+
+function firstChangedBlockIndex(previous: MarkdownBlock[], next: MarkdownBlock[]): number {
+  const limit = Math.min(previous.length, next.length);
+  for (let i = 0; i < limit; i++) {
+    // LiveMarkdown reuses a settled block's exact object across frames, so identity settles the whole stable
+    // prefix for free. Without this, the diff JSON.stringify'd every block of the document twice per frame,
+    // 60 times a second — half of the O(n²) that OOM'd the extension host.
+    if (previous[i] === next[i]) {
+      continue;
+    }
+    if (blockSignature(previous[i]) !== blockSignature(next[i])) {
+      return i;
+    }
+  }
+  return limit;
+}
+
+function blockSignature(block: MarkdownBlock): string {
+  return JSON.stringify(block);
+}
+
+export function renderMarkdownToSafeHtml(source: string): string {
+  return renderMarkdown(source).map(blockToHtml).join('');
+}
+
+export function escapeHtml(value: string): string {
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function parseInlineSpans(source: string, scope: number | undefined): MarkdownInline[] {
+  const tokens: MarkdownInline[] = [];
+  let rest = source;
+
+  while (rest.length > 0) {
+    const match = nextInline(rest, scope);
+    if (!match) {
+      tokens.push({ type: 'text', text: rest });
+      break;
+    }
+    if (match.index > 0) {
+      tokens.push({ type: 'text', text: rest.slice(0, match.index) });
+    }
+    tokens.push(match.token);
+    rest = rest.slice(match.index + match.length);
+  }
+
+  return tokens;
+}
+
+function nextInline(source: string, scope: number | undefined): { index: number; length: number; token: MarkdownInline } | undefined {
+  const patterns: Array<{ re: RegExp; toToken: (m: RegExpMatchArray) => MarkdownInline | undefined }> = [
+    {
+      re: /`([^`]+)`/,
+      toToken: (m) => ({ type: 'code', text: m[1] }),
+    },
+    {
+      re: /\*\*([^*]+)\*\*/,
+      toToken: (m) => ({ type: 'strong', text: m[1] }),
+    },
+    {
+      re: /\*([^*]+)\*/,
+      toToken: (m) => ({ type: 'em', text: m[1] }),
+    },
+  ];
+
+  let best = nextLink(source, scope);
+  for (const pattern of patterns) {
+    const match = source.match(pattern.re);
+    if (!match || match.index === undefined) {
+      continue;
+    }
+    const token = pattern.toToken(match);
+    if (!token) {
+      continue;
+    }
+    if (!best || match.index < best.index) {
+      best = { index: match.index, length: match[0].length, token };
+    }
+  }
+  return best;
+}
+
+/** Longest destination the link scanner reads; anything longer is left as text. */
+const LINK_SCAN_LIMIT = FILE_LINK_LIMITS.destination * 2;
+
+/**
+ * The first inline link `[text](destination)` in `source`. The destination is CommonMark's: `<…>` may hold spaces,
+ * a bare one may hold balanced parentheses, and an optional `"title"` follows it. A backslash is never read as an
+ * escape here, because it is the Windows path separator. A bracket pair that does not form a link stays text.
+ */
+function nextLink(source: string, scope: number | undefined): { index: number; length: number; token: MarkdownInline } | undefined {
+  const opener = /\[([^\]]+)\]\(/g;
+  for (let match = opener.exec(source); match; match = opener.exec(source)) {
+    const destination = linkDestination(source, match.index + match[0].length);
+    if (destination) {
+      return { index: match.index, length: destination.end - match.index, token: linkToken(match[1], destination.text, scope) };
+    }
+    opener.lastIndex = match.index + 1;
+  }
+  return undefined;
+}
+
+function linkDestination(source: string, start: number): { text: string; end: number } | undefined {
+  let at = start;
+  let text: string;
+  if (source[at] === '<') {
+    const close = boundedIndexOf(source, '>', at + 1);
+    if (close < 0) return undefined;
+    text = source.slice(at + 1, close);
+    if (text.includes('<')) return undefined;
+    at = close + 1;
+  } else {
+    let depth = 0;
+    for (; at < source.length && !/\s/.test(source[at]); at++) {
+      if (at - start > LINK_SCAN_LIMIT) return undefined;
+      if (source[at] === '(') depth++;
+      else if (source[at] === ')' && depth-- === 0) break;
+    }
+    if (depth > 0) return undefined;
+    text = source.slice(start, at);
+    if (!text) return undefined;
+  }
+  let next = at;
+  while (source[next] === ' ') next++;
+  const quote = next > at ? source[next] : undefined;
+  if (quote === '"' || quote === '\'' || quote === '(') {
+    const close = boundedIndexOf(source, quote === '(' ? ')' : quote, next + 1);
+    if (close < 0) return undefined;
+    next = close + 1;
+    while (source[next] === ' ') next++;
+  }
+  return source[next] === ')' ? { text, end: next + 1 } : undefined;
+}
+
+/** indexOf that gives up after LINK_SCAN_LIMIT characters, so a run of unclosed links stays linear per candidate. */
+function boundedIndexOf(source: string, char: string, from: number): number {
+  const found = source.slice(from, from + LINK_SCAN_LIMIT).indexOf(char);
+  return found < 0 ? -1 : from + found;
+}
+
+/** v0.9.97: only an absolute http(s) address stays a web link; a path is a file link; everything else is text. */
+function linkToken(text: string, destination: string, scope: number | undefined): MarkdownInline {
+  const target = classifyLinkDestination(destination);
+  if (target.kind === 'web') {
+    return { type: 'link', text, href: target.href };
+  }
+  if (target.kind === 'file') {
+    return { type: 'fileLink', text, target: destination, ...(scope !== undefined ? { ref: fileReferenceId(scope, destination) } : {}) };
+  }
+  return { type: 'linkRefused', text, note: linkRefusalNote(target) };
+}
+
+/** Split a table row into trimmed cells. Drops the optional leading/trailing border pipe, and — unlike a
+ *  raw split('|') — does NOT split on an escaped pipe (\|) or a pipe inside an inline-code span (`a|b`). */
+function splitTableRow(line: string): string[] {
+  let s = line.trim();
+  if (s.startsWith('|')) { s = s.slice(1); }
+  if (s.endsWith('|') && !/\\\|$/.test(s)) { s = s.slice(0, -1); } // trailing border pipe (not an escaped \|)
+  const cells: string[] = [];
+  let cur = '';
+  let inCode = false;
+  for (let i = 0; i < s.length; i++) {
+    const ch = s[i];
+    if (ch === '\\' && s[i + 1] === '|') { cur += '|'; i++; continue; } // escaped pipe → literal in the cell
+    if (ch === '`') { inCode = !inCode; cur += ch; continue; }            // toggle inline-code span
+    if (ch === '|' && !inCode) { cells.push(cur.trim()); cur = ''; continue; }
+    cur += ch;
+  }
+  cells.push(cur.trim());
+  return cells;
+}
+
+/** Pad/truncate a row's cells to the table's column count so a short/long body row still aligns. */
+function fitColumns<T>(cells: T[], cols: number, fill: () => T): T[] {
+  const out = cells.slice(0, cols);
+  while (out.length < cols) { out.push(fill()); }
+  return out;
+}
+
+/** A GFM table separator row: contains a pipe, and every cell is dashes with optional colons (:--, :-:, --:). */
+function isTableSeparator(line: string): boolean {
+  if (!line.includes('|') || !line.includes('-')) {
+    return false;
+  }
+  const cells = splitTableRow(line);
+  return cells.length > 0 && cells.every((c) => /^:?-{1,}:?$/.test(c));
+}
+
+function parseTableRow(line: string, scope: number | undefined): MarkdownInline[][] {
+  return splitTableRow(line).map((cell) => parseInlineSpans(cell, scope));
+}
+
+function parseTableAlign(separator: string): TableAlign[] {
+  return splitTableRow(separator).map((c) => {
+    const left = c.startsWith(':');
+    const right = c.endsWith(':');
+    if (left && right) { return 'center'; }
+    if (right) { return 'right'; }
+    if (left) { return 'left'; }
+    return null;
+  });
+}
+
+function blockToHtml(block: MarkdownBlock): string {
+  switch (block.type) {
+    case 'heading':
+      return `<h${block.level}>${inlineToHtml(block.spans)}</h${block.level}>`;
+    case 'paragraph':
+      return `<p>${inlineToHtml(block.spans)}</p>`;
+    case 'list':
+      return `<ul>${block.items.map((item) => `<li>${inlineToHtml(item)}</li>`).join('')}</ul>`;
+    case 'code':
+      return `<pre><code data-language="${escapeHtml(block.language)}">${escapeHtml(block.code)}</code></pre>`;
+    case 'verbatim':
+      return `<div class="code verbatim" role="group" aria-label="${escapeHtml(block.caption)}"><div class="code-head"><span>${escapeHtml(block.caption)}</span></div><pre>${escapeHtml(block.text)}</pre></div>`;
+    case 'table': {
+      const alignAttr = (i: number) => (block.align[i] ? ` style="text-align:${block.align[i]}"` : '');
+      const head = `<thead><tr>${block.header.map((c, i) => `<th${alignAttr(i)}>${inlineToHtml(c)}</th>`).join('')}</tr></thead>`;
+      const body = `<tbody>${block.rows.map((r) => `<tr>${r.map((c, i) => `<td${alignAttr(i)}>${inlineToHtml(c)}</td>`).join('')}</tr>`).join('')}</tbody>`;
+      return `<table>${head}${body}</table>`;
+    }
+  }
+}
+
+function inlineToHtml(spans: MarkdownInline[]): string {
+  return spans.map((span) => {
+    switch (span.type) {
+      case 'text':
+        return escapeHtml(span.text);
+      case 'strong':
+        return `<strong>${escapeHtml(span.text)}</strong>`;
+      case 'em':
+        return `<em>${escapeHtml(span.text)}</em>`;
+      case 'code':
+        return `<code>${escapeHtml(span.text)}</code>`;
+      case 'link':
+        return `<a href="${escapeHtml(span.href)}">${escapeHtml(span.text)}</a>`;
+      // Outside the chat a file link has no host to resolve it: it is text, and a refused link says why.
+      case 'fileLink':
+        return `<span class="md-file-ref" title="${escapeHtml(span.target)}">${escapeHtml(span.text)}</span>`;
+      case 'linkRefused':
+        return `<span class="md-link-refused">${escapeHtml(span.text)}</span> <span class="md-link-note">(${escapeHtml(span.note)})</span>`;
+    }
+  }).join('');
+}
