@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "claims": [
+    {
+      "id": "extension-unavailable-fallback",
+      "class": "availability",
+      "path": "src/extension.ts",
+      "text": "This connection is not available in this release.",
+      "occurrence": 1,
+      "lastAffirmed": "0.9.106"
+    },
+    {
+      "id": "tier2-route-limit",
+      "class": "capability-limit",
+      "path": "src/harness/tier2.ts",
+      "text": "Tier 2 route connection \"${…}\" is not supported by this release.",
+      "occurrence": 1,
+      "lastAffirmed": "0.9.106"
+    },
+    {
+      "id": "capability-guard-unavailable-fallback",
+      "class": "availability",
+      "path": "src/routes/CapabilityGuard.ts",
+      "text": "${…} is not available in this release.",
+      "occurrence": 1,
+      "lastAffirmed": "0.9.106"
+    },
+    {
+      "id": "agent-builder-unavailable-fallback",
+      "class": "availability",
+      "path": "src/views/AgentBuilderPanel.ts",
+      "text": "? (provider.availabilityMessage || (provider.name + ' is coming soon and is not available in this release.'))",
+      "occurrence": 1,
+      "lastAffirmed": "0.9.106"
+    },
+    {
+      "id": "settings-unavailable-fallback",
+      "class": "availability",
+      "path": "src/views/SettingsPanel.ts",
+      "text": "This connection is not available in this release.",
+      "occurrence": 1,
+      "lastAffirmed": "0.9.106"
+    },
+    {
+      "id": "codex-cli-delegated-pdf-limit",
+      "class": "capability-limit",
+      "path": "src/backend/CodexBackend.ts",
+      "text": "Codex CLI does not receive PDFs in this release",
+      "occurrence": 1,
+      "lastAffirmed": "0.9.106"
+    },
+    {
+      "id": "cli-unqualified-checking-notice",
+      "class": "capability-limit",
+      "path": "src/host/cliRuntimeHost.ts",
+      "text": "Using ${…} CLI, not yet tested with this release. Checking it in the background.",
+      "occurrence": 1,
+      "lastAffirmed": "0.9.106"
+    },
+    {
+      "id": "cli-unqualified-checked-notice",
+      "class": "capability-limit",
+      "path": "src/host/cliRuntimeHost.ts",
+      "text": "Using ${…} CLI ${…}, not yet tested with this release.",
+      "occurrence": 1,
+      "lastAffirmed": "0.9.106"
+    },
+    {
+      "id": "run-closeout-basis-internal",
+      "class": "capability-limit",
+      "path": "src/observability/RunLedger.ts",
+      "text": "How the host closed a run stays internal evidence in this release; the portable closeout state is closeoutCompletionState.",
+      "occurrence": 1,
+      "lastAffirmed": "0.9.106"
+    }
+  ]
+}
