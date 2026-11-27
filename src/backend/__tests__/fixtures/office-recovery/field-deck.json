@@ -1,0 +1,89 @@
+{
+  "path": "http-smoke-deck.pptx",
+  "final": true,
+  "deck": {
+    "slides": [
+      {
+        "objects": [
+          {
+            "type": "text",
+            "text": "Slide 1: Introduction",
+            "x": 1,
+            "y": 1,
+            "w": 8,
+            "h": 1,
+            "fontSize": 18
+          }
+        ]
+      },
+      {
+        "objects": [
+          {
+            "type": "text",
+            "text": "Slide 2: Sales Totals",
+            "x": 1,
+            "y": 1,
+            "w": 8,
+            "h": 1,
+            "fontSize": 18
+          },
+          {
+            "type": "table",
+            "rows": [
+              [
+                "Region",
+                "Sales"
+              ],
+              [
+                "North",
+                15
+              ],
+              [
+                "South",
+                20
+              ]
+            ],
+            "x": 1,
+            "y": 2,
+            "w": 8,
+            "h": 3
+          }
+        ]
+      },
+      {
+        "objects": [
+          {
+            "type": "text",
+            "text": "Slide 3: Sales Chart",
+            "x": 1,
+            "y": 1,
+            "w": 8,
+            "h": 1,
+            "fontSize": 18
+          },
+          {
+            "type": "chart",
+            "chartType": "bar",
+            "data_from": {
+              "transformation_ref": "transformation-477c1626-46ce-4ac2-b8a2-5e3b82aa47e8",
+              "label_field": "Region",
+              "value_fields": [
+                "TotalSales"
+              ],
+              "rows": {
+                "first": 1,
+                "last": 2
+              }
+            },
+            "x": 1,
+            "y": 2,
+            "w": 8,
+            "h": 4
+          }
+        ]
+      }
+    ],
+    "layout": "standard"
+  },
+  "schema_version": 1
+}

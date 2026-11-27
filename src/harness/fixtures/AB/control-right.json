@@ -1,0 +1,7 @@
+{
+  "name": "control-right",
+  "allowedTools": ["read", "write", "execute"],
+  "turnTimeoutMs": 300000,
+  "promptInjection": { "enabled": false },
+  "commandAllowlist": []
+}

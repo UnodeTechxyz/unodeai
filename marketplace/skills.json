@@ -1,0 +1,664 @@
+[
+  {
+    "id": "api-contract-review",
+    "name": "API Contract Review",
+    "summary": "Describe API changes, classify each as breaking or non-breaking, and check the contract is documented.",
+    "category": "development",
+    "capabilities": [
+      "read",
+      "search"
+    ],
+    "body": "# API Contract Review\n\nScope: what changed in an interface, whether existing clients keep working, and whether the contract is\ndocumented. Advice on the version number belongs to the skill whose name contains `api-versioning-semver`; give\nit this change list. Without that skill, leave the version decision to the project's own versioning policy.\n\n1. Compare the new contract with the previous one (OpenAPI, GraphQL schema, protobuf, exported types, CLI flags).\n   List every change: added, removed, renamed, type or constraint changed, default changed, behaviour changed.\n2. For each change, say whether existing clients keep working: breaking or non-breaking, with the reason (for\n   example \"removes field `x`, which clients read\").\n3. Check that additions are really compatible: new fields are optional, existing clients tolerate new enum\n   values, and existing fields keep their meaning.\n4. Check that every changed endpoint or operation documents its request, response, error responses and auth\n   requirements.\n5. Validate the schema with the project's own tool or script if it has one; otherwise say it was not validated.\n\nReturn: the change list with breaking or non-breaking and evidence (file:line), then documentation gaps."
+  },
+  {
+    "id": "accessibility-audit",
+    "name": "Accessibility Audit",
+    "summary": "Audit pages and user journeys against the project's declared WCAG target (2.2 is current): keyboard, focus, contrast, forms.",
+    "category": "design",
+    "capabilities": [
+      "read",
+      "search"
+    ],
+    "body": "# Accessibility Audit\n\nScope: pages, interactive flows and complete user journeys (for example sign-up, checkout, settings). The\nsemantics, keyboard behaviour and states of a single component belong to the skill whose name contains\n`component-a11y`; if you have its findings, cite them here instead of checking the same thing again.\n\n1. **Find the target.** Read the project's declared conformance target (for example \"WCAG 2.1 AA\") and name its\n   version in the report. WCAG 2.2 is the current W3C Recommendation; 2.0 and 2.1 targets are still valid.\n   Against an older target, a criterion that is new in 2.2 is a note, not a failure. With no declared target,\n   use WCAG 2.2 AA and say that you chose it.\n2. **Decide how you observe.** This host has no browser or render tool. If the project has a script that\n   renders or tests pages (for example a Playwright, Cypress or axe script in its package scripts or Makefile),\n   run it and use its output. Otherwise read the code, and say at the top of the report that the findings were\n   read from code, not rendered.\n3. **Walk each journey end to end.** Every step can be reached and operated with the keyboard alone, focus order\n   follows the visual order, focus stays visible and is not hidden behind sticky content, and nothing traps focus.\n4. **Page structure.** Page title, page language, headings and landmarks, and a skip link where navigation\n   repeats.\n5. **Contrast.** Text 4.5:1 (3:1 for large text); controls, focus indicators and meaningful graphics 3:1. When\n   you cannot render, compute it from the colour values or tokens.\n6. **Forms and errors.** Every input has a label; errors are announced and say how to fix them; sign-in does not\n   depend on a memory or puzzle test alone.\n7. **Dynamic content.** Status messages and live updates are announced; moving content can be paused.\n8. **Zoom and reflow.** Content works at 200% zoom and at 320 CSS px width. This needs rendering; if you could not\n   render, list it as not verified.\n\nFor each finding give: the page or step, file:line, the WCAG criterion number and version, `rendered` or\n`read from code`, and a concrete fix."
+  },
+  {
+    "id": "using-superpowers",
+    "name": "Using Superpowers",
+    "summary": "Choose and load relevant authorized skills before acting on a task.",
+    "category": "management",
+    "capabilities": [
+      "read"
+    ],
+    "body": "# Using Superpowers\n\nBefore acting on a task:\n\n1. Find your authorized skills.\n   - OpenAI-compatible and Claude backends: they are listed under **Authorized Agent Skills** in your system\n     prompt.\n   - Codex backend: your skills are Codex native skills with renamed names of the form\n     `unode-<hash>-<name>-<hash>`, and your system prompt has no list of them. Find a skill by the name it\n     contains (for example a name containing `systematic-debugging`).\n2. If one or more skills are relevant, load the best match before you answer, plan, edit, delegate,\n   or run tools.\n   - OpenAI-compatible backend: call `load_skill` with the skill name.\n   - Claude backend: invoke the extension-managed plugin command shown next to the skill.\n   - Codex backend: use the native skill whose name contains the skill name.\n3. Follow the loaded skill's procedure as your operating checklist.\n4. If no listed skill applies, proceed normally and do not pretend that you used one.\n5. For multi-domain work, load the most relevant skill first; load another only when it materially\n   changes the next step.\n\nTwo exceptions to \"load a skill first\":\n\n- The person explicitly asks you to run a specific command or step first. Do that first, then load a skill if\n  it still helps.\n- You are a coordinator whose instructions say to dispatch first. Dispatch first; the teammates who do the work\n  load the skills it needs.\n\nThe point is not ceremony. The point is to pause long enough to use the specialized procedure that\nthe user already authorized for this agent."
+  },
+  {
+    "id": "commit-message-quality",
+    "name": "Commit Message Quality",
+    "summary": "Check commit messages against the repository's own convention and for a body that explains the change.",
+    "category": "development",
+    "capabilities": [
+      "read",
+      "search"
+    ],
+    "body": "# Commit Message Quality\n\n1. Find the repository's convention: CONTRIBUTING, a commitlint or similar configuration, a commit template, or\n   the pattern in recent `git log`. Name the convention you used in the report.\n2. Check each message against that convention. Apply Conventional Commits (`type(scope): description`, with `!`\n   and a `BREAKING CHANGE:` footer for breaking changes) only when the repository uses it. A message is not wrong\n   for missing a convention the repository does not use.\n3. With no visible convention, use general rules: a short summary line that says what changed, a blank line, and\n   a body that says why when the reason is not obvious.\n4. The message matches the diff: it claims neither more nor less than the commit changes.\n5. One logical change per commit, where the repository expects that.\n6. Issue and ticket references use the repository's own form.\n\nFlag each problem with the commit hash, the rule broken, and where the rule comes from (the repository's\nconvention or the general rules above)."
+  },
+  {
+    "id": "test-coverage-gap",
+    "name": "Test Coverage Gap Analysis",
+    "summary": "Find untested code paths, missing edge cases, and low-coverage modules.",
+    "category": "development",
+    "capabilities": [
+      "read",
+      "search",
+      "execute"
+    ],
+    "body": "# Test Coverage Gap Analysis\n\n1. Find how the project measures coverage: its test scripts (for example package.json, Makefile, pyproject.toml,\n   build files) or CI configuration. Run that command, for example `npm test -- --coverage`, `pytest --cov`,\n   `go test -cover ./...`, `cargo llvm-cov`, or the JaCoCo report of a Maven or Gradle build. If coverage is not\n   set up, say so and work from reading the code and the tests.\n2. Use the project's own coverage threshold. If it has none, do not invent a pass mark; rank by risk instead.\n3. For each low-coverage area, find the largest uncovered function or branch and weigh it by risk: error\n   handling, security checks, data writes, and recently changed code come first.\n4. Look for paths a coverage number misses: error branches, boundary values, concurrency, and `TODO` or `FIXME`\n   notes.\n5. For an API, check that each documented status code or error has at least one test.\n\nOutput: how you measured coverage, then a ranked gap list (file, uncovered lines or branches, risk) with a\none-sentence test suggestion per gap."
+  },
+  {
+    "id": "dependency-risk-triage",
+    "name": "Dependency Risk Triage",
+    "summary": "Audit third-party dependencies for vulnerabilities, staleness, license issues, and bloat.",
+    "category": "security",
+    "capabilities": [
+      "read",
+      "search",
+      "execute"
+    ],
+    "body": "# Dependency Risk Triage\n\n1. Find the package managers in use from their manifests and lock files (for example `package.json`,\n   `requirements.txt` or `poetry.lock`, `go.mod`, `Cargo.toml`, `pom.xml` or `build.gradle`, `Gemfile`,\n   `composer.json`, `*.csproj`). Triage each one.\n2. **Vulnerabilities**: run the ecosystem's audit tool where it is available, for example `npm audit --json`,\n   `pip-audit`, `govulncheck ./...`, `cargo audit`, `bundle audit`, `dotnet list package --vulnerable`, or\n   OSV-Scanner across ecosystems. Record each critical or high finding with its advisory ID, package, installed\n   version and fixed version. If no tool can run, say which checks were not done.\n3. **Staleness**: dependencies far behind their latest release, or no longer maintained. Note the lag and how\n   hard an upgrade looks.\n4. **Licences**: read licences with the ecosystem's tool or from package metadata. Flag licences that conflict\n   with the project's own licence or policy, and packages with no licence.\n5. **Weight**: a large dependency used for one small function. Suggest a smaller option only when one exists.\n6. **Transitive risk**: deep or wide dependency chains, and packages that only one direct dependency pulls in.\n\nOutput: a risk-ranked report naming each ecosystem, the tools you ran and their results, and clear actions."
+  },
+  {
+    "id": "documentation-lint",
+    "name": "Documentation Lint",
+    "summary": "Check markdown docs for broken links, stale content, readability, and style consistency.",
+    "category": "documentation",
+    "capabilities": [
+      "read"
+    ],
+    "body": "# Documentation Lint\n\nLint markdown documentation:\n1. **Broken links**: check every relative and absolute link; flag any that return 404 or point to missing files.\n2. **Stale content**: compare documented commands/flags against the actual CLI `--help` output or code. Flag mismatches.\n3. **Readability**: run a Flesch-Kincaid check — target grade 8–10 for developer docs. Flag sentences over 25 words.\n4. **Style consistency**: check that code blocks have language tags, headings use sentence case, and terminology matches the project glossary.\n5. **Coverage**: ensure every public API function/endpoint and every CLI command has a corresponding doc section.\n\nOutput: a violation list (file:line, rule, fix suggestion) suitable for a CI doc-lint gate."
+  },
+  {
+    "id": "owasp-top10-review",
+    "name": "OWASP Top 10 Review",
+    "summary": "Screen code changes for the OWASP Top 10 web application security risks.",
+    "category": "security",
+    "capabilities": [
+      "read",
+      "search"
+    ],
+    "body": "# OWASP Top 10 Review\n\nBaseline: the OWASP Top 10 2025 (https://top10.owasp.org/2025/). If the project has adopted another edition (for\nexample 2021) in its policy or earlier reports, also map each finding to that edition and name both in the\nreport. The Top 10 is an awareness list of common risk categories, not a complete security review. Say so in the\nreport, and report a real issue even when it fits no category.\n\nScreen the change for:\n\n1. **A01 Broken Access Control**: every endpoint checks authentication and authorization; ownership checks on\n   resource IDs; server-side request forgery (SSRF): URLs the server fetches from user input are validated and\n   restricted.\n2. **A02 Security Misconfiguration**: default credentials, verbose errors, debug features, permissive CORS or\n   headers, features enabled that are not needed.\n3. **A03 Software Supply Chain Failures**: new or changed dependencies, build and CI steps and where they come\n   from; known vulnerabilities; pinned versions and lock files; who can change the pipeline.\n4. **A04 Cryptographic Failures**: sensitive data encrypted in transit and at rest; no hard-coded keys; no weak\n   algorithms for security uses (for example MD5, SHA-1).\n5. **A05 Injection**: SQL, NoSQL, OS command, LDAP, template and HTML/script output; parameterized queries and\n   output encoding.\n6. **A06 Insecure Design**: missing rate limits, missing business-rule checks, unsafe defaults.\n7. **A07 Authentication Failures**: credential storage, multi-factor authentication where required, session\n   handling, token expiry and revocation.\n8. **A08 Software or Data Integrity Failures**: unsigned updates, unsafe deserialization, untrusted data used as\n   code or configuration.\n9. **A09 Security Logging and Alerting Failures**: security events logged with enough context and alerted on;\n   no secrets in logs.\n10. **A10 Mishandling of Exceptional Conditions**: errors fail closed, are handled at the right level, do not leak\n    details, and do not leave state half-changed.\n\nOutput: the edition or editions you used; each finding with category, severity, file:line, evidence and\nremediation; then any findings outside the Top 10."
+  },
+  {
+    "id": "secrets-scanning",
+    "name": "Secrets Scanning",
+    "summary": "Detect exposed API keys, tokens, passwords, and private certificates in source and config.",
+    "category": "security",
+    "capabilities": [
+      "read",
+      "search"
+    ],
+    "body": "# Secrets Scanning\n\n**Never repeat a secret value**, not in full and not in part (no prefix, suffix or partly masked form), in a\nreport, log, message, commit, file you write, or export. Report only where it is and what type it looks like.\n\nHunt for exposed secrets in code, config, and history:\n\n1. Search for strings matching common secret patterns and high-entropy values: cloud access keys, `ghp_` and\n   similar tokens, `sk-` style API keys, `PRIVATE KEY` blocks, connection strings with passwords.\n2. Check `.env`, `.env.local`, `config.json`, YAML and similar files for plaintext credentials.\n3. Check history for secrets that were committed and later removed. Prefer a secret scanner with its redaction\n   option on (for example `gitleaks` with `--redact`). Raw `git log -p` or scanner output prints the values: do\n   not paste it into your reply or a report.\n4. Verify that secrets are loaded from environment variables or a vault, never hard-coded.\n5. Confirm that `.gitignore` excludes secret files and that a pre-commit hook or CI check blocks new leaks.\n\nOutput: one entry per leak with its location (file:line, or commit and path), the secret type, whether it reached\nhistory or a shared place, and a rotation and remediation plan. Treat any secret that reached a commit or a\nshared place as exposed."
+  },
+  {
+    "id": "perf-budget-audit",
+    "name": "Performance Budget Audit",
+    "summary": "Measure bundle size, load time, and runtime metrics against a performance budget.",
+    "category": "development",
+    "capabilities": [
+      "read",
+      "search",
+      "execute"
+    ],
+    "body": "# Performance Budget Audit\n\nAudit the project against a performance budget:\n1. Define or read the budget: max first-party JS bundle size, first contentful paint (FCP), largest contentful paint (LCP), and total blocking time (TBT).\n2. Run production build and capture bundle sizes per route/chunk. Flag any chunk exceeding its budget.\n3. Measure load metrics with a tool like Lighthouse or WebPageTest. Record FCP, LCP, TBT, and CLS.\n4. Identify the largest contributors: oversized images, unminified code, duplicate dependencies, or excessive third-party scripts.\n5. Recommend concrete fixes: code splitting, lazy loading, image optimization, tree shaking, or dependency replacement.\n\nOutput: a budget report with current vs. target values, the largest offenders, and a prioritized fix list."
+  },
+  {
+    "id": "ci-pipeline-review",
+    "name": "CI Pipeline Review",
+    "summary": "Review CI/CD workflows for speed, security, reliability, and maintainability.",
+    "category": "infrastructure",
+    "capabilities": [
+      "read",
+      "search"
+    ],
+    "body": "# CI Pipeline Review\n\nReview a CI/CD pipeline definition (GitHub Actions, GitLab CI, etc.):\n1. **Triggers**: confirm jobs run on the right events (push, PR, release) and avoid unnecessary runs on every file change.\n2. **Speed**: check for parallel jobs, caching of dependencies and build output, and minimal redundant steps.\n3. **Security**: pin third-party actions to a commit SHA, never use `pull_request_target` with untrusted checks, and inject secrets only via environment variables.\n4. **Reliability**: ensure jobs have timeouts, idempotent steps, and clear failure notifications.\n5. **Maintainability**: prefer reusable workflows or composite actions over copy-pasted YAML; document non-obvious steps.\n\nOutput: a pipeline review with risk items and concrete YAML improvements."
+  },
+  {
+    "id": "task-decomposition",
+    "name": "Task Decomposition",
+    "summary": "Break large requirements into small, independent, assignable tasks with clear acceptance criteria.",
+    "category": "management",
+    "capabilities": [
+      "read"
+    ],
+    "body": "# Task Decomposition\n\nDecompose a large requirement into actionable tasks:\n1. Read the requirement and identify the core user outcome or business goal.\n2. Split the work by vertical slice (end-to-end feature) rather than horizontal layer (all frontend, then all backend).\n3. Ensure each task is small enough to complete in one focused session and produces a verifiable result.\n4. Write a clear acceptance criterion for each task: given/when/then or a concrete observable output.\n5. Identify dependencies and order tasks so blockers come first; mark parallelizable tasks.\n6. Flag risks, unknowns, and decisions that need human input before implementation starts.\n\nOutput: a numbered task list with acceptance criteria and dependencies. Where you suggest who should do a task,\nchoose by fit with the work and by what the host reports that teammate can do now, not by its role name."
+  },
+  {
+    "id": "schema-migration-safety",
+    "name": "Schema Migration Safety",
+    "summary": "Validate database schema changes for backward compatibility and safe rollout.",
+    "category": "data",
+    "capabilities": [
+      "read",
+      "search"
+    ],
+    "body": "# Schema Migration Safety\n\nReview a database schema change for safe rollout:\n1. **Additive first**: new columns/tables should be nullable or have sensible defaults; never drop a column in the same deploy that stops writing it.\n2. **Backward compatibility**: the old application version must still run against the new schema until all instances are rolled out.\n3. **Index strategy**: new indexes are created `CONCURRENTLY` in Postgres to avoid table locks; verify index usage with `EXPLAIN`.\n4. **Data migration**: if data must be backfilled, do it in batches with a resumable script and idempotency checks.\n5. **Rollback**: ensure the migration can be reversed or that a compensating migration is ready before deploy.\n\nOutput: a migration risk assessment with safe/unsafe steps and suggested ordering."
+  },
+  {
+    "id": "root-cause-analysis",
+    "name": "Root Cause Analysis",
+    "summary": "Systematically narrow a bug to its root cause using failure trees and evidence.",
+    "category": "development",
+    "capabilities": [
+      "read",
+      "search"
+    ],
+    "body": "# Root Cause Analysis\n\nScope: the causal chain behind a failure and how to stop it recurring. Reproducing the failure, testing\nhypotheses and locating the defect belong to the skill whose name contains `systematic-debugging`; if you have\nits result, start from it instead of repeating it. If the failure is not yet located and you do not have that\nskill, first capture the exact symptom, reproduce it, and test one hypothesis at a time with the smallest check\nthat could prove it wrong.\n\n1. **Start from evidence**: the located defect, the reproduction, and the logs or traces that show it. Name\n   anything still unverified.\n2. **Build the causal chain** backward from the symptom: the trigger, the defect, the change or decision that\n   introduced it, and why existing tests, reviews or checks did not catch it. Each link cites evidence; mark a\n   link without evidence as inference.\n3. **Stop at causes you can act on.** \"Human error\" is not a root cause; ask what made the mistake easy to make\n   and hard to notice.\n4. **Look for siblings**: the same pattern elsewhere in the code or the process.\n5. **Propose prevention**: the smallest correct fix, a test or check that would have failed, and any guard or\n   process change that stops the whole class of failure. Say what each one prevents.\n\nOutput: a concise RCA with the symptom, the causal chain and its evidence, rejected hypotheses, the root cause,\nsibling cases, and action items."
+  },
+  {
+    "id": "pr-review-checklist",
+    "name": "PR Review Checklist",
+    "summary": "Run a standard checklist over a pull request and return PASS or FAIL with evidence and closing conditions.",
+    "category": "development",
+    "capabilities": [
+      "read",
+      "search"
+    ],
+    "body": "# PR Review Checklist\n\nCheck the pull request against its stated purpose and acceptance criteria:\n\n1. **Purpose**: does the description state what changed and why? Is it linked to an issue or ticket where the\n   project expects one?\n2. **Scope**: is the change focused? Are unrelated refactorings split out?\n3. **Correctness**: does the code handle errors, edge cases, and concurrency correctly?\n4. **Tests**: are new behaviors covered by tests? Would the tests fail if the behavior regressed?\n5. **Security**: are inputs validated, secrets kept out of code and logs, and new dependencies free of known\n   vulnerabilities?\n6. **Style**: does the code follow the project's style and naming conventions?\n7. **Documentation**: are README, API docs, or comments updated where behavior changed?\n8. **Performance**: are there obvious N+1 queries, large allocations, or blocking calls?\n\nOutput:\n\n- What you reviewed: the commit, branch or files.\n- The checks you ran and what they returned, or that the verdict rests on reading alone.\n- Each finding with: blocking or non-blocking, file:line, the evidence, and the condition that closes it.\n- The verdict: **FAIL** while any blocking finding is open, otherwise **PASS**. List non-blocking findings\n  separately; they do not change a PASS."
+  },
+  {
+    "id": "component-a11y",
+    "name": "Component Accessibility",
+    "summary": "Verify a frontend component is keyboard, screen-reader, and focus friendly.",
+    "category": "design",
+    "capabilities": [
+      "read",
+      "search"
+    ],
+    "body": "# Component Accessibility\n\nScope: one component and its variants: semantics, keyboard behaviour, focus and states. Page structure and whole\nuser journeys belong to the skill whose name contains `accessibility-audit`, which can cite this report.\n\n1. **Target.** Use the project's declared WCAG target and name its version in the report. WCAG 2.2 is current;\n   2.0 and 2.1 targets are still valid. With no declared target, use WCAG 2.2 AA and say so.\n2. **Semantic HTML.** The right native element (`<button>` for actions, `<a>` for navigation, `<label>` for\n   inputs). A custom widget follows the matching ARIA pattern and role.\n3. **Name, role and state.** A meaningful accessible name; states exposed and kept current (for example\n   `aria-expanded`, `aria-selected`, `aria-invalid`, disabled).\n4. **Keyboard.** Every interactive part is reachable with Tab; Enter or Space activates; arrow keys work where\n   the pattern expects them; Escape closes an overlay.\n5. **Focus.** A visible focus indicator; focus moves sensibly when the component opens or closes and returns to\n   the control that opened it; no focus trap, except a modal that releases focus when it closes.\n6. **Every state.** Default, hover, focus, active, disabled, loading, error and empty.\n7. **Colour independence.** Information is not conveyed by colour alone; icon-only controls have a name;\n   decorative icons are hidden from assistive technology.\n8. **Observation.** This host has no browser or render tool. If the project has a component test or story\n   runner with an accessibility check (for example jest-axe, a Storybook accessibility add-on, Playwright), run\n   it. Otherwise say that the findings were read from code.\n\nOutput: each finding with file:line, the WCAG criterion and version, `rendered` or `read from code`, and a fix."
+  },
+  {
+    "id": "authz-check",
+    "name": "Authorization Check",
+    "summary": "Verify that access-control decisions enforce ownership, least privilege, and deny-by-default.",
+    "category": "security",
+    "capabilities": [
+      "read",
+      "search"
+    ],
+    "body": "# Authorization Check\n\nBased on OWASP Broken Access Control:\n1. List every changed route/handler/method that touches a resource; record file:line.\n2. Confirm authentication is checked before authorization on every endpoint.\n3. Verify the subject can only access resources they own or are explicitly granted.\n4. Ensure role/permission enforcement is at the service layer, not just the UI.\n5. Check for deny-by-default fallthrough on every branch.\n\nReturn: authorization gaps with file:line and concrete fixes."
+  },
+  {
+    "id": "flaky-test-triage",
+    "name": "Flaky Test Triage",
+    "summary": "Identify root causes of unstable tests and recommend a fix or quarantine plan.",
+    "category": "testing",
+    "capabilities": [
+      "read",
+      "search"
+    ],
+    "body": "# Flaky Test Triage\n\nBased on public test-engineering practice:\n1. Collect recent CI failures and reruns for the same test name.\n2. Inspect for non-deterministic inputs: time, random seeds, unordered collections, or concurrency.\n3. Check for unreset external dependencies: network, database, or shared state.\n4. Verify async assertions wait for conditions instead of assuming immediate results.\n5. Recommend isolation, mocks, retries as last resort, or quarantine.\n\nReturn: root cause, suspect file:line, and remediation plan."
+  },
+  {
+    "id": "readme-quickstart-quality",
+    "name": "README Quickstart Quality",
+    "summary": "Check that a README quickstart is complete, runnable, and free of broken links.",
+    "category": "documentation",
+    "capabilities": [
+      "read"
+    ],
+    "body": "# README Quickstart Quality\n\nBased on Write the Docs and Divio best practice:\n1. Confirm a one-sentence purpose and target audience appear at the top.\n2. Verify install steps are copy-pasteable and work on a clean machine.\n3. Check prerequisites are stated before the first command.\n4. Include a minimal runnable example that produces output in three steps or fewer.\n5. Validate links, current API names, and troubleshooting for common failures.\n\nReturn: quality score and missing/broken quickstart items with line references."
+  },
+  {
+    "id": "acceptance-criteria-authoring",
+    "name": "Acceptance Criteria Authoring",
+    "summary": "Write clear, testable acceptance criteria for a user story or requirement.",
+    "category": "management",
+    "capabilities": [
+      "read"
+    ],
+    "body": "# Acceptance Criteria Authoring\n\nBased on Given/When/Then and INVEST:\n1. Restate the story as who, what, and why in one sentence.\n2. Write scenarios as Given (precondition), When (action), Then (observable outcome).\n3. Keep one scenario per business rule and avoid implementation details.\n4. Check INVEST: Independent, Negotiable, Valuable, Estimable, Small, Testable.\n5. Add negative scenarios for errors, unauthorized access, and empty states.\n\nReturn: acceptance scenarios and INVEST violations with suggested splits."
+  },
+  {
+    "id": "diff-risk-triage",
+    "name": "Diff Risk Triage",
+    "summary": "Rate each changed file by risk to focus review effort and catch dangerous changes early.",
+    "category": "development",
+    "capabilities": [
+      "read",
+      "search"
+    ],
+    "body": "# Diff Risk Triage\n\nBased on Google code-review heuristics:\n\n1. Categorize changed files by layer: data, API, logic, UI, infra, test.\n2. Flag auth, payments, security headers, secrets, and schema migrations as high risk.\n3. Measure blast radius: count call sites and consumers of changed public interfaces.\n4. Check for removed or renamed public symbols without deprecation.\n5. Verify new dependencies are pinned, justified, and licensed compatibly.\n\nOutput:\n\n- What you reviewed: the commit, branch or files.\n- A risk rating per file with the reason, to focus further review.\n- Each finding with: blocking or non-blocking, file:line, the evidence, and the condition that closes it.\n- The verdict: **FAIL** while any blocking finding is open, otherwise **PASS**. List non-blocking findings\n  separately; they do not change a PASS."
+  },
+  {
+    "id": "openapi-lint",
+    "name": "OpenAPI Lint",
+    "summary": "Validate an OpenAPI document for spec compliance, consistency, and completeness.",
+    "category": "development",
+    "capabilities": [
+      "read",
+      "search"
+    ],
+    "body": "# OpenAPI Lint\n\nBased on OpenAPI 3.1 and Spectral rules:\n1. Validate the document parses and matches the declared openapi version.\n2. Ensure every operation has a unique operationId, summary, description, and tag.\n3. Check paths use consistent casing and plural nouns for collections.\n4. Verify every response has a schema and 4xx/5xx errors share a common structure.\n5. Confirm security schemes are declared globally and referenced per operation.\n\nReturn: lint report with file:line, rule, and fix suggestion."
+  },
+  {
+    "id": "api-versioning-semver",
+    "name": "API Versioning (SemVer)",
+    "summary": "Classify API changes by compatibility and advise on the version bump under the project's versioning policy.",
+    "category": "development",
+    "capabilities": [
+      "read",
+      "search"
+    ],
+    "body": "# API Versioning (SemVer)\n\nScope: the compatibility class of each change and advice on the version number. Describing the changes belongs\nto the skill whose name contains `api-contract-review`; if you have its change list, start from it. Without it,\nfirst list each interface change against the previous version.\n\n1. Find the project's versioning policy: SemVer 2.0.0, calendar versions, URL or header versions, or none.\n   Follow it. Under SemVer, a 0.x version may make breaking changes in a minor release.\n2. Classify each change as breaking, additive or fix, with the reason.\n3. Advise the version change the policy implies (under SemVer: breaking to MAJOR, additive to MINOR, fix to\n   PATCH). This is advice: the project decides, and it may batch changes or release on a schedule. Report a\n   missing bump as a problem only when the project's policy requires one for this release.\n4. Check that the version a client sees (URL, header, package version, release notes) matches the project's\n   decision.\n5. For a breaking change, check for a migration note and the deprecation period the project promises.\n\nReturn: the policy you applied, the class of each change with evidence, the advised version change, and a\nchangelog snippet."
+  },
+  {
+    "id": "dockerfile-best-practices",
+    "name": "Dockerfile Best Practices",
+    "summary": "Check a Dockerfile against the official Docker best-practices checklist.",
+    "category": "infrastructure",
+    "capabilities": [
+      "read",
+      "search"
+    ],
+    "body": "# Dockerfile Best Practices\n\nBased on Docker official best practices:\n1. Use a minimal, pinned base image; avoid latest in production.\n2. Order layers from least-frequent to most-frequent change to maximize cache hits.\n3. Combine related commands with && and clean up package caches in the same layer.\n4. Run as a non-root user and drop privileges explicitly.\n5. Copy only required artifacts; never copy secrets or build caches.\n\nReturn: Dockerfile issues with line references and safer alternatives."
+  },
+  {
+    "id": "data-quality-checks",
+    "name": "Data Quality Checks",
+    "summary": "Define versioned, repeatable data-quality checks for a dataset or pipeline stage.",
+    "category": "data",
+    "capabilities": [
+      "read",
+      "search"
+    ],
+    "body": "# Data Quality Checks\n\nBased on dbt and Great Expectations patterns:\n1. Identify the dataset, schema, and columns that changed or are consumed.\n2. Verify row count, freshness, and schema drift against the declared contract.\n3. Check for nulls, duplicates, and out-of-range values in key columns.\n4. Validate referential integrity across foreign-key relationships.\n5. Confirm distributions and categorical values match historical baselines.\n\nReturn: data-quality report with failed checks, affected columns, and remediation steps."
+  },
+  {
+    "id": "api-error-handling",
+    "name": "API Error Handling",
+    "summary": "Check API error responses against RFC 9457 Problem Details, or the project's chosen format, and for leaked internals.",
+    "category": "development",
+    "capabilities": [
+      "read",
+      "search"
+    ],
+    "body": "# API Error Handling\n\nThe current standard for HTTP API error bodies is RFC 9457 (Problem Details). It replaced RFC 7807 and keeps\nthe same core members, so a response written for 7807 is usually valid under 9457 too.\n\n1. Find the format the project has chosen: its API guidelines, the error schemas in its API description, or the\n   existing error code. Name the format and version you checked against in the report.\n   - If the project explicitly uses RFC 7807, check against 7807. Mention 9457 as an optional note; do not\n     report the older reference as a defect or ask for a migration.\n   - If the project uses another error format on purpose, check that the format is used consistently.\n   - With no stated choice, check against RFC 9457 and say that you chose it.\n2. For Problem Details responses: the media type is `application/problem+json`; `type`, `title`, `status`,\n   `detail` and `instance` are used as the RFC defines them (`type` defaults to `about:blank`); `status`\n   matches the HTTP status code; extension members are documented.\n3. Status codes match the failure class: 4xx for a client error, 5xx for a server error.\n4. Messages do not leak stack traces, secrets, queries, file paths or internal host names.\n5. Expected errors are documented in the API description (for example OpenAPI) with example payloads.\n\nReturn: the format and version you checked against, then each gap with file:line and the fix."
+  },
+  {
+    "id": "draft-only-external-actions",
+    "name": "Draft-only External Actions",
+    "summary": "Keep sends, publishes, deploys, purchases, and other external side effects as drafts until explicit approval.",
+    "category": "management",
+    "capabilities": [
+      "read"
+    ],
+    "body": "# Outward actions: confirm the exact action, not the preparation\n\nOnly an action that changes what other people or other systems see needs the person's go-ahead. The work that\nprepares it does not.\n\nProcedure:\n\n1. Go ahead without asking for: reading public web pages and APIs, calling the model provider or an integration\n   the person set up, installing packages, `git fetch` and `git pull`, running local commands and tests, and\n   writing local files, including the finished draft of a message, post or document.\n2. These are outward actions: `git push`, a deployment, publishing a package, page or release, sending a message,\n   email or post to people outside this team (a `send_message` to your coordinator or a teammate is not one), a purchase or payment, a change or deletion in a production system or a\n   third-party account, and a change to credentials or security settings.\n3. Prepare an outward action completely. Show the recipient or system, the payload, command, URL or configuration\n   change in plain language, and say what will change, what data leaves the machine, and how reversible it is.\n4. Do it only when the person approved that exact action (for example \"push it\" or \"send it to Alice\"). A general\n   goal such as \"finish the release\" is not approval for a push or a send.\n5. If approval is missing, finish everything up to the outward step, then say in one sentence what is ready and\n   what will happen when they approve: on a delegated task, to your coordinator with `send_message` (kind\n   question), who asks the person; if you lead or work alone, to the person in your reply.\n\nDo not hide outbound work behind generic words like \"sync\", \"publish\", \"notify\", or \"clean up\". Say exactly\nwhat would happen."
+  },
+  {
+    "id": "quality-gate-95",
+    "name": "Quality Gate 95",
+    "summary": "Use a high-confidence completion checklist before release, review, or sign-off.",
+    "category": "management",
+    "capabilities": [
+      "read",
+      "search"
+    ],
+    "body": "# Quality gate 95\n\nBefore calling work complete, score it against the user's actual acceptance bar. The target is not perfection;\nit is \"would a careful reviewer confidently ship this?\"\n\nChecklist:\n\n1. Requirements fit: every requested behavior is present, and no large unrequested behavior was added.\n2. Correctness: the implementation handles normal, empty, error, and boundary cases.\n3. Safety: destructive, external, security-sensitive, or irreversible actions are gated or documented.\n4. Integration: touched files agree on names, types, contracts, configuration, and runtime assumptions.\n5. Verification: relevant tests/checks were run, or the blocker is stated with exact commands and output.\n6. User experience: labels, error messages, and defaults are honest and actionable.\n7. Maintainability: the solution is smaller than the problem, with no needless framework or cleverness.\n\nIf the work scores below 95/100, do not pretend it is done. State the top gaps and either fix them or ask\nwhether to accept the known trade-off: on a delegated task, your coordinator, with `send_message` (kind question); if you lead or work alone, the person, in your reply."
+  },
+  {
+    "id": "recent-activity-scan",
+    "name": "Recent Activity Scan",
+    "summary": "Recover recent project context when the task depends on it, such as continuing handed-off work.",
+    "category": "management",
+    "capabilities": [
+      "read",
+      "search"
+    ],
+    "body": "# Recent activity scan\n\nUse this only when the next step depends on recent history: continuing interrupted or handed-off work, resuming\nafter a break, or a question about what changed recently. Do not run it before every task, and a lead does not run\nit before dispatching: a lead dispatches first, and the teammate reads what its task needs.\n\nProcedure:\n\n1. Start with what you already have: the conversation, the task you were given and any results it names. Stop\n   here if that answers the question.\n2. If more is needed, read only the sources the task points to: the nearest task card, design note or review\n   result, and, in a Git project, the current status and the recent commits that touch the files in scope.\n3. Separate intentional work from obvious temporary output in the files changed in scope.\n4. Summarize only the facts that change your next step: current branch, dirty files in scope, known blockers,\n   and the next requested action.\n5. If history conflicts, prefer the latest explicit user instruction and say what you are assuming.\n\nThis is a context-recovery habit, not an excuse to wander the repo. Stop scanning once you know enough to act."
+  },
+  {
+    "id": "proactive-gap-capture",
+    "name": "Proactive Gap Capture",
+    "summary": "Record real follow-ups and risks without hijacking the current task.",
+    "category": "management",
+    "capabilities": [
+      "read",
+      "write"
+    ],
+    "body": "# Proactive gap capture\n\nCapture important gaps without hijacking the current task.\n\nProcedure:\n\n1. Decide whether the gap blocks the current request. If it blocks, surface it immediately: on a delegated task,\n   to your coordinator with `send_message` (kind blocker); if you lead or work alone, to the person in your reply.\n   If not, keep going.\n2. Record the gap in one compact note: symptom, impact, suggested owner, and when to revisit.\n3. Avoid expanding scope by default. A discovered improvement is not permission to implement it.\n4. Mention the gap in the final handoff only if it affects release confidence or would save the user real time.\n5. For recurring gaps, suggest a task card or backlog item rather than repeating the same warning.\n\nGood gap capture feels like memory, not bureaucracy."
+  },
+  {
+    "id": "brainstorming-to-spec",
+    "name": "Brainstorming to Spec",
+    "summary": "Turn vague ideas into concrete, reviewable specs before implementation.",
+    "category": "management",
+    "capabilities": [
+      "read",
+      "write",
+      "search"
+    ],
+    "body": "# Brainstorming to spec\n\nTurn fuzzy intent into a concrete, reviewable spec before building.\n\nProcedure:\n\n1. Restate the goal, user, and success signal in one or two sentences.\n2. Ask only the questions that change the design. Prefer assumptions for details that can be safely adjusted.\n   Ask on a delegated task, your coordinator, with `send_message` (kind question); if you lead or work alone, the person, in your reply.\n3. Offer two or three viable approaches with trade-offs: fastest, safest, and most extensible when those differ.\n4. Recommend one approach and say why it fits this project.\n5. Draft the spec: scope, non-goals, user-visible behavior, acceptance criteria, risks, and open questions.\n6. Get the person's approval before implementation if the choice changes product behavior, cost, security, or\n   external integrations. On a delegated task, ask for it through your coordinator with `send_message` (kind\n   question).\n\nDo not turn brainstorming into a hidden implementation session. The output is a shared decision."
+  },
+  {
+    "id": "writing-implementation-plans",
+    "name": "Writing Implementation Plans",
+    "summary": "Convert an approved design into ordered, reviewable implementation tasks.",
+    "category": "management",
+    "capabilities": [
+      "read",
+      "write"
+    ],
+    "body": "# Writing implementation plans\n\nCreate plans that are executable by another agent without extra context.\n\nPlan shape:\n\n1. Objective and non-goals.\n2. Preconditions and assumptions.\n3. Ordered tasks, each with exact files or modules to inspect/change.\n4. Acceptance criteria per task.\n5. Verification commands and expected signals.\n6. Rollback or cleanup notes for risky changes.\n7. Review focus: what the reviewer should attack first.\n\nKeep steps small and sequenced. If tasks can run in parallel, state the non-overlapping file ownership. If two\ntasks need the same file, sequence them rather than creating a merge fight."
+  },
+  {
+    "id": "dispatching-parallel-agents",
+    "name": "Dispatching Parallel Agents",
+    "summary": "Coordinate multiple agents safely with explicit non-overlapping ownership.",
+    "category": "management",
+    "capabilities": [
+      "read",
+      "delegate"
+    ],
+    "body": "# Dispatching parallel agents\n\nParallelism is useful only when ownership is explicit.\n\nProcedure:\n\n1. Split the work by independent vertical slices, not by vague effort.\n2. Give each task a non-overlapping file or module write scope.\n3. Give every task the same public contracts, acceptance criteria, and verification expectations.\n4. Dispatch the independent tasks together with `dispatch_task`, then end your turn. There is no blocking wait:\n   when a teammate's result arrives, the host wakes you with it. For dependent work, dispatch the first stage,\n   end your turn, and dispatch the next stage when its result wakes you.\n5. When a teammate asks a question about its running task, answer it with `reply_to_task`, using the handle and\n   exchange_id that the wake shows.\n6. When a result arrives, check its evidence against the acceptance criteria: what changed, what was run and what\n   it returned. Then record your decision with `record_task_disposition`: `accepted`, or `needs-rework` with the\n   concrete reason, or another disposition with its reason.\n7. Run `run_checks` only when the team has a configured check. Run it after the slices are in, to catch\n   cross-slice breakage, and route a failure to the owner of the failing file. Without a configured check, rely\n   on the evidence each result carries and say so.\n8. Have the work reviewed by a teammate who did not implement it. Do not let implementers review their own work.\n\nIf you cannot define non-overlapping ownership, do not parallelize."
+  },
+  {
+    "id": "systematic-debugging",
+    "name": "Systematic Debugging",
+    "summary": "Diagnose bugs and regressions by reproducing, isolating, and proving the root cause.",
+    "category": "development",
+    "capabilities": [
+      "read",
+      "search",
+      "execute"
+    ],
+    "body": "# Systematic debugging\n\nFind the root cause before changing code.\n\nScope: reproduce the failure, test hypotheses, locate the defect and fix it. When the failure also needs a\nwritten causal chain and a plan to stop it recurring (an incident, a repeated failure, a postmortem), continue\nwith the skill whose name contains `root-cause-analysis` and give it what you found here; do not repeat these\nsteps there.\n\nProcedure:\n\n1. Capture the exact symptom: command, input, output, stack trace, expected behavior, and observed behavior.\n2. Reproduce it in the smallest reliable way. If reproduction is impossible, state what signal is missing.\n3. List plausible causes, then test them one at a time with the smallest falsifying check.\n4. Isolate the boundary where good state becomes bad: input parsing, routing, state update, IO, rendering, or\n   integration.\n5. Fix the root cause, not the most convenient symptom.\n6. Add or update a regression test that would have failed before the fix.\n7. Re-run the relevant checks and report exact results.\n\nDo not guess a cause from vibes. Evidence first; patch second."
+  },
+  {
+    "id": "requesting-code-review",
+    "name": "Requesting Code Review",
+    "summary": "Prepare a review packet that makes finished implementation easy to attack.",
+    "category": "development",
+    "capabilities": [
+      "read",
+      "search"
+    ],
+    "body": "# Requesting code review\n\nMake review easy to attack.\n\nReview packet:\n\n1. Summary of what changed and why.\n2. Files changed, grouped by concern.\n3. Behavior to verify and known non-goals.\n4. Tests/checks run with exact commands and outcomes.\n5. Risk areas where the reviewer should be skeptical.\n6. Any shortcuts, unverified assumptions, or follow-up work.\n\nDo not ask for a rubber stamp. Ask for the reviewer to try to break the change."
+  },
+  {
+    "id": "executing-plans",
+    "name": "Executing Plans",
+    "summary": "Carry out task cards and implementation plans without silent scope drift.",
+    "category": "development",
+    "capabilities": [
+      "read",
+      "write",
+      "execute"
+    ],
+    "body": "# Executing plans\n\nFollow the plan, keep evidence, and avoid scope drift.\n\nProcedure:\n\n1. Read the plan and restate the current task, files in scope, and acceptance criteria.\n2. Perform steps in order unless a step is impossible or unsafe.\n3. When reality differs from the plan, pause and record the delta before changing direction. If the change needs\n   a decision, ask for it: on a delegated task, your coordinator, with `send_message` (kind question); if you lead or work alone, the person, in your reply.\n4. Keep edits minimal and scoped to the task's ownership set.\n5. Verify the task's acceptance criteria before moving to the next task.\n6. At handoff, report completed steps, changed files, checks run, and remaining gaps.\n\nA plan is not a prison, but silent deviation creates unreviewable work."
+  },
+  {
+    "id": "test-driven-development",
+    "name": "Test-driven Development",
+    "summary": "Use red-green-refactor for non-trivial behavior, bug fixes, and regressions.",
+    "category": "testing",
+    "capabilities": [
+      "read",
+      "write",
+      "execute"
+    ],
+    "body": "# Test-driven development\n\nUse tests as executable requirements.\n\nProcedure:\n\n1. Name the behavior and the failure mode.\n2. Write the smallest test that proves the behavior or reproduces the regression.\n3. Confirm it fails before the fix when practical.\n4. Make the implementation pass without weakening the assertion.\n5. Add edge cases for empty, invalid, boundary, and permission/error paths.\n6. Run the focused test, then the relevant suite.\n7. Report exactly what passed and what remains untested.\n\nTests should fail loudly when the behavior regresses."
+  },
+  {
+    "id": "verification-before-completion",
+    "name": "Verification Before Completion",
+    "summary": "Check evidence before claiming a task is done or release-ready.",
+    "category": "management",
+    "capabilities": [
+      "read",
+      "search",
+      "execute"
+    ],
+    "body": "# Verification before completion\n\nDo not call work done until the evidence matches the claim.\n\nChecklist:\n\n1. Compare the final state against the user's request and acceptance criteria.\n2. Run the relevant checks using the project's own scripts.\n3. Inspect changed files for accidental scope creep, debug leftovers, generated junk, and stale docs.\n4. Confirm safety-sensitive behavior with targeted tests or direct probes.\n5. If a check was skipped, say why and what risk remains.\n6. Final response must include what changed and how it was verified.\n\n\"Looks good\" is not evidence. Use commands, tests, diffs, and observed behavior."
+  },
+  {
+    "id": "design-system-consistency",
+    "name": "Design System Consistency",
+    "summary": "Check that a screen or component reuses the design system rather than re-inventing it: tokens, spacing, type scale, states and variants.",
+    "category": "design",
+    "capabilities": [
+      "read",
+      "search"
+    ],
+    "body": "# Design System Consistency\n\n1. Locate the system first: token file, component library, or the closest existing implementation. If none\n   exists, say so -- a consistency review against nothing is a style opinion.\n2. List every colour, spacing, radius, shadow and font size the work introduces as a **literal value**, and\n   name the token it should have used. Literals are how a system erodes.\n3. Check the state set of every interactive element: default, hover, focus-visible, active, disabled,\n   loading, error, empty. A missing focus-visible is both a consistency and an accessibility failure: report it\n   here. If you have the skill whose name contains `component-a11y` or `accessibility-audit`, use it for the rest\n   of the accessibility check.\n4. Check that a new component is genuinely new. A variant of an existing component that was rebuilt instead\n   of extended is the most expensive kind of inconsistency to unwind.\n5. Verify the type scale and spacing rhythm against the system rather than against how it looks.\n6. Report each finding as `file:line`, the literal used, and the token that exists. A finding without a\n   named replacement is not actionable."
+  },
+  {
+    "id": "responsive-breakpoint-review",
+    "name": "Responsive Breakpoint Review",
+    "summary": "Verify a layout across the breakpoints the project actually declares, including the states that appear at only one size.",
+    "category": "design",
+    "capabilities": [
+      "read",
+      "search"
+    ],
+    "body": "# Responsive Breakpoint Review\n\nThis host has no browser or render tool. If the project has a script that renders pages at given widths (for\nexample a Playwright or Storybook screenshot script, or visual tests), run it at each breakpoint. Otherwise review\nthe CSS and markup, say at the top of the report that nothing was rendered, and mark every finding `rendered` or\n`read from code`.\n\n1. Read the breakpoints from the project's own configuration. Reviewing against remembered device widths\n   tests a layout nobody ships.\n2. At each declared breakpoint check: no horizontal page scroll, no clipped or overlapping text, tap targets\n   large enough, and images that scale rather than overflow.\n3. Check the boundaries, not just the middles. Defects cluster one pixel either side of a breakpoint.\n4. Check content extremes at every size: the longest realistic string, the empty state, and a list long\n   enough to scroll. Fixed-height containers fail on real content, not on placeholder text.\n5. Verify that a wide-only control has a reachable equivalent when it collapses. A control that simply\n   disappears below a width is a removed feature, not a responsive design.\n6. Check zoom to 200% and a narrow window separately -- they are different failures, and only one of them is\n   a device width. Both need rendering; if you could not render, list them as not verified.\n7. Report each finding with the width at which it appears, so it can be reproduced, and whether it was\n   `rendered` or `read from code`."
+  },
+  {
+    "id": "clause-playbook-redline",
+    "name": "Playbook Redline (draft only)",
+    "summary": "Draft a redline against an organisation playbook, tracing every proposed change to the rule or stated assumption that produced it.",
+    "category": "legal",
+    "capabilities": [
+      "read",
+      "write"
+    ],
+    "body": "# Playbook Redline (draft only)\n\nA redline is a negotiation commitment. An unreviewed redline that reaches a counterparty is an unauthorised\nsettlement of a term -- the most common documented failure of this category.\n\n1. Read the playbook first and list the rules it actually contains. If no playbook exists, say so at the top\n   and draft anyway against **stated assumptions**: list each assumption (for example \"liability capped at\n   12 months of fees\"), mark every change that rests on one `assumption`, and say that the organisation's own\n   positions may differ. Do not present an assumption as the organisation's position.\n2. Compare the draft clause by clause. For each deviation record: the clause, the playbook rule id, the\n   proposed change, and the quoted original.\n3. **Every proposed change cites the rule or the assumption that generated it.** A change with neither behind\n   it is your opinion -- mark it `no-rule` and keep it in a separate list rather than mixing it into the\n   redline.\n4. Never weaken a limitation of liability, indemnity, IP assignment, or termination right unless a playbook\n   rule explicitly authorises that exact move; without a playbook, propose it only as a flagged option. Flag any\n   such clause you touched, even when a rule allowed it.\n5. Never delete language without showing what was removed. Deletions are the changes reviewers miss.\n6. List novel clauses with no playbook coverage separately, marked `out-of-playbook -- escalate`.\n7. **Deliver a draft, addressed to your own side.** Clean text the person can use is fine; do not send it,\n   and say plainly that a person with signing authority must accept each change before it leaves the\n   organisation. If you have the skill whose name contains `draft-only-external-actions`, it covers outward\n   actions in general."
+  },
+  {
+    "id": "contract-intake-extraction",
+    "name": "Contract Intake and Extraction",
+    "summary": "Extract parties, dates, amounts, obligations and governing law from an agreement into a structured record with a source span for every field.",
+    "category": "legal",
+    "capabilities": [
+      "read",
+      "write"
+    ],
+    "body": "# Contract Intake and Extraction\n\nA mis-extracted term becomes the record used for renewal notices and dispute positions. Report absence; never fill a gap.\n\n1. List every source document by path and note its format. Do not extract from a file you did not read.\n2. For each field in the agreed schema (parties, effective date, term, renewal, notice period, value,\n   payment terms, governing law, termination rights), record the value **and the exact quoted span plus its\n   location** in the source. A value without a span is not an extraction; it is a guess.\n3. Where a field is not present, write `not found`. **Never infer a value from a similar contract, a file\n   name, or a party's usual terms.**\n4. Flag every date and amount that appears more than once with different values. Renewal, effective and\n   execution dates are the fields most often bound to the wrong number.\n5. Name each party exactly as written, including entity suffix. If a subsidiary and a parent both appear,\n   record both and mark which one signs -- do not collapse them.\n6. Produce a confidence marker per field: `quoted` (span copied verbatim), `derived` (computed from quoted\n   spans, showing the arithmetic), or `not found`. No fourth category.\n7. **Stop at the boundary.** The extraction is an index, not advice. A person with authority reads the\n   flagged fields before anything is filed, renewed, or relied on. State that in the output."
+  },
+  {
+    "id": "legal-authority-citation",
+    "name": "Legal Authority Citation",
+    "summary": "Enforce legal-authority sourcing: statutes, regulations, case law, and regulator guidance, cited so a reader can verify them.",
+    "category": "legal",
+    "capabilities": [
+      "read",
+      "search"
+    ],
+    "body": "# Legal Authority Citation\n\nThis applies the general sourcing rule to legal claims. If you have the skill whose name contains\n`claim-sourcing-and-citation`, it holds that general rule; without it, the general rule is: every material claim\ncites a source that supports that exact claim, and an estimate or inference is labelled as one. A fabricated\ncitation in a legal context is not a style problem; courts have sanctioned it.\n\n1. Every statement of what the law requires cites a **primary authority** -- statute, regulation, or\n   decision -- by its identifier, not by a summary article about it.\n2. Regulator guidance is cited as guidance and labelled as such. Guidance is not binding law and must never\n   be presented as if it were.\n3. **Never cite a case, section, or paragraph you have not read this session.** If it was not retrieved,\n   write `not verified this session` beside it. A plausible citation you cannot open is a fabrication with\n   good formatting.\n4. Record jurisdiction and version or date for every authority. A correct citation to a superseded provision\n   is a wrong answer.\n5. Separate `what the authority says` from `what it is being read to mean`. The second is analysis and must\n   be labelled.\n6. Where authorities conflict or the question is unsettled, say so. Presenting one side of an open question\n   as settled is the most consequential failure available here.\n7. **Stop at the boundary.** This produces researched material, not legal advice, and cannot substitute for\n   a qualified adviser in the relevant jurisdiction. State that."
+  },
+  {
+    "id": "privacy-dpa-review",
+    "name": "Privacy and DPA Review",
+    "summary": "Review a data processing agreement or privacy term against a stated framework: roles, transfer mechanism, sub-processors, retention, security measures, and breach notice.",
+    "category": "legal",
+    "capabilities": [
+      "read",
+      "search"
+    ],
+    "body": "# Privacy and DPA Review\n\n1. Name the framework you are reviewing against (GDPR, UK GDPR, CCPA/CPRA, or an internal standard). A\n   review with no named framework has no criteria and cannot be checked.\n2. Identify the roles the document assigns -- controller, processor, joint controller -- and quote the text\n   that assigns them. A role mislabel changes every downstream obligation.\n3. Record the categories of personal data, data subjects, and processing purposes as the document states\n   them. Mark anything the document leaves open-ended.\n4. For cross-border transfers: identify the mechanism claimed (adequacy, SCCs, BCRs, derogation), the exact\n   module or clause cited, and whether a transfer impact assessment is referenced. **Do not assess whether a\n   mechanism is currently valid** -- validity changes with regulatory decisions and is a legal determination.\n5. Check for, and quote or mark absent: sub-processor authorisation and notice, retention and deletion\n   terms, security measures, audit rights, data-subject-request assistance, and breach-notification timing.\n6. Produce a table of `present / absent / ambiguous` with a span for every `present`.\n7. **Stop at the boundary.** This is a completeness review against a checklist, not a legal opinion on\n   adequacy, and not a sign-off. A privacy or legal owner decides. Say so in the output."
+  },
+  {
+    "id": "sanctions-export-refusal",
+    "name": "Sanctions and Export Control -- analyse, never clear",
+    "summary": "Research and analyse sanctions, export-control and licensing questions with sources, but never clear a party, classify an item as final, or say a transaction is permitted; the decision goes to a named person.",
+    "category": "legal",
+    "capabilities": [
+      "read",
+      "search"
+    ],
+    "body": "# Sanctions and Export Control -- analyse, never clear\n\nA wrong clearance here is a criminal-liability exposure for the organisation and for individuals. Research and\nanalysis help the person who decides; a determination you present as final would be relied on as a clearance.\nSo do the analysis, and leave the decision with a person who has the authority to make it.\n\n1. Recognise the subject: restricted or denied party screening, embargoed or sanctioned destinations,\n   controlled or dual-use technology classification, deemed export to foreign nationals, end-use or end-user\n   restrictions, or a licence requirement.\n2. **Do the research the person asked for.** Read the sources you can reach: the published lists and their\n   official search tools, the regulations, the classification lists, and the documents already held. Quote what\n   each source says and where it says it, with the date you read it.\n3. **Analyse, with stated uncertainty.** Say which entries look like possible matches and why (name, aliases,\n   address, identifiers), which classification entries look relevant and why, and what facts would change the\n   answer. Mark what you could not check.\n4. **Never clear.** Do not say that a party is cleared or not listed, that an item's classification is final,\n   or that a transaction is permitted. Write \"possible match\", \"no match found in <source> on <date>\", or\n   \"candidate classification\", and say what a qualified review still has to confirm.\n5. State the specific question the decision-maker must answer, so they are not handed a pile of context and\n   asked to work out what was being asked.\n6. Name the decision owner: the export-control or trade-compliance owner if one is named, otherwise say that a\n   qualified owner must make this decision before anything proceeds.\n7. **Put the analysis, its sources, its limits and the open decision in your reply.** The reply is the record\n   that always exists. Where the work is tracked in a file and you can write files, put it there too. On a\n   delegated task, tell your coordinator with `send_message` (kind note) where the analysis is; if you cannot\n   write files, ask the coordinator or the decision owner to keep it, and say so."
+  },
+  {
+    "id": "vendor-risk-review",
+    "name": "Vendor Risk Review",
+    "summary": "Assess a third-party vendor package -- security questionnaire, certifications, sub-processors, and contract terms -- into a findings list with evidence.",
+    "category": "legal",
+    "capabilities": [
+      "read",
+      "search"
+    ],
+    "body": "# Vendor Risk Review\n\nThis is third-party due diligence. For package and dependency CVE or licence triage, use the skill whose name\ncontains `dependency-risk-triage` instead; without it, state that dependency triage is outside this review and\nneeds its own check. Conflating the two produces a review that covers neither.\n\n1. Inventory what the vendor actually supplied: questionnaire responses, certifications (SOC 2, ISO 27001),\n   pen-test summaries, sub-processor list, DPA, and status-page history. **List what is missing first** -- an\n   absent artefact is the finding most often lost in a long review.\n2. For every certification record the scope statement and the report period, not just the badge. A current\n   badge over an expired or narrowly scoped report is the standard failure here.\n3. Map questionnaire answers to evidence. An answer with no supporting artefact is `asserted, unevidenced` --\n   a distinct category from `evidenced` and from `not answered`.\n4. Record where the data will live, which sub-processors touch it, and what the vendor commits to on\n   notice-of-change. Quote the commitment or mark it absent.\n5. Note contractual security terms that contradict the questionnaire. Contradictions between what a vendor\n   says and what it signs are findings in their own right.\n6. Rate findings by their impact **on the data being shared**, and state the data classification you assumed.\n7. **Stop at the boundary.** Produce findings and open questions. Accepting a risk is a decision for the\n   owner of the data and the budget, not for the reviewer."
+  },
+  {
+    "id": "positioning-and-messaging",
+    "name": "Positioning and Messaging",
+    "summary": "Define a focused market position and translate it into consistent audience-specific messages.",
+    "category": "marketing",
+    "capabilities": [
+      "read",
+      "write"
+    ],
+    "body": "# Positioning and Messaging\n\n1. Identify the primary audience, the problem they already recognize, and the context in which it is\n   urgent.\n2. State the category and the differentiated outcome in one plain-language positioning sentence.\n3. Choose two or three proof points that can be demonstrated honestly. Do not lead with unsupported\n   superlatives or competitor claims.\n4. Translate the position into a message hierarchy: headline, supporting value, proof, and one clear\n   call to action.\n5. Adapt the wording for the audience and channel while preserving the same core promise and limits.\n\nReturn: positioning statement, message hierarchy, proof requirements, and channel-specific variants."
+  },
+  {
+    "id": "technical-seo-audit",
+    "name": "Technical SEO Audit",
+    "summary": "Audit the technical SEO surface of a site: crawlability, indexability, canonical and metadata correctness, structured data, and redirect integrity.",
+    "category": "marketing",
+    "capabilities": [
+      "read",
+      "search"
+    ],
+    "body": "# Technical SEO Audit\n\nTechnical only. Content and keyword strategy are a separate concern; mixing them produces a report in which\nthe mechanical defects get lost.\n\n1. Confirm crawlability: `robots.txt`, `noindex` directives, and whether the routes intended to be indexed\n   are reachable without JavaScript execution.\n2. Check one canonical URL per page, self-referential where it should be. Duplicate or cross-pointing\n   canonicals are the most common launch defect.\n3. Verify the sitemap lists real, indexable, 200-returning URLs and nothing else.\n4. Check title and meta description presence, uniqueness, and length per template -- not per page.\n5. Validate structured data against the type being claimed, and confirm the marked-up content is actually on\n   the page. Marking up content a visitor cannot see is a policy violation, not an optimisation.\n6. Trace redirects: no chains, no loops, correct status codes, and every legacy URL that carried traffic\n   accounted for. A launch that silently drops old URLs loses the ranking it was meant to keep.\n7. Record findings as URL, observed behaviour, expected behaviour. **Never report a ranking prediction** --\n   the audit observes mechanics; it cannot observe what a search engine will do."
+  },
+  {
+    "id": "artifact-hash-verification",
+    "name": "Three-way artifact hash verification",
+    "summary": "Use before publishing a release artifact when its canonical bytes must be independently verified.",
+    "category": "testing",
+    "capabilities": [
+      "read",
+      "search",
+      "execute"
+    ],
+    "body": "# Artifact hash verification\n\nFollow the project's own release rules first: its release runbook, CONTRIBUTING or RELEASING file, or release\nworkflow. They decide which artifact is canonical, where its hashes are published and who may publish it. The\nsteps below are a general check; fit them to that process.\n\n1. Identify the canonical artifact as the project defines it (for example the file its CI built from the release\n   tag). Do not rebuild or repackage it to compare: a rebuild is a different artifact unless the project proves\n   reproducible builds.\n2. Collect the independent hash references the project provides, for example a checksum or evidence file shipped\n   with the artifact, a hash in the build log or release notes, or a signature or attestation. Then compute the\n   hash over the downloaded bytes yourself.\n3. Use SHA-256 or stronger, and compare full values, not prefixes.\n4. Require every reference to match. A mismatch means stop and investigate; it is a new candidate, not a retry.\n5. If the project signs its artifacts, verify the signature with the project's published key as well.\n6. Do not change the file between verification and use. Publishing is an outward action: do it only with the\n   explicit approval the project requires.\n\nRecord the artifact name and source, each reference and where it came from, the matched hash, and anything you\ncould not verify."
+  },
+  {
+    "id": "claim-sourcing-and-citation",
+    "name": "Claim Sourcing and Citation",
+    "summary": "Trace material claims to appropriate primary sources and distinguish evidence from inference.",
+    "category": "testing",
+    "capabilities": [
+      "read",
+      "search"
+    ],
+    "body": "# Claim Sourcing and Citation\n\n1. List the claims that would affect a reader's decision, separating direct facts, estimates, and\n   inferences.\n2. Prefer a primary source for each material factual claim. Use a reputable secondary source only\n   when the primary source is unavailable, and say that clearly.\n3. Check that the cited source supports the exact claim, not merely a related topic. Record the\n   publication date when freshness matters.\n4. Label estimates and inferences as such. Do not convert an assumption into a statement of fact.\n5. Place a concise citation next to the claim it supports, and call out any claim that cannot yet be\n   verified.\n\nReturn: a claim-by-claim evidence table, missing-source risks, and corrected wording where needed."
+  },
+  {
+    "id": "mutation-validation",
+    "name": "Mutation validation",
+    "summary": "Use during a change when a test must prove it detects a named product failure.",
+    "category": "testing",
+    "capabilities": [
+      "read",
+      "write",
+      "execute"
+    ],
+    "body": "# Mutation validation\n\nUse this only on a disposable working-tree mutation. It proves that a test is load-bearing; it is not a\nreason to alter product behaviour or weaken an assertion.\n\n1. Name the product decision or invariant the test is meant to protect.\n2. Make the smallest reversible mutation to that product code that violates the invariant. Do not mutate\n   only the test, fixture, or mock unless that layer is the claimed product boundary.\n3. Run the focused test and record the specific expected failure. If it passes, stop: the test does not\n   prove the claimed behaviour.\n4. Revert exactly the mutation, inspect the diff, and rerun the focused test green.\n5. In release evidence, record the mutation, failing test, observed failure, restoration, and green rerun.\n\nNever leave the mutation in a commit. A full suite is useful after restoration, but it cannot replace the\nfocused red-then-green proof."
+  },
+  {
+    "id": "frontend-design",
+    "name": "Frontend Design",
+    "summary": "Make deliberate visual, typographic and copy choices for a new or reshaped web interface, inside the project's existing brand and components.",
+    "category": "design",
+    "capabilities": [
+      "read",
+      "write",
+      "execute"
+    ],
+    "body": "# Frontend Design\n\n## Start from what the project already has\n\nBefore any new visual direction, look at what the project already decides: its brand, its design tokens, its\ncomponent library, and, for an editor extension's webview, the editor's theme tokens. Where they exist, they win.\nYour distinctive choices then happen inside them: in hierarchy, composition, copy and the one memorable moment,\nnot in a new palette that fights the product. Do not overturn an existing product style unless the brief asks for\na new direction. Where the brief or the project pins down a visual direction, follow it exactly.\n\nWhen the brief leaves the visual direction open, approach it as the design lead at a studio known for giving every\nclient a distinct visual identity that is not mistaken for anyone else's: make deliberate, opinionated choices about\npalette, typography and layout that are specific to this brief, and take aesthetic risk where it is justified.\n\n## Ground your designs in the subject matter\n\nIf the brief does not identify what the product or subject matter is, identify it yourself before designing: one\nconcrete subject, the design's audience and the design's primary job. Write them at the top of your design plan as\nthe assumptions you designed for. Ask only when the brief is too ambiguous to design anything sensible; an\naesthetic choice does not need the person's confirmation before you build. If project files, team rules or earlier\nmessages say something about the client's preferences or what they are building, use that as a hint. The subject's\nindustry, subject matter, materials and vernacular are where distinctive visual choices come from: a design for a\ntoy for girls aged 8 to 11 will be very aesthetically different from a dashboard for financial analysts. Build with\nthe brief's real content and subject matter throughout.\n\n## Design principles\n\nFor web designs, the hero is the first thing viewers will see. Open with the most characteristic thing in the\nsubject's world, in the form that is most appropriate: a headline, an image, an animation, a live demo, an\ninteractive moment, or other treatments. Be deliberate with your choice: a big number with a small label, supporting\nstats, and a gradient accent is the default treatment, so only use it if that's truly the best option.\n\nTypography carries the personality of the page. You don't need a different typeface for display or headline text\nand body content: use one family or two, and if two, make them clearly distinct.\n\nChoose your typefaces deliberately, not the default families you would reach for on any other project, and set a\nclear type scale following the default guidance of The Elements of Typographic Style with intentional weights,\nwidths, and spacing. When type is used as a headline or visual element, use the type treatment itself as an active\npart of the design, not a neutral delivery vehicle for the content. Where the project already sets its typefaces\n(or an editor webview inherits the editor's font), keep them and work with scale, weight and spacing instead.\n\nDefault to line lengths of less than 80 characters. Serif typefaces can have slightly longer line lengths; give\nserif body text slightly more line-height than a sans-serif.\n\nAvoid these default typographic treatments; they are the commonest tells of a generated page:\n- Accenting just a single word or phrase in a headline, like putting one word in italic/bold or a different color.\n- Using all caps for labels.\n- Adding unnecessary typographic labels above content.\n\nVisual structure is information. Structural devices like outlines, borders, numbering, eyebrows, dividers, labels,\netc., encode useful information about the content rather than decorate it. Many generic designs use numbered markers\n(01 / 02 / 03), but that's only appropriate if the content actually is a sequence, like a stepped process or a\ntimeline. Before adding numbered markers, check the content really is a sequence.\n\nUse non-user-triggered motion sparingly and deliberately, only to draw attention. A single orchestrated moment (one\npage-load sequence or one reveal) lands better than scattered effects; fade-and-slide-up entrances on each section\nand hover transitions on every card are the generic default and read as generated. Motion that answers a person's\naction (opening, expanding, confirming) is welcome when it shows what changed.\n\nConsider written content carefully. Often a design brief may not contain real content, and it's up to you to come\nup with copy and placeholder content. Copy can make a design feel as templated as the design itself. See the section\non writing below for more guidance.\n\n## Process: plan, review against the brief, build, critique\n\nFor calibration, generated design right now clusters around some traits:\n1. a warm cream background (near #F4F1EA) with a high-contrast serif display and a terracotta or warm-clay accent\n   (often near #D97757, the accent of a well-known AI assistant's own interface, so on a user's brief it reads as a\n   tell);\n2. a near-black background with a single bright acid-green or vermilion accent;\n3. a broadsheet-style layout with hairline rules, zero border-radius, and dense newspaper-like columns;\n4. the SaaS-card kit: content chopped into identical rounded cards, one border-radius on everything regardless of\n   hierarchy, the same soft grey shadow (rgba(0,0,0,.1)) under each, and gradient washes as decoration;\n5. template chrome that appears whatever the subject: a tracked-out ALL-CAPS eyebrow label above every heading; meta\n   strings joined with middle dots ('A · B · C'); labels built as 'WORD — fragment' with a spaced em dash; tinted\n   near-black (#0B0B0B, #111) standing in for black; a monospace face for small data labels; a '→' appended to link\n   and button text.\n\nAll traits are legitimate for some briefs, but they are defaults rather than choices, and they appear regardless of\nsubject. Where the brief pins down a visual direction, follow it exactly: the brief's own words always win, including\nwhen it asks for one of these looks. Where it leaves an axis free, don't spend that freedom on one of these defaults.\nAs with a hired human designer, there's often a careful balance between doing what you're good at and taking each\nproject as a chance to experiment and learn.\n\nWork in two passes. First, brainstorm a short design plan based on the client's design brief: create a compact token\nsystem with color, type, layout, and principles. Where the project already has tokens, the plan names which existing\ntokens you use and what, if anything, you add.\n- Color: describe the core base palette as 4–6 named hex values (or the existing token names).\n- Type: the typefaces and their roles.\n- Layout: a layout concept, using one-sentence prose descriptions and ASCII wireframes to ideate and compare. Include\n  alignment guidance; should the content be left aligned, center aligned, justified?\n- Principles: the high-level guidance for what makes this page unique.\n\nThen review that plan against the brief before building: if any part of it reads like the generic default you would\nproduce for any similar page (work through a similar prompt to see if you arrive somewhere similar) rather than a\nchoice made for this specific brief, revise that part, and say what you changed and why. Only after you've confirmed\nthe relative uniqueness of your design plan should you start to write the code, following the revised plan. This\nreview is your own; it is not a step where you stop and wait for approval.\n\nWhen writing the code, be careful of structuring your CSS selector specificities. It's easy to generate CSS classes\nthat cancel each other out (especially with a type-based selector like .section and an element-based selector like\n.cta). This can happen often with padding/margin between sections.\n\n## Restraint and self-critique\n\nSpend your boldness in one place. Let one element be the memorable thing, keep everything around it quiet and\ndisciplined, and cut any decoration that does not serve the brief. Build to a quality floor without announcing it:\nresponsive down to mobile, visible keyboard focus, every control reachable and usable from the keyboard, reduced\nmotion respected, visually accessible (contrast, labels), harmonious color palettes. Consider Chanel's advice: before\nleaving the house, take a look in the mirror and remove one accessory.\n\nCritique your own work as you build by looking at it. Render the page the project's own way (its dev server, a\nscript, a screenshot test) or with a browser integration you have been granted, take screenshots at a wide and a\nnarrow width, and check keyboard focus. A picture is worth a thousand tokens. Call your review visual only when you\nactually looked at a rendered page or a screenshot; when you could not render it, say that what you report is read\nfrom the code, not seen, and say what would be needed to look at it.\n\nHuman creatives have memory and always try to do something new, so if you have a space to quickly jot down notes\nabout what you've tried, it can help you in future passes.\n\n## More on writing in design\n\nWords appear in a design for one reason: to make it easier to understand and use. They are design content, not\ndecoration. Bring the same intentionality and minimalism to copywriting that you would bring to spacing and color.\nBefore writing anything, ask what the design needs to say, and how it can best be said to help the person navigate\nthe experience. Write in the language of the brief and the product.\n\nWrite from the end user's perspective. Name things by what users will understand in simple language, not by how the\nsystem is built. A user manages notifications, not webhook config. Describe what something is or does in plain terms\nrather than selling it. Being specific and legible to new users is always better than being clever.\n\nUse active voice as default. A CTA says exactly what happens when it is used: \"Save changes,\" not \"Submit.\" An action\nkeeps the same name through the whole flow, so the button that says \"Publish\" produces a toast that says \"Published.\"\nThe vocabulary of an interface is the signposting for someone navigating the product. Cohesion and consistency are\nhow people learn their way around. Where the product already names an action, keep its name.\n\nTreat failure and emptiness as moments for direction, not mood. Explain what went wrong and how to fix it, in the\ninterface's voice rather than a person's. Errors don't apologize, and they are never vague about what happened. An\nempty screen is an invitation to act.\n\nKeep the tone conversational: plain verbs, sentence case, no filler, with tone matched to the brand and the audience.\nLet each written element do exactly one job.\n\n## Hand-over\n\nHand over the working page or component, the design plan you built from (with the assumptions you made), what you\nchecked (widths, keyboard, contrast) and how: seen in a render or screenshot, or read from the code.\n\n---\nAdapted from the Apache-2.0 `frontend-design` skill in github.com/anthropics/skills. What changed and why is listed in\n`SOURCE.md`; the license is in `LICENSE.txt`."
+  },
+  {
+    "id": "internal-comms",
+    "name": "Internal Communications",
+    "summary": "Draft status reports, leadership updates, 3P updates, newsletters and FAQs from the available sources, with gaps marked and nothing sent.",
+    "category": "documentation",
+    "capabilities": [
+      "read",
+      "write"
+    ],
+    "body": "# Internal communications\n\n## When to use this skill\n\nTo write internal communications, use this skill for:\n- 3P updates (Progress, Plans, Problems)\n- Status reports and project updates\n- Leadership updates\n- Company or team newsletters\n- FAQ responses\n- Incident reports\n- Anything else written for readers inside an organization\n\n## Ground rules\n\n- **The user's own format comes first.** If the user, the project or the team already has a template, a house style\n  or earlier issues of the same update, follow them. The guideline files below are defaults for when nothing like\n  that exists.\n- **Write in the user's language** and in the register their organization uses. The guideline files are written in\n  English; their structure carries over, their English idioms do not have to.\n- **Only what the sources support.** Use the material you actually have in this session: what the user gave you,\n  files in the workspace, and integrations this agent has been granted. Never invent progress, numbers, names, dates\n  or quotes. Keep what a source states apart from what you infer, and mark inference as such.\n- **Missing facts are marked, not filled.** When a fact the piece needs is missing, write a visible placeholder (for\n  example `[team name]` or `[metric: source needed]`) and list the gaps at the end of the draft. Ask the user only\n  for a fact that changes the result and that no source you have can supply; otherwise deliver the draft with the\n  gaps marked.\n- **You produce a draft.** Do not send, post or publish it. If the user asks you to send it as well, that is a\n  separate outward action and goes through the normal confirmation of that exact action.\n\n## How to use this skill\n\n1. **Identify the communication type** from the request.\n2. **Read the matching guideline file** in this skill's `examples/` folder (with `read_skill_file` where that tool is\n   offered, otherwise from this skill's folder):\n   - `examples/3p-updates.md` - For Progress/Plans/Problems team updates\n   - `examples/company-newsletter.md` - For company-wide or team newsletters\n   - `examples/faq-answers.md` - For answering frequently asked questions\n   - `examples/general-comms.md` - For anything else that doesn't explicitly match one of the above\n3. **Follow the guideline file** for structure, tone and content gathering, within the ground rules above.\n4. **Hand over** the draft, the sources each statement rests on, and the list of gaps and assumptions.\n\nIf the communication type matches none of the guidelines, use `examples/general-comms.md`, state the audience,\npurpose and tone you assumed, and deliver the draft.\n\n## Keywords\n\n3P updates, status report, leadership update, company newsletter, company comms, weekly update, FAQs, common\nquestions, project updates, incident report, internal comms\n\n---\nAdapted from the Apache-2.0 `internal-comms` skill in github.com/anthropics/skills. What changed and why is listed in\n`SOURCE.md`; the license is in `LICENSE.txt`."
+  },
+  {
+    "id": "security-threat-model",
+    "name": "Security Threat Model",
+    "summary": "Build a repository-grounded threat model: trust boundaries, assets, attacker capabilities, abuse paths, risk ranking and mitigations.",
+    "category": "security",
+    "capabilities": [
+      "read",
+      "search",
+      "write"
+    ],
+    "body": "# Threat Model Source Code Repo\n\nDeliver an actionable AppSec-grade threat model that is specific to the repository or a project path, not a generic\nchecklist. Anchor every architectural claim to evidence in the repo and keep assumptions explicit. Prioritize\nrealistic attacker goals and concrete impacts over generic checklists.\n\nReference files in this skill are read with `read_skill_file` where that tool is offered, otherwise from this\nskill's folder.\n\n## Quick start\n\n1) Collect (or infer) inputs:\n- Repo root path and any in-scope paths.\n- Intended usage, deployment model, internet exposure, and auth expectations (if known).\n- Any existing repository summary or architecture spec.\n- Use the prompts in `references/prompt-template.md` to generate a repository summary.\n- Follow the output contract in `references/prompt-template.md`. Use it verbatim when possible.\n\n## Workflow\n\n### 1) Scope and extract the system model\n- Identify primary components, data stores, and external integrations from the repo summary.\n- Identify how the system runs (server, CLI, library, worker) and its entrypoints.\n- Separate runtime behavior from CI/build/dev tooling and from tests/examples.\n- Map the in-scope locations to those components and exclude out-of-scope items explicitly.\n- Do not claim components, flows, or controls without evidence.\n\n### 2) Derive boundaries, assets, and entry points\n- Enumerate trust boundaries as concrete edges between components, noting protocol, auth, encryption, validation,\n  and rate limiting.\n- List assets that drive risk (data, credentials, models, config, compute resources, audit logs).\n- Identify entry points (endpoints, upload surfaces, parsers/decoders, job triggers, admin tooling, logging/error\n  sinks).\n\n### 3) Calibrate assets and attacker capabilities\n- List the assets that drive risk (credentials, PII, integrity-critical state, availability-critical components,\n  build artifacts).\n- Describe realistic attacker capabilities based on exposure and intended usage.\n- Explicitly note non-capabilities to avoid inflated severity.\n\n### 4) Enumerate threats as abuse paths\n- Prefer attacker goals that map to assets and boundaries (exfiltration, privilege escalation, integrity compromise,\n  denial of service).\n- Classify each threat and tie it to impacted assets.\n- Keep the number of threats small but high quality.\n\n### 5) Prioritize with explicit likelihood and impact reasoning\n- Use qualitative likelihood and impact (low/medium/high) with short justifications.\n- Set overall priority (critical/high/medium/low) using likelihood x impact, adjusted for existing controls.\n- State which assumptions most influence the ranking.\n\n### 6) Settle service context and assumptions\n- First look for the context in the repository, the request and earlier messages: deployment files, docs,\n  configuration, the README.\n- Summarize the key assumptions that materially affect threat ranking or scope, and put them in the report's\n  \"Scope and assumptions\" section.\n- Ask the user only when a missing fact would change the scope or the ranking materially and nothing you can read\n  answers it. Ask at most 1–3 targeted questions (service owner and environment, scale/users, deployment model,\n  authn/authz, internet exposure, data sensitivity, multi-tenancy) and continue with the work that does not depend\n  on the answer.\n- Without an answer, finish the report with the assumptions stated, and mark the conclusions that depend on them as\n  conditional.\n\n### 7) Recommend mitigations and focus paths\n- Distinguish existing mitigations (with evidence) from recommended mitigations.\n- Tie mitigations to concrete locations (component, boundary, or entry point) and control types (authZ checks, input\n  validation, schema enforcement, sandboxing, rate limits, secrets isolation, audit logging).\n- Prefer specific implementation hints over generic advice (e.g., \"enforce schema at gateway for upload payloads\"\n  vs \"validate inputs\").\n- Base recommendations on the context you established; where assumptions remain unresolved, mark recommendations as\n  conditional.\n\n### 8) Run a quality check before finalizing\n- Confirm all discovered entrypoints are covered.\n- Confirm each trust boundary is represented in threats.\n- Confirm runtime vs CI/dev separation.\n- Confirm user clarifications (or the assumptions that stand in for them) are reflected.\n- Confirm assumptions and open questions are explicit.\n- Confirm that the format of the report matches closely the required output format defined in the prompt template:\n  `references/prompt-template.md`.\n- Where you can write files and the task names no other location, write the final Markdown to a file named\n  `<repo-or-dir-name>-threat-model.md` (use the basename of the repo root, or the in-scope directory if you were\n  asked to model a subpath). Otherwise hand the report over in your reply.\n\n## Risk prioritization guidance (illustrative, not exhaustive)\n- High: pre-auth RCE, auth bypass, cross-tenant access, sensitive data exfiltration, key or token theft, model or\n  config integrity compromise, sandbox escape.\n- Medium: targeted DoS of critical components, partial data exposure, rate-limit bypass with measurable impact,\n  log/metrics poisoning that affects detection.\n- Low: low-sensitivity info leaks, noisy DoS with easy mitigation, issues requiring unlikely preconditions.\n\n## Security hygiene\n- Never print a secret you come across. Redact it and describe only its presence and location.\n\n## References\n\n- Output contract and full prompt template: `references/prompt-template.md`\n- Optional controls/asset list: `references/security-controls-and-assets.md`\n\nOnly load the reference files you need. Keep the final result concise, grounded, and reviewable.\n\n---\nAdapted from the Apache-2.0 `security-threat-model` skill in github.com/openai/skills. What changed and why is listed\nin `SOURCE.md`; the license is in `LICENSE.txt`."
+  },
+  {
+    "id": "webapp-testing",
+    "name": "Web App Testing",
+    "summary": "Check a local web app in a real browser through the granted Playwright integration or a workspace Playwright script: interactions, screenshots and console logs.",
+    "category": "testing",
+    "capabilities": [
+      "read",
+      "write",
+      "execute"
+    ],
+    "body": "# Web Application Testing\n\nTest a local web application by driving a real browser: open the page, interact with it, take screenshots and read\nits console. This skill covers web pages and web apps. It does not drive the editor's own interface.\n\nReference files in this skill are read with `read_skill_file` where that tool is offered, otherwise from this\nskill's folder.\n\n## Choose the tool, in this order\n\n1. **The Playwright integration, when it is granted to you.** This is the managed Playwright MCP integration from\n   the UnodeAi integration catalog (id `playwright`). Its tools appear in your tool list; use them under the names\n   listed there to navigate, read the page (an accessibility snapshot), click, type, take screenshots and read\n   console messages. It needs no helper code. If this agent does not have it and the task needs a browser, tell the\n   user once that it can be granted to the agent under **MCP grants** in the Agent Builder, and continue with the\n   next option.\n2. **The project's own browser tests.** If the project already has Playwright (for example `@playwright/test` or\n   `playwright` in `package.json`, a `playwright.config.*` file, or the `playwright` package in the project's Python\n   virtual environment), use its configuration and its own test scripts.\n3. **A script written into the workspace**, when neither of the above can do the step: for example several servers\n   started together around one scripted check. Write the helper from `references/with-server-helper.md` and a check\n   script based on `references/examples.md` into the workspace (for example under `.skill-helpers/`) and run them\n   with your normal command permission. Tell the user what you wrote and where, and remove it when the task is done\n   unless they want to keep it.\n\n## Missing tools\n\nGo through these in order.\n\n1. **Use what is already there.** The granted integration, or the project's own `node_modules`, virtual environment\n   or declared packages. This starts no new download.\n2. **Install inside the project when the task needs it.** Asking for the work (\"test it\") includes installing what\n   the work needs inside the project: for example a project virtual environment (`python -m venv .venv`, then\n   `.venv\\Scripts\\python -m pip install playwright==<version>` on Windows or `.venv/bin/python -m pip install\n   playwright==<version>` elsewhere) or a dev dependency (`npm install --save-dev @playwright/test@<version>`). Pin\n   an exact version, keep it in the project, and tell the user what you added.\n3. **Ask once before a machine-wide install or a large download.** The Playwright browser download\n   (`playwright install chromium`, or the same through `npx playwright install chromium`) is usually hundreds of MB\n   and goes to a per-user cache outside the project (`%USERPROFILE%\\AppData\\Local\\ms-playwright` on Windows,\n   `~/.cache/ms-playwright` on Linux, `~/Library/Caches/ms-playwright` on macOS). The same holds for a global `npm`\n   or `pip` install. Before it, ask once and name the exact command, where it installs and the approximate size (say\n   it is unknown if you cannot tell). If the user approves, run it. If they decline, or you have no way to ask,\n   report what is missing and the exact command, and continue with what needs no browser: read the HTML and source\n   for selectors, run the project's other tests, and report the browser checks as not run.\n\nIf the Playwright integration itself reports that its browser is missing, that download is the same step 3.\n\n## Decision tree\n\n```\nUser task → Is it static HTML?\n    ├─ Yes → Read the HTML file directly to identify selectors\n    │         ├─ Success → Open it (file URL) with the integration or a script, and act on those selectors\n    │         └─ Fails/Incomplete → Treat as dynamic (below)\n    │\n    └─ No (dynamic webapp) → Is the server already running?\n        ├─ No → Start it the project's way. If your command tool cannot keep a server running while you\n        │        use the browser, run the server and a scripted check together with the server helper.\n        │\n        └─ Yes → Reconnaissance-then-action:\n            1. Navigate and wait until the page is ready\n            2. Take a snapshot or screenshot, or inspect the DOM\n            3. Identify selectors from the rendered state\n            4. Execute actions with the discovered selectors\n```\n\n## Reconnaissance-then-action\n\n1. **Inspect the rendered page**: with the integration, take a page snapshot or screenshot; in a script:\n   ```python\n   page.screenshot(path='.skill-helpers/output/inspect.png', full_page=True)\n   content = page.content()\n   page.locator('button').all()\n   ```\n2. **Identify selectors** from what you saw.\n3. **Execute actions** using the discovered selectors.\n\n## Waiting\n\nWait for a condition, not for a fixed time: the element, text or URL the next step needs\n(`page.wait_for_selector()`, `page.wait_for_url()`), or `page.wait_for_load_state('networkidle')` for a dynamic app\nthat has no clearer ready signal. Do not inspect the DOM of a dynamic app before it is ready. Use a fixed pause only\nto observe something time-based, and say so.\n\n## Best practices\n\n- Use `sync_playwright()` for synchronous scripts, and launch Chromium headless unless the task needs to see it.\n- Use descriptive selectors: `text=`, `role=`, CSS selectors, or IDs.\n- Write screenshots and logs into the project (for example `.skill-helpers/output/`, or the folder the project uses\n  for test output), never to a fixed system path.\n- Clean up: close the browser (the integration's close tool, or `browser.close()`), and stop every server you\n  started. The server helper stops the whole process tree; for a server you started another way, stop it and check\n  that its port is free.\n\n## Report what you observed\n\nReport each step you ran and what you saw: the screenshots (with their paths), the console errors and warnings, and\nthe step that failed with its error. Call a check visual only when you looked at a screenshot or a snapshot. If a\nstep could not run (no browser, no server), say which and why; do not report it as passed.\n\n## Reference files\n\n- `references/with-server-helper.md`: start one or more servers, run a command, stop them all (adapted from the\n  upstream `scripts/with_server.py`).\n- `references/examples.md`: example scripts for element discovery, a local static HTML file, and console log\n  capture (adapted from the upstream `examples/*.py`).\n\n---\nAdapted from the Apache-2.0 `webapp-testing` skill in github.com/anthropics/skills. What changed and why is listed in\n`SOURCE.md`; the license is in `LICENSE.txt`."
+  },
+  {
+    "id": "gh-fix-ci",
+    "name": "GitHub CI Fix",
+    "summary": "Read failing GitHub Actions checks and logs with gh, find the cause, and make a focused fix when the task asks for one.",
+    "category": "infrastructure",
+    "capabilities": [
+      "read",
+      "search",
+      "write",
+      "execute"
+    ],
+    "body": "# Fix failing GitHub CI\n\n## Overview\n\nLocate the failing checks of a pull request or a GitHub Actions run, read the logs of the failures that GitHub\nActions produced, summarize each failure with its log snippet, find the cause, and fix it when the task asks for a\nfix. Checks from other providers (for example Buildkite) are out of scope: report their details URL only.\n\nReference files in this skill are read with `read_skill_file` where that tool is offered, otherwise from this\nskill's folder.\n\n## Follow the user's task and the project's rules\n\n- **The task sets the scope.** When the user asked you to fix the CI, go from diagnosis to a focused fix without\n  stopping for a separate plan approval; your hand-over says what you planned and did. When the user asked only to\n  look at or explain a failure, deliver the diagnosis and a fix plan and change nothing.\n- **The project's rules apply.** Follow the repository's own contribution and agent instruction files and any team\n  rules: their required checks, branches, commit conventions and reviews. This skill adds no gates of its own.\n- **Outward actions.** Do anything that changes GitHub only when the task asks for it, and prepare the exact\n  destination and content first. UnodeAi recognises `git push`, `gh pr create`, `gh pr comment`, `gh pr review` and\n  `gh pr merge` as outward actions; they go through the normal confirmation of that exact action.\n- **Writes UnodeAi does not recognise.** `gh run rerun` and `gh workflow run` start new CI runs on GitHub, which can\n  use paid minutes; `gh pr edit` and `gh api` calls that change something also write to GitHub. UnodeAi does not\n  recognise these as outward actions: they get no outward-action confirmation, only the normal command permission.\n  Run them only when the user's task asks for exactly that. Do not start a CI run on your own to check a fix; check\n  it locally and say that the remote result is unknown until CI runs again.\n\n## Inputs\n\n- `repo`: a path inside the repository (default `.`)\n- `pr`: pull request number or URL (optional; defaults to the current branch's pull request), or a run URL or id\n- Access to the repository's GitHub host: a granted GitHub integration or a signed-in `gh`\n\n## When gh is missing or not signed in\n\nGo through these in order.\n\n1. **Use what is already there.** A granted GitHub integration whose tools can read checks and logs, or `gh` already\n   on `PATH` and signed in. Check with `gh --version` and `gh auth status`; the second shows the host and account.\n   Never add `--show-token`.\n2. **gh is not installed.** If a granted integration can do the reading, use it. Otherwise installing `gh` is a\n   system install and needs one ask first: name the exact command for this machine (for example\n   `winget install --id GitHub.cli` on Windows, `brew install gh` on macOS, or the Linux distribution's package),\n   where it installs, and its approximate size if you know it; say the size is unknown if you do not. If the user\n   approves, run it. If they decline, or you have no way to ask, report the missing tool and the exact command, and\n   continue with the work that does not need it.\n3. **gh is not signed in.** Do not look for tokens in files or environment variables, and do not ask the user to\n   paste a token into the chat. Name the host (github.com, or the enterprise host from the remote URL) and give the\n   exact command for the user to run in their own terminal: `gh auth login --hostname <host>`. Reading logs usually\n   needs the `repo` and `workflow` scopes. An installed `gh` is not a signed-in `gh`: say which of the two is true.\n   Until the user signs in, continue with what needs no GitHub access: read the workflow files and reproduce the\n   failing step locally.\n\n## Workflow\n\n1. **Resolve the pull request or run.**\n   - Prefer the current branch's pull request: `gh pr view --json number,url`.\n   - If the user gave a pull request number or URL, or a run URL or id, use that directly.\n2. **Inspect the failing checks (GitHub Actions only).**\n   - With Python available, the helper in `references/inspect-pr-checks-helper.md` does this in one read-only run and\n     handles gh field drift and job-log fallbacks. Write it into the workspace and run it as that file describes.\n   - Otherwise use `gh` directly:\n     - `gh pr checks <pr> --json name,state,bucket,link,startedAt,completedAt,workflow`\n       - If a field is rejected, rerun with the available fields `gh` reports.\n     - For each failing check, take the run id from its link and run:\n       - `gh run view <run_id> --json name,workflowName,conclusion,status,url,event,headBranch,headSha`\n       - `gh run view <run_id> --log-failed` for the failed steps, or `gh run view <run_id> --log` for the whole log\n     - If the run log says it is still in progress, fetch the job log directly:\n       - `gh api \"/repos/<owner>/<repo>/actions/jobs/<job_id>/logs\" > \"<path>\"`\n3. **Scope checks from other providers.** If a check's link is not a GitHub Actions run, label it as external and\n   report only the URL.\n4. **Summarize the failures.** For each: the check name, the run URL, and a concise log snippet. Say explicitly when\n   a log is missing. A workflow can print secrets into its log: redact any before quoting.\n5. **Find the cause.** Read the code and configuration the failing step touches. Where you can run commands,\n   reproduce the failing step locally with the same command the workflow runs. Separate a failure in the change from\n   one in the environment (a flaky test, a runner image, a missing secret) and say which you found.\n6. **Fix, when the task asks for it.** Make the smallest change that removes the cause, following the project's\n   rules. Run the failing step locally and the tests around the change.\n7. **Report.** What failed, why, what you changed, and which local checks you ran with their results. Whether CI\n   passes is known only after it runs again: after a push the task asked for, `gh pr checks <pr>` (read-only) shows\n   the new state. Do not report remote CI as passing from local results.\n\n## Reference files\n\n- `references/inspect-pr-checks-helper.md`: the upstream check-inspection script as reference text, with how to write\n  it into the workspace and run it.\n\n---\nAdapted from the Apache-2.0 `gh-fix-ci` skill in github.com/openai/skills. What changed and why is listed in\n`SOURCE.md`; the license is in `LICENSE.txt`."
+  },
+  {
+    "id": "mcp-builder",
+    "name": "MCP Server Builder",
+    "summary": "Design, build and locally test an MCP server in TypeScript or Python, and run its evaluation questions with the current agent's own tools.",
+    "category": "development",
+    "capabilities": [
+      "read",
+      "search",
+      "write",
+      "execute"
+    ],
+    "body": "# MCP Server Development Guide\n\n## Overview\n\nCreate MCP (Model Context Protocol) servers that enable models to interact with external services through\nwell-designed tools. The quality of an MCP server is measured by how well it enables models to accomplish real-world\ntasks.\n\nReference files in this skill are read with `read_skill_file` where that tool is offered, otherwise from this\nskill's `reference/` folder. Load only the ones you need.\n\n---\n\n# Process\n\n## High-Level Workflow\n\nCreating a high-quality MCP server involves four main phases.\n\n### Phase 1: Deep Research and Planning\n\n#### 1.1 Understand Modern MCP Design\n\n**API Coverage vs. Workflow Tools:**\nBalance comprehensive API endpoint coverage with specialized workflow tools. Workflow tools can be more convenient\nfor specific tasks, while comprehensive coverage gives agents flexibility to compose operations. Performance varies by\nclient: some clients benefit from code execution that combines basic tools, while others work better with\nhigher-level workflows. When uncertain, prioritize comprehensive API coverage.\n\n**Tool Naming and Discoverability:**\nClear, descriptive tool names help agents find the right tools quickly. Use consistent prefixes (e.g.,\n`github_create_issue`, `github_list_repos`) and action-oriented naming.\n\n**Context Management:**\nAgents benefit from concise tool descriptions and the ability to filter/paginate results. Design tools that return\nfocused, relevant data. Some clients support code execution which can help agents filter and process data\nefficiently.\n\n**Actionable Error Messages:**\nError messages should guide agents toward solutions with specific suggestions and next steps.\n\n#### 1.2 Study MCP Protocol Documentation\n\n**Navigate the MCP specification** with your web-fetch tool, if you have one:\n\nStart with the sitemap to find relevant pages: `https://modelcontextprotocol.io/sitemap.xml`\n\nThen fetch specific pages with `.md` suffix for markdown format (e.g.,\n`https://modelcontextprotocol.io/specification/draft.md`).\n\nKey pages to review:\n- Specification overview and architecture\n- Transport mechanisms (streamable HTTP, stdio)\n- Tool, resource, and prompt definitions\n\n#### 1.3 Study Framework Documentation\n\n**Recommended stack:**\n- **Language**: TypeScript (high-quality SDK support and good compatibility in many execution environments, plus\n  static typing and good linting tools). Where the project already uses Python or another stack, follow the project.\n- **Transport**: Streamable HTTP for remote servers, using stateless JSON (simpler to scale and maintain, as opposed\n  to stateful sessions and streaming responses). stdio for local servers.\n\n**Load framework documentation:**\n\n- **MCP Best Practices**: `reference/mcp_best_practices.md` - Core guidelines\n\n**For TypeScript:**\n\nThe TypeScript SDK has two major versions. Use the one the project already uses:\n- **v2** (`@modelcontextprotocol/server`): the current stable release. Use it for new servers.\n- **v1** (`@modelcontextprotocol/sdk`): receives bug and security fixes only. Use it when the project's\n  `package.json` already depends on `@modelcontextprotocol/sdk`.\n\nIf the project already uses v1, tell the user once, in a sentence or two, that v2 (`@modelcontextprotocol/server`)\nis the current stable release, that v1 receives only bug and security fixes, and that the official codemod migrates\na project (see \"Migrating a v1 Server\" in `reference/node_mcp_server_v2.md`). Then continue with v1. Migrate only when\nthe user asks for it.\n\nDon't mix the two in one project: v1 code samples (imports from `@modelcontextprotocol/sdk/...`) don't apply to v2.\n\n- **TypeScript SDK (v2)**: `https://raw.githubusercontent.com/modelcontextprotocol/typescript-sdk/main/README.md`; the\n  full docs index is `https://ts.sdk.modelcontextprotocol.io/v2/llms.txt`\n- `reference/node_mcp_server_v2.md` - TypeScript patterns and examples (SDK v2)\n- For v1 projects only: `https://raw.githubusercontent.com/modelcontextprotocol/typescript-sdk/v1.x/README.md` and\n  `reference/node_mcp_server.md`\n\n**For Python:**\n- **Python SDK**: `https://raw.githubusercontent.com/modelcontextprotocol/python-sdk/main/README.md`\n- `reference/python_mcp_server.md` - Python patterns and examples\n\n#### 1.4 Plan Your Implementation\n\n**Understand the API:**\nReview the service's API documentation to identify key endpoints, authentication requirements, and data models. Use\nweb search and web fetch as needed.\n\n**Tool Selection:**\nPrioritize comprehensive API coverage. List endpoints to implement, starting with the most common operations.\n\n---\n\n### Phase 2: Implementation\n\n#### 2.1 Set Up Project Structure\n\nSee the language-specific guides for project setup:\n- `reference/node_mcp_server_v2.md` - Project structure, package.json, tsconfig.json (`reference/node_mcp_server.md`\n  for existing v1 projects)\n- `reference/python_mcp_server.md` - Module organization, dependencies\n\nPin the SDK version the project uses; do not move an existing project to another SDK major version on your own.\n\n#### 2.2 Implement Core Infrastructure\n\nCreate shared utilities:\n- API client with authentication\n- Error handling helpers\n- Response formatting (JSON/Markdown)\n- Pagination support\n\n#### 2.3 Implement Tools\n\nFor each tool:\n\n**Input Schema:**\n- Use Zod (TypeScript) or Pydantic (Python)\n- Include constraints and clear descriptions\n- Add examples in field descriptions\n\n**Output Schema:**\n- Define `outputSchema` where possible for structured data\n- Use `structuredContent` in tool responses (TypeScript SDK feature)\n- Helps clients understand and process tool outputs\n\n**Tool Description:**\n- Concise summary of functionality\n- Parameter descriptions\n- Return type schema\n\n**Implementation:**\n- Async/await for I/O operations\n- Proper error handling with actionable messages\n- Support pagination where applicable\n- Return both text content and structured data when using modern SDKs\n\n**Annotations:**\n- `readOnlyHint`: true/false\n- `destructiveHint`: true/false\n- `idempotentHint`: true/false\n- `openWorldHint`: true/false\n\n---\n\n### Phase 3: Review and Test\n\n#### 3.1 Code Quality\n\nReview for:\n- No duplicated code (DRY principle)\n- Consistent error handling\n- Full type coverage\n- Clear tool descriptions\n\n#### 3.2 Build and Test\n\nProve four things on a local server: it initializes, it lists its tools, a valid call returns the expected result,\nand an invalid call returns an error the model can read.\n\n**TypeScript:**\n- Run `npm run build` to verify compilation\n- v2 projects: run the self-check script from \"Verify Your Server\" in `reference/node_mcp_server_v2.md` against the\n  built server\n- Or use the connection helper below\n\n**Python:**\n- Verify syntax: `python -m py_compile your_server.py`\n- Use the connection helper below\n\n**The connection helper** (`reference/connection-helper.md`) initializes a server, lists its tools and calls one tool\nper command, with no model and no API key. Write it into the workspace when you want it, and run it with your normal\ncommand permission.\n\n**MCP Inspector** (`@modelcontextprotocol/inspector`) is an interactive UI for manual exploration. It is optional; see\n\"Missing tools\" below before using it.\n\nDo not add the server you build to the user's integrations or to any CLI configuration. Registering or granting it is\nthe user's choice.\n\nSee the language-specific guides for detailed testing approaches and quality checklists.\n\n---\n\n### Phase 4: Create Evaluations\n\nAfter implementing your MCP server, create evaluations to test how well a model can use it.\n\n**Read `reference/evaluation.md` for the complete evaluation guidelines.**\n\n#### 4.1 Understand Evaluation Purpose\n\nUse evaluations to test whether models can effectively use your MCP server to answer realistic, complex questions.\n\n#### 4.2 Create 10 Evaluation Questions\n\nFollow the process in the evaluation guide:\n\n1. **Tool Inspection**: List available tools and understand their capabilities\n2. **Content Exploration**: Use READ-ONLY operations to explore available data\n3. **Question Generation**: Create 10 complex, realistic questions\n4. **Answer Verification**: Solve each question yourself to verify answers\n\n#### 4.3 Evaluation Requirements\n\nEnsure each question is:\n- **Independent**: Not dependent on other questions\n- **Read-only**: Only non-destructive operations required\n- **Complex**: Requiring multiple tool calls and deep exploration\n- **Realistic**: Based on real use cases humans would care about\n- **Verifiable**: Single, clear answer that can be verified by string comparison\n- **Stable**: Answer won't change over time\n\n#### 4.4 Output Format\n\nCreate an XML file with this structure:\n\n```xml\n<evaluation>\n  <qa_pair>\n    <question>Find discussions about AI model launches with animal codenames. One model needed a specific safety designation that uses the format ASL-X. What number X was being determined for the model named after a spotted wild cat?</question>\n    <answer>3</answer>\n  </qa_pair>\n<!-- More qa_pairs... -->\n</evaluation>\n```\n\n#### 4.5 Run the Evaluation Yourself\n\nYou run the questions with the model, budget and tools you already have, through the server's tools (granted to you,\nor through the connection helper), and record each result in the report format in `reference/evaluation.md`. Do not\ncreate a model API client, read an API key from the environment or a credentials file, ask the user to paste a key,\nor start a separate evaluation pipeline. If you cannot reach the server's tools, keep the questions and report the\nevaluation as not run.\n\n---\n\n# Missing tools\n\nGo through these in order.\n\n1. **Use what is already there.** The MCP SDK, test client or Inspector the project already declares, run from the\n   project (`npm run ...`, `npx` of a declared package, the project's virtual environment). This starts no new\n   download.\n2. **Install inside the project when the task needs it.** Building the server includes installing what the build and\n   its tests need inside the project: the SDK and a test client as dependencies or dev dependencies, or the `mcp`\n   package in a project virtual environment. Pin exact versions and tell the user what you added.\n3. **Ask once before a download outside the project.** `npx` of a package the project does not declare (for example\n   `npx @modelcontextprotocol/inspector` or the migration codemod) downloads it into the npm cache outside the\n   project; a global `npm` or `pip` install changes the machine. Before it, ask once and name the exact command with a\n   pinned version (not `@latest`), where it goes and its approximate size (say it is unknown if you cannot tell). The\n   alternative is a pinned dev dependency (step 2). If the user declines, or you have no way to ask, report the\n   missing tool and the exact command, and continue with what does not need it.\n\n---\n\n# Reference Files\n\n## Documentation Library\n\nLoad these resources as needed during development:\n\n### Core MCP Documentation (Load First)\n- **MCP Protocol**: Start with the sitemap at `https://modelcontextprotocol.io/sitemap.xml`, then fetch specific\n  pages with `.md` suffix\n- `reference/mcp_best_practices.md` - Universal MCP guidelines including:\n  - Server and tool naming conventions\n  - Response format guidelines (JSON vs Markdown)\n  - Pagination best practices\n  - Transport selection (streamable HTTP vs stdio)\n  - Security and error handling standards\n\n### SDK Documentation (Load During Phase 1/2)\n- **Python SDK**: `https://raw.githubusercontent.com/modelcontextprotocol/python-sdk/main/README.md`\n- **TypeScript SDK (v2)**: `https://raw.githubusercontent.com/modelcontextprotocol/typescript-sdk/main/README.md`;\n  full docs index at `https://ts.sdk.modelcontextprotocol.io/v2/llms.txt`\n- **TypeScript SDK (v1, existing v1 projects only)**:\n  `https://raw.githubusercontent.com/modelcontextprotocol/typescript-sdk/v1.x/README.md`\n\n### Language-Specific Implementation Guides (Load During Phase 2)\n- `reference/python_mcp_server.md` - Complete Python/FastMCP guide with:\n  - Server initialization patterns\n  - Pydantic model examples\n  - Tool registration with `@mcp.tool`\n  - Complete working examples\n  - Quality checklist\n\n- `reference/node_mcp_server_v2.md` - Complete TypeScript guide for `@modelcontextprotocol/server` with:\n  - Project setup and the server factory\n  - Tool design: Zod 4 schemas, output formats, pagination, errors\n  - A complete example serving stdio and Streamable HTTP, plus bearer auth\n  - Resources, prompts, and notifications\n  - A self-check script to verify the built server\n  - Links to SDK examples for advanced features\n  - A v1 → v2 translation table, migration steps, and a quality checklist\n\n- `reference/node_mcp_server.md` - The equivalent guide for existing `@modelcontextprotocol/sdk` projects\n\n### Testing and Evaluation (Load During Phase 3/4)\n- `reference/connection-helper.md` - Initialize a server, list its tools, call a tool; no model, no API key\n- `reference/evaluation.md` - Evaluation creation guide with:\n  - Question creation guidelines\n  - Answer verification strategies\n  - XML format specifications\n  - Example questions and answers\n  - How the current agent runs an evaluation and records the report\n- `reference/example-evaluation.md` - A small example evaluation file (format only)\n\n---\nAdapted from the Apache-2.0 `mcp-builder` skill in github.com/anthropics/skills. What changed and why is listed in\n`SOURCE.md`; the license is in `LICENSE.txt`."
+  },
+  {
+    "id": "docx",
+    "name": "Word Documents",
+    "summary": "Read, create and edit Word documents with available Office tools and optional source helpers.",
+    "category": "documentation",
+    "capabilities": [
+      "read",
+      "write",
+      "execute"
+    ],
+    "body": "# Word documents\n\n## Use in UnodeAi\n\nUse the tools actually offered in this turn. Start with inspect_office for existing files and follow its returned selectors and cursors; use edit_office for supported edits. If export_pdf is offered, use it for a PDF of an inspected DOCX/PPTX made by the installed application; its receipt reports the pages and what the passive copy removed, and a failed export is not retried with another application automatically. To change the body text of a PDF made from a Word document, edit that DOCX with edit_office (tracked by default) and export it again with export_pdf, naming the earlier PDF in regenerates_pdf; for a combined PDF, put the new pages in with edit_pdf replace_pages and repeat the overlays on them. Without the source DOCX, convert_pdf_to_docx (when offered, Windows with Word) turns a PDF that has a text layer into an editable .docx; it runs only after the user has turned off Word's PDF-conversion notice and otherwise returns the steps for them. Word's conversion can change the layout, so compare the old and new PDF pages side by side with view_pdf_pages before delivering. Use write_document or write_presentation for supported new outputs. If build_office is offered, use its managed generator contract for richer generation. Do not invent a missing tool. Built-in Office tools do not require installing Python, Node packages or LibreOffice.\n\nFor Excel workbooks that a document reports on or produces, use read_workbook, then edit_workbook for an existing .xlsx or write_workbook for a new one. When the user states a relationship (for example A = B+C+D, a total or a share), write a formula, not a number you computed; write fixed numbers only when the user asks for fixed values. These tools save formulas without recalculating them: say so, and never quote a formula result you did not read from a recalculated file.\n\nload_skill returns resource_root and the resource inventory. Read supporting files with read_skill_file; use the returned installed paths for helper commands. Do not copy the whole skill into a workspace or reconstruct an installation path. Helpers are ordinary command source, never trusted host handlers: their effects use the current Commands and file permissions. Commands Off remains Off; host Office tools remain available under their own permissions.\n\nThe original upstream instructions are preserved in references/upstream/SKILL.md as technical reference data. Their preinstalled-package and sandbox assumptions do not describe this installation. Read RUNTIME.md before selecting a helper. Use an available runtime; follow the existing dependency installation tiers for missing dependencies. Do not silently install global packages, widen file access, or enable commands. For Node helpers, resolve dependencies from the actual module context; a package installed only in the task cwd may not be found from the installed helper.\n\nChoose explicit task-owned output paths. Preserve originals; run destructive unpacked-package edits on a task-created staging copy. A zero exit status or a success message is not document verification. Inspect the resulting artifact with the available host tools, report the checks actually performed, and mark native rendering, schema coverage and unsupported features unverified where appropriate. Do not claim a receipt or native Office success from helper stdout.\n\n## Word workflow\n\nInspect the document and supported selectors before editing. Preserve styles, sections, bookmarks, fields and relationships outside the requested change. Read the original technical reference for OOXML details and the relevant helper source before using it. scripts/office/validate.py provides optional source validators, not a complete native Word rendering check.\n\nscripts/accept_changes.py has a fixed /tmp/libreoffice_docx_profile macro location and may report success after a LibreOffice timeout without checking revisions. Do not use its stdout as proof that tracked changes were accepted. Prefer an available verified host/native workflow; if using the helper under existing authority, inspect the resulting document and explicitly verify the revision postcondition or report it unverified."
+  },
+  {
+    "id": "pptx",
+    "name": "PowerPoint Presentations",
+    "summary": "Read, create and edit slide decks with available Office tools and optional source helpers.",
+    "category": "documentation",
+    "capabilities": [
+      "read",
+      "write",
+      "execute"
+    ],
+    "body": "# PowerPoint presentations\n\n## Use in UnodeAi\n\nUse the tools actually offered in this turn. Start with inspect_office for existing files and follow its returned selectors and cursors; use edit_office for supported edits. If export_pdf is offered, use it for a PDF of an inspected DOCX/PPTX made by the installed application; its receipt reports the pages and what the passive copy removed, and a failed export is not retried with another application automatically. Use write_document or write_presentation for supported new outputs. If build_office is offered, use its managed generator contract for richer generation. Do not invent a missing tool. Built-in Office tools do not require installing Python, Node packages or LibreOffice.\n\nload_skill returns resource_root and the resource inventory. Read supporting files with read_skill_file; use the returned installed paths for helper commands. Do not copy the whole skill into a workspace or reconstruct an installation path. Helpers are ordinary command source, never trusted host handlers: their effects use the current Commands and file permissions. Commands Off remains Off; host Office tools remain available under their own permissions.\n\nThe original upstream instructions are preserved in references/upstream/SKILL.md as technical reference data. Their preinstalled-package and sandbox assumptions do not describe this installation. Read RUNTIME.md before selecting a helper. Use an available runtime; follow the existing dependency installation tiers for missing dependencies. Do not silently install global packages, widen file access, or enable commands. For Node helpers, resolve dependencies from the actual module context; a package installed only in the task cwd may not be found from the installed helper.\n\nChoose explicit task-owned output paths. Preserve originals; run destructive unpacked-package edits on a task-created staging copy. A zero exit status or a success message is not document verification. Inspect the resulting artifact with the available host tools, report the checks actually performed, and mark native rendering, schema coverage and unsupported features unverified where appropriate. Do not claim a receipt or native Office success from helper stdout.\n\n## Presentation workflow\n\nInspect the deck, theme and layouts before editing. Preserve supported native shapes, charts and relationships. For richer generation, read references/upstream/SKILL.md for theme/layout and pptxgenjs guidance, while using the runtime and permission rules above. scripts/slide_text.py extracts content; scripts/thumbnail.py renders optional grids with an explicit output prefix. Neither alone establishes editability or native rendering fidelity.\n\nscripts/clean.py deletes unused parts from the supplied unpacked deck: use a task-created staging copy. scripts/apply_theme.js writes in place unless given a separate output; inspect its source and dependency resolution before running. Schema validators and rendered thumbnails are distinct checks; report which completed."
+  }
+]

@@ -1,0 +1,3 @@
+/** The host returns a JSON metadata line, followed by the unchanged decoded resource text. */
+export function resourceText(value: string): string { const at = value.indexOf('\n\n'); if (at < 0) return value; const metadata = JSON.parse(value.slice(0, at)); if (!metadata.resource_path && !metadata.skill_name) throw Error('missing resource metadata'); return value.slice(at + 2); }
+export function instructionText(value: string): string { const text = resourceText(value); const at = text.lastIndexOf('\n\n## Resource inventory\n'); if (at < 0) throw Error('missing resource inventory'); return text.slice(0, at); }

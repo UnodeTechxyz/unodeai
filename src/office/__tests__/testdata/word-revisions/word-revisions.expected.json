@@ -1,0 +1,112 @@
+{
+  "generator": "generate.mjs + word-check.ps1",
+  "word_version": "16.0",
+  "revisions": [
+    {
+      "story": "body",
+      "type": 2,
+      "author": "Avery Fixture",
+      "text": "old "
+    },
+    {
+      "story": "body",
+      "type": 1,
+      "author": "Avery Fixture",
+      "text": "new "
+    },
+    {
+      "story": "body",
+      "type": 2,
+      "author": "Blake Fixture",
+      "text": "drop "
+    },
+    {
+      "story": "body",
+      "type": 1,
+      "author": "Avery Fixture",
+      "text": "drop "
+    },
+    {
+      "story": "body",
+      "type": 14,
+      "author": "Casey Fixture",
+      "text": "moved words "
+    },
+    {
+      "story": "body",
+      "type": 1,
+      "author": "Blake Fixture",
+      "text": "Brand new paragraph.\r"
+    },
+    {
+      "story": "body",
+      "type": 15,
+      "author": "Casey Fixture",
+      "text": "moved words "
+    },
+    {
+      "story": "body",
+      "type": 2,
+      "author": "Avery Fixture",
+      "text": "\r"
+    },
+    {
+      "story": "body",
+      "type": 3,
+      "author": "Casey Fixture",
+      "text": "Bold now."
+    },
+    {
+      "story": "body",
+      "type": 10,
+      "author": "Casey Fixture",
+      "text": "Bold now.\r"
+    },
+    {
+      "story": "body",
+      "type": 1,
+      "author": "Avery Fixture",
+      "text": "Row two\r\u0007\r\u0007"
+    },
+    {
+      "story": "header",
+      "type": 1,
+      "author": "Blake Fixture",
+      "text": "draft "
+    }
+  ],
+  "comments": [
+    {
+      "author": "Avery Fixture",
+      "initial": "AF",
+      "text": "First comment line.\rSecond line.",
+      "scope": "commented words",
+      "done": true,
+      "ancestor": 0
+    },
+    {
+      "author": "Blake Fixture",
+      "initial": "BF",
+      "text": "Reply text.",
+      "scope": "commented words",
+      "done": true,
+      "ancestor": 1
+    },
+    {
+      "author": "Casey Fixture",
+      "initial": "CF",
+      "text": "Point note.",
+      "scope": "",
+      "done": false,
+      "ancestor": 0
+    }
+  ],
+  "accepted": {
+    "body": "Alpha new text.\rKeep this.\rBefore after.\rBrand new paragraph.\rTarget: moved words here.\rFirst half second half.\rBold now.\rSee commented words and a point.\rRow one\r\u0007\r\u0007Row two\r\u0007\r\u0007End.\r",
+    "header": "Header draft title\r"
+  },
+  "rejected": {
+    "body": "Alpha old text.\rKeep this.\rBefore moved words after.\rTarget: here.\rFirst half \rsecond half.\rBold now.\rSee commented words and a point.\rRow one\r\u0007\r\u0007End.\r",
+    "header": "Header title\r"
+  }
+}

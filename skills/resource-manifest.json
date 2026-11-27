@@ -1,0 +1,1902 @@
+{
+  "schema_version": 1,
+  "skills": [
+    {
+      "name": "acceptance-criteria-authoring",
+      "category": "management",
+      "digest": "f4874321db8f90e967e1f23ecc13f3dcd8477a7462aff6ee25f18de87f927c11",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 770,
+          "sha256": "c9f9dfc9513c41ac0a874ae025b9f1145798aaecde68e519410496c8ffe146fe",
+          "kind": "text",
+          "encoding": "utf-8"
+        }
+      ]
+    },
+    {
+      "name": "accessibility-audit",
+      "category": "design",
+      "digest": "6f172507449452afbc1d24d2ed7bd16dabb45b88278ad14ac7907c1357411450",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 2467,
+          "sha256": "c601b67c94a3eda707286a0cd0c434e23e7b3fe866c4961bee1b3703c4b5b7ee",
+          "kind": "text",
+          "encoding": "utf-8"
+        }
+      ]
+    },
+    {
+      "name": "api-contract-review",
+      "category": "development",
+      "digest": "b44576552938ba17469f14285cd4a6b47527c46d5be972352139b38650306b1f",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 1518,
+          "sha256": "b4b1b55be9c54fedf13f2949305c78db70c59520bc196bef532768dce2592b58",
+          "kind": "text",
+          "encoding": "utf-8"
+        }
+      ]
+    },
+    {
+      "name": "api-error-handling",
+      "category": "development",
+      "digest": "19c4b2652cbb89ca31766833b3799ba5c371e2b0f8a00266eeae0a695da15089",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 1737,
+          "sha256": "1446d694a667eabc393e15242d21b2e75c76b956c00930bb5098cd01fe839de5",
+          "kind": "text",
+          "encoding": "utf-8"
+        }
+      ]
+    },
+    {
+      "name": "api-versioning-semver",
+      "category": "development",
+      "digest": "cd34308c055e4579d1d2d7f7796f3fa92a16274745da4b3c01b775813d64f642",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 1514,
+          "sha256": "67d966130f0d738e56dc9a9f3b9a459399c9386cd308ea3a4cc769571d0500a9",
+          "kind": "text",
+          "encoding": "utf-8"
+        }
+      ]
+    },
+    {
+      "name": "artifact-hash-verification",
+      "category": "rigor",
+      "digest": "9371d4d9a285c3153651a418a4d4ebd8b4214e3667a1db3eb692142d9390fe5a",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 1569,
+          "sha256": "6d7badb3a2c590bdd9de5eb0f15f349f1aa55a2fb6a45afd12dcaf95b4857aa3",
+          "kind": "text",
+          "encoding": "utf-8"
+        }
+      ]
+    },
+    {
+      "name": "authz-check",
+      "category": "security",
+      "digest": "17d97059cdd60e90c3a61bf73ca0265350fdd9733e5335fe46b3d25d859333dc",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 741,
+          "sha256": "256bc290b424d1bf73484fcb59749f782d679e9aaa668915a8a62e2a882b83a2",
+          "kind": "text",
+          "encoding": "utf-8"
+        }
+      ]
+    },
+    {
+      "name": "brainstorming-to-spec",
+      "category": "management",
+      "digest": "4d18fd6b35a08f2c6bce75a557104f39d5a4f0d2f08e4149ca451c93e4877fc8",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 1185,
+          "sha256": "0af7561314afb0ced94c08db98f01a0938ca231dbc658c6a6f95d8776d5cc09e",
+          "kind": "text",
+          "encoding": "utf-8"
+        }
+      ]
+    },
+    {
+      "name": "ci-pipeline-review",
+      "category": "infrastructure",
+      "digest": "c7e572fd3afa850b1317226dd0b82fbb311a2a193ee501c0a3da72bac017cc40",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 1014,
+          "sha256": "6574f22a83e2fdf65efad14e4742a7a217de9431ee278d26878291ec3e2ac713",
+          "kind": "text",
+          "encoding": "utf-8"
+        }
+      ]
+    },
+    {
+      "name": "claim-sourcing-and-citation",
+      "category": "rigor",
+      "digest": "609649a2dc73c96239a632a4ddfe54a3874c6e4a1697fd264f688ba0185af131",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 1003,
+          "sha256": "b1997479c5bfbda11b1eea4d2c96de3a2bdd496191523a5d18ffda405a561ce2",
+          "kind": "text",
+          "encoding": "utf-8"
+        }
+      ]
+    },
+    {
+      "name": "clause-playbook-redline",
+      "category": "legal",
+      "digest": "3642f013517faaa9fd6020759ce412dec354e785021f941e47b20b1444a9efb2",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 2118,
+          "sha256": "927b0f79dd0623390f4ab49535efe250bedb5f934599f2e107efa3cfdc1c0ed1",
+          "kind": "text",
+          "encoding": "utf-8"
+        }
+      ]
+    },
+    {
+      "name": "commit-message-quality",
+      "category": "development",
+      "digest": "a337c34f64f3b873c4f036edf1397705a6306585eec6712a75592423c1208b17",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 1300,
+          "sha256": "07faf6edc37b30e4819cf7eeca43b375f2edb5f6220658488cd079b6f8eac2e9",
+          "kind": "text",
+          "encoding": "utf-8"
+        }
+      ]
+    },
+    {
+      "name": "component-a11y",
+      "category": "design",
+      "digest": "0cb6caa15dfa8be1b8c0c43a3172d36f8af6504cc2bc300aebc1bbf15297ea5d",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 2064,
+          "sha256": "0061987f3a3c456496d443626b89250b786b88f661e87232cf4235e8ac453b58",
+          "kind": "text",
+          "encoding": "utf-8"
+        }
+      ]
+    },
+    {
+      "name": "contract-intake-extraction",
+      "category": "legal",
+      "digest": "9c8de22eabf5d72885443c0caecc64eb555668e0ff8753dc9d2633c3627c6606",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 1704,
+          "sha256": "6a8cc540abb2dff46f719f832ce13519fba632a46e0de4ec327c69678ab1f8f4",
+          "kind": "text",
+          "encoding": "utf-8"
+        }
+      ]
+    },
+    {
+      "name": "data-quality-checks",
+      "category": "data",
+      "digest": "6b4939b41dd7c5261012f091cb393ff0e19be8861bbba8595f7212f491d9c807",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 766,
+          "sha256": "ffc230b58e7f3a4d2f36a11c4b44846dd21ba1dbad49d117d7d835be27c5b9ae",
+          "kind": "text",
+          "encoding": "utf-8"
+        }
+      ]
+    },
+    {
+      "name": "dependency-risk-triage",
+      "category": "security",
+      "digest": "3a6a9cf0d89ed4973cbbb4b957df7f812e7e05e568fdfc8d533e2bf44e344a35",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 1619,
+          "sha256": "5c5c4f96f093607152074a99ea211f4fce387aea56710939e03a4ec28b5c69bc",
+          "kind": "text",
+          "encoding": "utf-8"
+        }
+      ]
+    },
+    {
+      "name": "design-system-consistency",
+      "category": "design",
+      "digest": "88a56c0a5a76bd6c4a3a38dbac7b6af3442b13e46544880b64a41acd8595beaa",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 1421,
+          "sha256": "e67e5152debc1d16b85da611f31f8ff9440eedd55e5a80927ef004965085c292",
+          "kind": "text",
+          "encoding": "utf-8"
+        }
+      ]
+    },
+    {
+      "name": "diff-risk-triage",
+      "category": "development",
+      "digest": "39599d236ffa5796448713edb20348d9ce1c463b21c3e2e9e064fed06864e1cc",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 1100,
+          "sha256": "f63aae52b1931cac660f8e02a7f784e9c48aff2592cb4eb02acaf1666761c570",
+          "kind": "text",
+          "encoding": "utf-8"
+        }
+      ]
+    },
+    {
+      "name": "dispatching-parallel-agents",
+      "category": "management",
+      "digest": "32260fff95db96b4f62f971158c46a79a9121c69c070a2ff70af3e9f41f76d74",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 1659,
+          "sha256": "bce018ee7a543bee7f8a96e5346ec3e6083c3a70560e606fedc0bf721f05800e",
+          "kind": "text",
+          "encoding": "utf-8"
+        }
+      ]
+    },
+    {
+      "name": "dockerfile-best-practices",
+      "category": "infrastructure",
+      "digest": "e79694c893656c9c00cfb2f2d8cbf13f962c79e31bc71683283926be9cce2cc3",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 740,
+          "sha256": "1f8131a4e0234297e5e79dd82fcc2bd8513d4765d2bb44e4844fa38105d917de",
+          "kind": "text",
+          "encoding": "utf-8"
+        }
+      ]
+    },
+    {
+      "name": "documentation-lint",
+      "category": "documentation",
+      "digest": "3180866b3644c334560290ea6857e6e903e7ba17e41bfbd518a3ea55d4744632",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 997,
+          "sha256": "75eb4e5d1f572098ba55c91df7b23c7f8ec1f3fc60e4653140566795f2ea51af",
+          "kind": "text",
+          "encoding": "utf-8"
+        }
+      ]
+    },
+    {
+      "name": "docx",
+      "category": "documentation",
+      "digest": "b77a76951297480b78c26500ce90849ac94176295b41071369fbae831d28078b",
+      "files": [
+        {
+          "path": "LICENSE.txt",
+          "bytes": 11357,
+          "sha256": "58d1e17ffe5109a7ae296caafcadfdbe6a7d176f0bc4ab01e12a689b0499d8bd",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "RUNTIME.md",
+          "bytes": 3928,
+          "sha256": "7c8ad87ad1ce0ab43b8b33c1181617e86827f2fa5d52ea74492338873bc14e39",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "SKILL.md",
+          "bytes": 4398,
+          "sha256": "c122e127ccbd38db387c08b7fa771a522d5c7d13460a72bfbe2df3aaae1c22f2",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "SOURCE.md",
+          "bytes": 874,
+          "sha256": "9956c327d8bd25908887190e1dbea7d98435fa9a09b312c2d7ac08e10913e556",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "references/upstream/SKILL.md",
+          "bytes": 7488,
+          "sha256": "895d5aa6c4cd98e4aed4c995d846f056f3549086e79bcd6617afea6014f82288",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/__init__.py",
+          "bytes": 1,
+          "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/accept_changes.py",
+          "bytes": 4051,
+          "sha256": "0c991d2bc7304a1248e9f3bf9b1498f0b6e76641fc457e7cbd73c99b4eef3a74",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/comment.py",
+          "bytes": 14054,
+          "sha256": "37d116e5f56bb142b208c6c6a4bbcf960495abf470ddb7c6675ccfac864ba3d7",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/merge_runs.py",
+          "bytes": 9398,
+          "sha256": "3ab367fd7fba4647943d0aa5e65203b15458551410f5ffc821d902616a4b9f40",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/helpers/__init__.py",
+          "bytes": 4042,
+          "sha256": "5c456ffc522900399b5f9402f92d66aaf2d9f87655d236c69f60bf07f4fd7c9b",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/helpers/pptx_chart.py",
+          "bytes": 9938,
+          "sha256": "aed734e9a6c743ae712fc228c868bf0f6abcfb6a53549eefb19081b15d240fda",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/helpers/pptx_slide.py",
+          "bytes": 3352,
+          "sha256": "06fe06953bf038826b85ecc142f4dc9299a37fa0c4e4dd9b00b10486df33524d",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/helpers/pptx_theme.py",
+          "bytes": 3510,
+          "sha256": "ebb54c56e9c13807f5f98f0cae22d47cdd0162da8525eaa664e3f2c8c8d6bb03",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/ISO-IEC29500-4_2016/dml-chart.xsd",
+          "bytes": 74984,
+          "sha256": "41b93bd8857cc68b1e43be2806a872d736a9bdd6566900062d8fdb57d7bbb354",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/ISO-IEC29500-4_2016/dml-chartDrawing.xsd",
+          "bytes": 6956,
+          "sha256": "3fd0586f2637b98bb9886f0e0b67d89e1cc987c2d158cc7deb5f5b9890ced412",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/ISO-IEC29500-4_2016/dml-diagram.xsd",
+          "bytes": 51302,
+          "sha256": "29b254ee0d10414a8504b5a08149c7baec35a60d5ff607d6b3f492aa36815f40",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/ISO-IEC29500-4_2016/dml-lockedCanvas.xsd",
+          "bytes": 624,
+          "sha256": "5cb76dabd8b97d1e9308a1700b90c20139be4d50792d21a7f09789f5cccd6026",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/ISO-IEC29500-4_2016/dml-main.xsd",
+          "bytes": 152039,
+          "sha256": "5375417f0f5394b8dd1a7035b9679151f19a6b65df309dec10cfb4a420cb00e9",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/ISO-IEC29500-4_2016/dml-picture.xsd",
+          "bytes": 1231,
+          "sha256": "5d389d42befbebd91945d620242347caecd3367f9a3a7cf8d97949507ae1f53c",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/ISO-IEC29500-4_2016/dml-spreadsheetDrawing.xsd",
+          "bytes": 8862,
+          "sha256": "b4532b6d258832953fbb3ee4c711f4fe25d3faf46a10644b2505f17010d01e88",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/ISO-IEC29500-4_2016/dml-wordprocessingDrawing.xsd",
+          "bytes": 14795,
+          "sha256": "bdad416b096b61d37b71603b2c949484f9070c830bdaeba93bf35e15c8900614",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/ISO-IEC29500-4_2016/pml.xsd",
+          "bytes": 83612,
+          "sha256": "d173c3e5d61e42e2e3a97226c632fd2ab7cc481fc4e492365b87024ab546daff",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/ISO-IEC29500-4_2016/shared-additionalCharacteristics.xsd",
+          "bytes": 1269,
+          "sha256": "3c6709101c6aaa82888df5d8795c33f9e857196790eb320d9194e64be2b6bdd8",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/ISO-IEC29500-4_2016/shared-bibliography.xsd",
+          "bytes": 7328,
+          "sha256": "0b364451dc36a48dd6dae0f3b6ada05fd9b71e5208211f8ee5537d7e51a587e2",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/ISO-IEC29500-4_2016/shared-commonSimpleTypes.xsd",
+          "bytes": 6382,
+          "sha256": "e2abacbb9a55ce1365f8961bc1b1395bbc811e512b111000d8c333f98458dece",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/ISO-IEC29500-4_2016/shared-customXmlDataProperties.xsd",
+          "bytes": 1248,
+          "sha256": "0ef4bb354ff44b923564c4ddbdda5987919d220225129ec94614a618ceafc281",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/ISO-IEC29500-4_2016/shared-customXmlSchemaProperties.xsd",
+          "bytes": 880,
+          "sha256": "0d103b99a4a8652f8871552a69d42d2a3760ac6a5e3ef02d979c4273257ff6a4",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/ISO-IEC29500-4_2016/shared-documentPropertiesCustom.xsd",
+          "bytes": 2608,
+          "sha256": "9c085407751b9061c1f996f6c39ce58451be22a8d334f09175f0e89e42736285",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/ISO-IEC29500-4_2016/shared-documentPropertiesExtended.xsd",
+          "bytes": 3507,
+          "sha256": "bc92e36ccd233722d4c5869bec71ddc7b12e2df56059942cce5a39065cc9c368",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/ISO-IEC29500-4_2016/shared-documentPropertiesVariantTypes.xsd",
+          "bytes": 7507,
+          "sha256": "7b5b7413e2c895b1e148e82e292a117d53c7ec65b0696c992edca57b61b4a74b",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/ISO-IEC29500-4_2016/shared-math.xsd",
+          "bytes": 23313,
+          "sha256": "3213ef1631606250f5010b42cad7ef716f7c59426367798e33c374c0ec391d3a",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/ISO-IEC29500-4_2016/shared-relationshipReference.xsd",
+          "bytes": 1367,
+          "sha256": "12264f3c03d738311cd9237d212f1c07479e70f0cbe1ae725d29b36539aef637",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/ISO-IEC29500-4_2016/sml.xsd",
+          "bytes": 242277,
+          "sha256": "beffeed56945c22a77440122c8bdc426f3fcbe7f3b12ea0976c770d1f8d54578",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/ISO-IEC29500-4_2016/vml-main.xsd",
+          "bytes": 26148,
+          "sha256": "f5ee623b08b6a66935e5aced2f5d8ad0fc71bf9e8e833cd490150c0fa94b8763",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/ISO-IEC29500-4_2016/vml-officeDrawing.xsd",
+          "bytes": 25279,
+          "sha256": "585bedc1313b40888dcc544cb74cd939a105ee674f3b1d3aa1cc6d34f70ff155",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/ISO-IEC29500-4_2016/vml-presentationDrawing.xsd",
+          "bytes": 535,
+          "sha256": "133c9f64a5c5d573b78d0a474122b22506d8eadb5e063f67cdbbb8fa2f161d0e",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/ISO-IEC29500-4_2016/vml-spreadsheetDrawing.xsd",
+          "bytes": 5712,
+          "sha256": "6bdeb169c3717eb01108853bd9fc5a3750fb1fa5b82abbdd854d49855a40f519",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/ISO-IEC29500-4_2016/vml-wordprocessingDrawing.xsd",
+          "bytes": 4010,
+          "sha256": "475dcae1e7d1ea46232db6f8481040c15e53a52a3c256831d3df204212b0e831",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/ISO-IEC29500-4_2016/wml.xsd",
+          "bytes": 171367,
+          "sha256": "c2dd9f61f892deae6acd8d20771ea79b12018af25f3bf8d06639c8542d218cfd",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/ISO-IEC29500-4_2016/xml.xsd",
+          "bytes": 4646,
+          "sha256": "a539aa2fb154fa50e0f5cc97e6ad7cbc66f8ec3e3746f61ec6a8b0d5d15ecdf2",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/ecma/fouth-edition/opc-contentTypes.xsd",
+          "bytes": 1963,
+          "sha256": "9e0b7209fc69ab11987900404540969976000c5ebe4d4f58c43dc3842886bf3a",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/ecma/fouth-edition/opc-coreProperties.xsd",
+          "bytes": 2515,
+          "sha256": "451958454e8588dfc7cd945981ada142ca06ff3307937f5700df059c2b307fa8",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/ecma/fouth-edition/opc-digSig.xsd",
+          "bytes": 2856,
+          "sha256": "6de111e11403f7cd49027400755bae0ea1cabef2815f09bd40a24f0017613b24",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/ecma/fouth-edition/opc-relationships.xsd",
+          "bytes": 1344,
+          "sha256": "f565adfef5a502044abc3a9153e157edc25af78304d335994afb958874b15e26",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/mce/mc.xsd",
+          "bytes": 3127,
+          "sha256": "3a37e461ecf5a8670fdec34029703401f8728ab9c96ec1739a6ae58d55212413",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/microsoft/wml-2010.xsd",
+          "bytes": 26549,
+          "sha256": "568b26ee156cb9549aa439ca2158965f77b7c1602b7e0316f40ac6cf586e35f2",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/microsoft/wml-2012.xsd",
+          "bytes": 3745,
+          "sha256": "0fa75578a000439a7988ba0c59fdc69f774bbd416cbacc14d07125b3f686cb74",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/microsoft/wml-2018.xsd",
+          "bytes": 901,
+          "sha256": "be0ff793a22dd31384650c3a4da14c2fa8062751c2e97b0e5ee852bda13c60ad",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/microsoft/wml-cex-2018.xsd",
+          "bytes": 1778,
+          "sha256": "fddc2b880cabb9005aebbc7e783e53c19fec1c03df7d0e2f2076a33a0fdfd081",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/microsoft/wml-cid-2016.xsd",
+          "bytes": 1002,
+          "sha256": "127ca209fa73d7cb708449cb355c871867948a96e4a74f7bf5811ef62d17991d",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/microsoft/wml-sdtdatahash-2020.xsd",
+          "bytes": 600,
+          "sha256": "842e7163409c8d74f4d7088a8bc99500d80bc75332681a0980055b08f374a604",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/microsoft/wml-symex-2015.xsd",
+          "bytes": 745,
+          "sha256": "16f6f8072249f431370723c2cd8974672e0d9c897e00e97dd918079df934871b",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/soffice.py",
+          "bytes": 9100,
+          "sha256": "bcfa227707681ffbecc0f0af5c4e7155407b3baaf5cec5cdd41387c97cdd40c7",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/validate.py",
+          "bytes": 7808,
+          "sha256": "8c10ec61d8e880877515019e1fe8fab9a1f590c9e50ed0631418e960aca1e313",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/validators/__init__.py",
+          "bytes": 336,
+          "sha256": "83e0f035c5abea238d3f2c3968afbd511ed022b527b7c9cb60a9434cc34ff987",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/validators/base.py",
+          "bytes": 34369,
+          "sha256": "6129ec6a4fc0a4aa78af1434f9baa73994cc24d3261afda4e680e00f215cbf3b",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/validators/docx.py",
+          "bytes": 19745,
+          "sha256": "7b0f1a23c9cd9ff07187d9d7d359f62317f94a5e389d63fd19766e1688a195a2",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/validators/pptx.py",
+          "bytes": 21058,
+          "sha256": "3a100ec5f00ae183bca67f4aaa8e3e902caee60254e141b8120f32c53d85cee7",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/validators/redlining.py",
+          "bytes": 18983,
+          "sha256": "f9c4455adc32b3890d5203d6c25d868d98d7e970bbad76b686f502950737599a",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/templates/comments.xml",
+          "bytes": 2603,
+          "sha256": "a08ba83ee8790ac9e3dc61921f4988f19edd7e06ac09d6f1897a877c1581818d",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/templates/commentsExtended.xml",
+          "bytes": 2611,
+          "sha256": "544eeecfeceed4b468fff163cd9c366d33641c8b8ab691ce002576197846afe8",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/templates/commentsExtensible.xml",
+          "bytes": 2707,
+          "sha256": "bad10b3283e6ad6e7ef6d1ca5169683721ed690ee331282c65df04017e080631",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/templates/commentsIds.xml",
+          "bytes": 2619,
+          "sha256": "db20f9616e004ec42ef736e80c2384e45db0f8d1194d31dc8b37c7d6ecdd6420",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/templates/people.xml",
+          "bytes": 115,
+          "sha256": "056f63aa1197fd8c9dda980c9f1b9ff016fd5fa4a462df8aec5f384f39d23e37",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "upstream-files.json",
+          "bytes": 16538,
+          "sha256": "efd382afccfb193ed3b45a4d11587160550f6aa65f363ae4c1d01aa3f871897d",
+          "kind": "text",
+          "encoding": "utf-8"
+        }
+      ]
+    },
+    {
+      "name": "draft-only-external-actions",
+      "category": "rigor",
+      "digest": "a270789702945e7a25f8083d5e83a7359d7bcc5727700225236c03b601acca4c",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 1962,
+          "sha256": "9dbab06c299c0d52199b7391699bc1de1605d7eec3e8ce3f76719697df9a900b",
+          "kind": "text",
+          "encoding": "utf-8"
+        }
+      ]
+    },
+    {
+      "name": "executing-plans",
+      "category": "development",
+      "digest": "f70749748543b709da0009ef7cc490fee21ebd4a0bade8d503551db0e885e117",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 941,
+          "sha256": "40c212d1f4d3d15eaedb0848169c39f51bd721673cdcc1cbd60fe7a64f6e5a3c",
+          "kind": "text",
+          "encoding": "utf-8"
+        }
+      ]
+    },
+    {
+      "name": "flaky-test-triage",
+      "category": "testing",
+      "digest": "035c8655907b43b9cbc7920bb9b07346c56603e3258e689262f194e37f180a9c",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 756,
+          "sha256": "c0ad8c2bb7047f3c2d484951938a2219c671144844328caf87ccf8b3512de808",
+          "kind": "text",
+          "encoding": "utf-8"
+        }
+      ]
+    },
+    {
+      "name": "frontend-design",
+      "category": "design",
+      "digest": "609776f0e77ddcc18572f52a651d695871804c9db606aefa0aba5a82116364d7",
+      "files": [
+        {
+          "path": "LICENSE.txt",
+          "bytes": 10174,
+          "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "SKILL.md",
+          "bytes": 11469,
+          "sha256": "40539d4af1ebf35de145f8ce2a0e6fbfaa3c6441b52926854f0a025201b7648f",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "SOURCE.md",
+          "bytes": 2465,
+          "sha256": "26ceb5ba439c7366d081f6b08169e1f6ed2cb891176dc2baf0da5e874bfb3665",
+          "kind": "text",
+          "encoding": "utf-8"
+        }
+      ]
+    },
+    {
+      "name": "gh-fix-ci",
+      "category": "infrastructure",
+      "digest": "f7edcdba088d8155badb6456fab0f7104546398a1ca002a65f819f2239392a5a",
+      "files": [
+        {
+          "path": "LICENSE.txt",
+          "bytes": 10776,
+          "sha256": "4dd13869245e356246a5b770723247bbb80a8f07a181d1d3d873a1734297cdb9",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "SKILL.md",
+          "bytes": 6759,
+          "sha256": "683e2bc48ab5e082603bf1c4c4be19921b38305c1b0ec81f3770d26215f064b8",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "SOURCE.md",
+          "bytes": 4341,
+          "sha256": "aafe37d486d0d1f5c20e065bd7a9285a9d6c2accd8c3b4c42180b968d355103e",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "references/inspect-pr-checks-helper.md",
+          "bytes": 17827,
+          "sha256": "6e53d446a3449edd38e846e54f975b608edb6dd6edf2bdaeaef6f55075788fe0",
+          "kind": "text",
+          "encoding": "utf-8"
+        }
+      ]
+    },
+    {
+      "name": "internal-comms",
+      "category": "documentation",
+      "digest": "2dad8583888733609645863d88aabaf14deae4af4a11b2a695f32f0c3e90d419",
+      "files": [
+        {
+          "path": "LICENSE.txt",
+          "bytes": 11345,
+          "sha256": "bc6b3af2f331cbc7fb0da1344efb2cbe5877a31498b4d70dbc7000f3405a1362",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "SKILL.md",
+          "bytes": 3318,
+          "sha256": "44bc4ac9ccd33730815322137b7aa5929af0210a60dd7d2388bbc5dbd525493e",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "SOURCE.md",
+          "bytes": 3173,
+          "sha256": "3717bbeacd37bfcc2a276c179d1c5d5d11cd01af75f6f25aeb51d2b71b407577",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "examples/3p-updates.md",
+          "bytes": 3765,
+          "sha256": "d620376cf21dd5d8852c08ba0f5e0005e0c2fcfe17fc7169c55f8b4d006f86b3",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "examples/company-newsletter.md",
+          "bytes": 3668,
+          "sha256": "e09d2bb11e556233aef2d69d574bac6969524e68d81674eccfe539a0b6f845db",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "examples/faq-answers.md",
+          "bytes": 2663,
+          "sha256": "aef2cfdd79c10a0d56cd360e721381250ebb3418a6cfd78dccc1bc21556c382b",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "examples/general-comms.md",
+          "bytes": 906,
+          "sha256": "de1c88cc693bc26913f1f9f1271678fba108c02d8b16a98c14ff9ff9510b6233",
+          "kind": "text",
+          "encoding": "utf-8"
+        }
+      ]
+    },
+    {
+      "name": "legal-authority-citation",
+      "category": "legal",
+      "digest": "8d0f512cd4db1fced8dec04c907824d57bd9f292a32c84f3a6fef789917d3a39",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 1814,
+          "sha256": "96d0d4b75ed5a58016039733d9cf010802c2409aad644400dfcc04ecc82d0f89",
+          "kind": "text",
+          "encoding": "utf-8"
+        }
+      ]
+    },
+    {
+      "name": "mcp-builder",
+      "category": "development",
+      "digest": "816bcd239eaa071553493759c0b032fca76092c925be5b5f603fa63f3d3c4005",
+      "files": [
+        {
+          "path": "LICENSE.txt",
+          "bytes": 11345,
+          "sha256": "bc6b3af2f331cbc7fb0da1344efb2cbe5877a31498b4d70dbc7000f3405a1362",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "SKILL.md",
+          "bytes": 13808,
+          "sha256": "390abca9cb8b652bab9473e7205e998571f3ddb55709ee2c9d85628afd69fec6",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "SOURCE.md",
+          "bytes": 5928,
+          "sha256": "a31ac576c859eb43df131e5e9660b79373a5db028d08cff3b70e4f31ef5b26f3",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "reference/connection-helper.md",
+          "bytes": 11112,
+          "sha256": "2b7e52adb7a0f0a42c7cd1130c933962adc7d6cd46c8d215c4231a1ba4c84ee9",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "reference/evaluation.md",
+          "bytes": 20430,
+          "sha256": "90a071f56d735d20235c8a3a10df6d570f05056ddbc5d97bcc2b40528baccdbf",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "reference/example-evaluation.md",
+          "bytes": 1620,
+          "sha256": "14f373c4483949de6e9ecb2180d79dcf4270bd1f902ecd8d0e98510a8f92f848",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "reference/mcp_best_practices.md",
+          "bytes": 7330,
+          "sha256": "80fb4369a349447cf18ecdd7494fe7938b6065377e9f08c077cec411093a3007",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "reference/node_mcp_server.md",
+          "bytes": 28745,
+          "sha256": "ee3c95d812e450f6168b734390d0c9ef6f8ebeef041d73a122c972dfbd4d476a",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "reference/node_mcp_server_v2.md",
+          "bytes": 35715,
+          "sha256": "566319b41cb23aee973b44daf5e9c9d84e1bf95d2f3ab9ead6acde08736c51d4",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "reference/python_mcp_server.md",
+          "bytes": 25099,
+          "sha256": "2da52f77e675191014ca2e146a4b95aa04d0ca7dd7e2b100322df15ade685e80",
+          "kind": "text",
+          "encoding": "utf-8"
+        }
+      ]
+    },
+    {
+      "name": "mutation-validation",
+      "category": "rigor",
+      "digest": "159d9d1bd4a895b7e898bb40909bd7f92ce2e91e8cb0387c0a0d5e47a7ab59db",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 1040,
+          "sha256": "2414673af7c365944b13902f4a297b600ea9694c136fcb6066855b6d0e684e46",
+          "kind": "text",
+          "encoding": "utf-8"
+        }
+      ]
+    },
+    {
+      "name": "openapi-lint",
+      "category": "development",
+      "digest": "04512296d2df8ead07792cbe69a115fcadb7aca16925119e1ab341612c14af71",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 732,
+          "sha256": "58814fd0567142dfc8ef19ee90a0b4a5f28e8c65674bd209178aaa994ac571f1",
+          "kind": "text",
+          "encoding": "utf-8"
+        }
+      ]
+    },
+    {
+      "name": "owasp-top10-review",
+      "category": "security",
+      "digest": "b3c29ea3163735ff198b9401a054633cd642213e53f3a6ed454523bd61ee3499",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 2457,
+          "sha256": "33ddaec25c45de7ac651c4887e638da0e84a263378fa956fa27d37398df8ab83",
+          "kind": "text",
+          "encoding": "utf-8"
+        }
+      ]
+    },
+    {
+      "name": "perf-budget-audit",
+      "category": "development",
+      "digest": "36e90ed086d30676d60b2290495dc328a5000eb3ee12b092166c9f84c1aadb0b",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 1024,
+          "sha256": "60c5c84a84816948f3607fb26700ad238ac41de552bec8c9510a7e807b3fbf66",
+          "kind": "text",
+          "encoding": "utf-8"
+        }
+      ]
+    },
+    {
+      "name": "positioning-and-messaging",
+      "category": "marketing",
+      "digest": "2febfa5ad2176b15368d672ac56df4c6472cf9dbe00a3e0dbd6c1244d0046de4",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 958,
+          "sha256": "29c6d315e48df01e75fb0bed29d92c1b26f41f5427e25d43aace248783dd126f",
+          "kind": "text",
+          "encoding": "utf-8"
+        }
+      ]
+    },
+    {
+      "name": "pptx",
+      "category": "documentation",
+      "digest": "8a8227cc54795af1cb17a6c8fdf6a551c555748c630433edce9fa53ebbc111d3",
+      "files": [
+        {
+          "path": "LICENSE.txt",
+          "bytes": 11357,
+          "sha256": "58d1e17ffe5109a7ae296caafcadfdbe6a7d176f0bc4ab01e12a689b0499d8bd",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "RUNTIME.md",
+          "bytes": 3928,
+          "sha256": "7c8ad87ad1ce0ab43b8b33c1181617e86827f2fa5d52ea74492338873bc14e39",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "SKILL.md",
+          "bytes": 3234,
+          "sha256": "fd3b43d646935c0a7524c93bb7f751d2553d502b6c7cf725f00e749b26ea8921",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "SOURCE.md",
+          "bytes": 874,
+          "sha256": "a52b6445447c336218c32664feddca0f8ee3764ba558f4d3d110ab1848856633",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "references/upstream/SKILL.md",
+          "bytes": 28365,
+          "sha256": "598c981d93f2173b251f86a4bc94e9fb4e4f5ddaa314ba2dd4eca24b7a07808e",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/__init__.py",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/add_slide.py",
+          "bytes": 18831,
+          "sha256": "23a4c66a9f43e651189cbc9f82ba0a8271d19dc8d44cf0c426dda66f7eb6a93a",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/apply_theme.js",
+          "bytes": 7291,
+          "sha256": "e440b33c43f2e707076cb64b57ca926ce886564b115c19ee23ac487bdb1a6259",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/clean.py",
+          "bytes": 10415,
+          "sha256": "5c808cd4dff7e02661ef3c68b5917f4e25097cc6610c92a3a7df4a6366a5c3c1",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/helpers/__init__.py",
+          "bytes": 4042,
+          "sha256": "5c456ffc522900399b5f9402f92d66aaf2d9f87655d236c69f60bf07f4fd7c9b",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/helpers/pptx_chart.py",
+          "bytes": 9938,
+          "sha256": "aed734e9a6c743ae712fc228c868bf0f6abcfb6a53549eefb19081b15d240fda",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/helpers/pptx_slide.py",
+          "bytes": 3352,
+          "sha256": "06fe06953bf038826b85ecc142f4dc9299a37fa0c4e4dd9b00b10486df33524d",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/helpers/pptx_theme.py",
+          "bytes": 3510,
+          "sha256": "ebb54c56e9c13807f5f98f0cae22d47cdd0162da8525eaa664e3f2c8c8d6bb03",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/ISO-IEC29500-4_2016/dml-chart.xsd",
+          "bytes": 74984,
+          "sha256": "41b93bd8857cc68b1e43be2806a872d736a9bdd6566900062d8fdb57d7bbb354",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/ISO-IEC29500-4_2016/dml-chartDrawing.xsd",
+          "bytes": 6956,
+          "sha256": "3fd0586f2637b98bb9886f0e0b67d89e1cc987c2d158cc7deb5f5b9890ced412",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/ISO-IEC29500-4_2016/dml-diagram.xsd",
+          "bytes": 51302,
+          "sha256": "29b254ee0d10414a8504b5a08149c7baec35a60d5ff607d6b3f492aa36815f40",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/ISO-IEC29500-4_2016/dml-lockedCanvas.xsd",
+          "bytes": 624,
+          "sha256": "5cb76dabd8b97d1e9308a1700b90c20139be4d50792d21a7f09789f5cccd6026",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/ISO-IEC29500-4_2016/dml-main.xsd",
+          "bytes": 152039,
+          "sha256": "5375417f0f5394b8dd1a7035b9679151f19a6b65df309dec10cfb4a420cb00e9",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/ISO-IEC29500-4_2016/dml-picture.xsd",
+          "bytes": 1231,
+          "sha256": "5d389d42befbebd91945d620242347caecd3367f9a3a7cf8d97949507ae1f53c",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/ISO-IEC29500-4_2016/dml-spreadsheetDrawing.xsd",
+          "bytes": 8862,
+          "sha256": "b4532b6d258832953fbb3ee4c711f4fe25d3faf46a10644b2505f17010d01e88",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/ISO-IEC29500-4_2016/dml-wordprocessingDrawing.xsd",
+          "bytes": 14795,
+          "sha256": "bdad416b096b61d37b71603b2c949484f9070c830bdaeba93bf35e15c8900614",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/ISO-IEC29500-4_2016/pml.xsd",
+          "bytes": 83612,
+          "sha256": "d173c3e5d61e42e2e3a97226c632fd2ab7cc481fc4e492365b87024ab546daff",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/ISO-IEC29500-4_2016/shared-additionalCharacteristics.xsd",
+          "bytes": 1269,
+          "sha256": "3c6709101c6aaa82888df5d8795c33f9e857196790eb320d9194e64be2b6bdd8",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/ISO-IEC29500-4_2016/shared-bibliography.xsd",
+          "bytes": 7328,
+          "sha256": "0b364451dc36a48dd6dae0f3b6ada05fd9b71e5208211f8ee5537d7e51a587e2",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/ISO-IEC29500-4_2016/shared-commonSimpleTypes.xsd",
+          "bytes": 6382,
+          "sha256": "e2abacbb9a55ce1365f8961bc1b1395bbc811e512b111000d8c333f98458dece",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/ISO-IEC29500-4_2016/shared-customXmlDataProperties.xsd",
+          "bytes": 1248,
+          "sha256": "0ef4bb354ff44b923564c4ddbdda5987919d220225129ec94614a618ceafc281",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/ISO-IEC29500-4_2016/shared-customXmlSchemaProperties.xsd",
+          "bytes": 880,
+          "sha256": "0d103b99a4a8652f8871552a69d42d2a3760ac6a5e3ef02d979c4273257ff6a4",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/ISO-IEC29500-4_2016/shared-documentPropertiesCustom.xsd",
+          "bytes": 2608,
+          "sha256": "9c085407751b9061c1f996f6c39ce58451be22a8d334f09175f0e89e42736285",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/ISO-IEC29500-4_2016/shared-documentPropertiesExtended.xsd",
+          "bytes": 3507,
+          "sha256": "bc92e36ccd233722d4c5869bec71ddc7b12e2df56059942cce5a39065cc9c368",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/ISO-IEC29500-4_2016/shared-documentPropertiesVariantTypes.xsd",
+          "bytes": 7507,
+          "sha256": "7b5b7413e2c895b1e148e82e292a117d53c7ec65b0696c992edca57b61b4a74b",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/ISO-IEC29500-4_2016/shared-math.xsd",
+          "bytes": 23313,
+          "sha256": "3213ef1631606250f5010b42cad7ef716f7c59426367798e33c374c0ec391d3a",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/ISO-IEC29500-4_2016/shared-relationshipReference.xsd",
+          "bytes": 1367,
+          "sha256": "12264f3c03d738311cd9237d212f1c07479e70f0cbe1ae725d29b36539aef637",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/ISO-IEC29500-4_2016/sml.xsd",
+          "bytes": 242277,
+          "sha256": "beffeed56945c22a77440122c8bdc426f3fcbe7f3b12ea0976c770d1f8d54578",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/ISO-IEC29500-4_2016/vml-main.xsd",
+          "bytes": 26148,
+          "sha256": "f5ee623b08b6a66935e5aced2f5d8ad0fc71bf9e8e833cd490150c0fa94b8763",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/ISO-IEC29500-4_2016/vml-officeDrawing.xsd",
+          "bytes": 25279,
+          "sha256": "585bedc1313b40888dcc544cb74cd939a105ee674f3b1d3aa1cc6d34f70ff155",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/ISO-IEC29500-4_2016/vml-presentationDrawing.xsd",
+          "bytes": 535,
+          "sha256": "133c9f64a5c5d573b78d0a474122b22506d8eadb5e063f67cdbbb8fa2f161d0e",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/ISO-IEC29500-4_2016/vml-spreadsheetDrawing.xsd",
+          "bytes": 5712,
+          "sha256": "6bdeb169c3717eb01108853bd9fc5a3750fb1fa5b82abbdd854d49855a40f519",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/ISO-IEC29500-4_2016/vml-wordprocessingDrawing.xsd",
+          "bytes": 4010,
+          "sha256": "475dcae1e7d1ea46232db6f8481040c15e53a52a3c256831d3df204212b0e831",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/ISO-IEC29500-4_2016/wml.xsd",
+          "bytes": 171367,
+          "sha256": "c2dd9f61f892deae6acd8d20771ea79b12018af25f3bf8d06639c8542d218cfd",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/ISO-IEC29500-4_2016/xml.xsd",
+          "bytes": 4646,
+          "sha256": "a539aa2fb154fa50e0f5cc97e6ad7cbc66f8ec3e3746f61ec6a8b0d5d15ecdf2",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/ecma/fouth-edition/opc-contentTypes.xsd",
+          "bytes": 1963,
+          "sha256": "9e0b7209fc69ab11987900404540969976000c5ebe4d4f58c43dc3842886bf3a",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/ecma/fouth-edition/opc-coreProperties.xsd",
+          "bytes": 2515,
+          "sha256": "451958454e8588dfc7cd945981ada142ca06ff3307937f5700df059c2b307fa8",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/ecma/fouth-edition/opc-digSig.xsd",
+          "bytes": 2856,
+          "sha256": "6de111e11403f7cd49027400755bae0ea1cabef2815f09bd40a24f0017613b24",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/ecma/fouth-edition/opc-relationships.xsd",
+          "bytes": 1344,
+          "sha256": "f565adfef5a502044abc3a9153e157edc25af78304d335994afb958874b15e26",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/mce/mc.xsd",
+          "bytes": 3127,
+          "sha256": "3a37e461ecf5a8670fdec34029703401f8728ab9c96ec1739a6ae58d55212413",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/microsoft/wml-2010.xsd",
+          "bytes": 26549,
+          "sha256": "568b26ee156cb9549aa439ca2158965f77b7c1602b7e0316f40ac6cf586e35f2",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/microsoft/wml-2012.xsd",
+          "bytes": 3745,
+          "sha256": "0fa75578a000439a7988ba0c59fdc69f774bbd416cbacc14d07125b3f686cb74",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/microsoft/wml-2018.xsd",
+          "bytes": 901,
+          "sha256": "be0ff793a22dd31384650c3a4da14c2fa8062751c2e97b0e5ee852bda13c60ad",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/microsoft/wml-cex-2018.xsd",
+          "bytes": 1778,
+          "sha256": "fddc2b880cabb9005aebbc7e783e53c19fec1c03df7d0e2f2076a33a0fdfd081",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/microsoft/wml-cid-2016.xsd",
+          "bytes": 1002,
+          "sha256": "127ca209fa73d7cb708449cb355c871867948a96e4a74f7bf5811ef62d17991d",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/microsoft/wml-sdtdatahash-2020.xsd",
+          "bytes": 600,
+          "sha256": "842e7163409c8d74f4d7088a8bc99500d80bc75332681a0980055b08f374a604",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/schemas/microsoft/wml-symex-2015.xsd",
+          "bytes": 745,
+          "sha256": "16f6f8072249f431370723c2cd8974672e0d9c897e00e97dd918079df934871b",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/soffice.py",
+          "bytes": 9100,
+          "sha256": "bcfa227707681ffbecc0f0af5c4e7155407b3baaf5cec5cdd41387c97cdd40c7",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/validate.py",
+          "bytes": 7808,
+          "sha256": "8c10ec61d8e880877515019e1fe8fab9a1f590c9e50ed0631418e960aca1e313",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/validators/__init__.py",
+          "bytes": 336,
+          "sha256": "83e0f035c5abea238d3f2c3968afbd511ed022b527b7c9cb60a9434cc34ff987",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/validators/base.py",
+          "bytes": 34369,
+          "sha256": "6129ec6a4fc0a4aa78af1434f9baa73994cc24d3261afda4e680e00f215cbf3b",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/validators/docx.py",
+          "bytes": 19745,
+          "sha256": "7b0f1a23c9cd9ff07187d9d7d359f62317f94a5e389d63fd19766e1688a195a2",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/validators/pptx.py",
+          "bytes": 21058,
+          "sha256": "3a100ec5f00ae183bca67f4aaa8e3e902caee60254e141b8120f32c53d85cee7",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/office/validators/redlining.py",
+          "bytes": 18983,
+          "sha256": "f9c4455adc32b3890d5203d6c25d868d98d7e970bbad76b686f502950737599a",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/slide_text.py",
+          "bytes": 4446,
+          "sha256": "0deab09d4ae494411ee893f9c69fffc19fe264a6053990a2f066334c0d88d422",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "scripts/thumbnail.py",
+          "bytes": 9802,
+          "sha256": "94ef83a84346aa2d63913de0d42bb2fe902ccdc17bfac6130096ca758381793c",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "upstream-files.json",
+          "bytes": 15763,
+          "sha256": "1cac159cddc8d39684149caee999ea550fe97592ab653939041e6f9f0a331154",
+          "kind": "text",
+          "encoding": "utf-8"
+        }
+      ]
+    },
+    {
+      "name": "pr-review-checklist",
+      "category": "development",
+      "digest": "ed384c4ed66b26f555f72ee9a8bdc52594c55282d58939ce9907242a76efa796",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 1553,
+          "sha256": "141feeb72345d35233eb0e7d95a7bc6a1001941668815ab45d80a4ceb7f620be",
+          "kind": "text",
+          "encoding": "utf-8"
+        }
+      ]
+    },
+    {
+      "name": "privacy-dpa-review",
+      "category": "legal",
+      "digest": "a57b3be409f8c58a3ea4c30cf504ed30ea362247c69604102d65ab3e3202dddf",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 1643,
+          "sha256": "b05c370eb03113fb32554b4117ac82b6412e4610f860686a3d97eec296ac9c27",
+          "kind": "text",
+          "encoding": "utf-8"
+        }
+      ]
+    },
+    {
+      "name": "proactive-gap-capture",
+      "category": "management",
+      "digest": "17a0eec44996ca1ff661c695ba81aec2da072377697a847c1da1d9c10041926d",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 960,
+          "sha256": "5c34009a1559037fbfc7c734b058e47df7a986e496e95f2549ef7b54e6bcb07a",
+          "kind": "text",
+          "encoding": "utf-8"
+        }
+      ]
+    },
+    {
+      "name": "quality-gate-95",
+      "category": "rigor",
+      "digest": "e87a39c4bd21d19bf0e98978109f006c4bcea0227d814b9ac897620109c79d25",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 1306,
+          "sha256": "51e5370f1b49c6d63b7c6df77f9e00da8a7450483a3af5697081766aa2eedf9d",
+          "kind": "text",
+          "encoding": "utf-8"
+        }
+      ]
+    },
+    {
+      "name": "readme-quickstart-quality",
+      "category": "documentation",
+      "digest": "9a0a5f967a22517d88df259c3002ec86de64f31840d14dd3df0a62122693cfb6",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 773,
+          "sha256": "60ba7b441de14aaaf8be51b07d4942a62ad3fd516cb6de79240e42832c8a205b",
+          "kind": "text",
+          "encoding": "utf-8"
+        }
+      ]
+    },
+    {
+      "name": "recent-activity-scan",
+      "category": "management",
+      "digest": "64fc32a5e914fa3a3dcff02f328cc9098a182b7428b5885517e263055816db6b",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 1408,
+          "sha256": "bd1f6a55b79f809a7b0e1fe7e30fec7f3b872309727f7c9f08fd7c6f9139b316",
+          "kind": "text",
+          "encoding": "utf-8"
+        }
+      ]
+    },
+    {
+      "name": "requesting-code-review",
+      "category": "development",
+      "digest": "0106bf53b67e3f42c6d6b07e6ac0002d8eaaafb1927d0ae8eba143bfe8ab9f19",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 588,
+          "sha256": "9b556a359882d227a94ec5310e5b78f612e28eaabcba6a9fec7467b895306049",
+          "kind": "text",
+          "encoding": "utf-8"
+        }
+      ]
+    },
+    {
+      "name": "responsive-breakpoint-review",
+      "category": "design",
+      "digest": "90fc399a7108547b02d5c13bdac40c3bdfe8c4f41ace00fd199dbfef7df08630",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 1728,
+          "sha256": "bee0718151e109769866615af9dc3a42cb05afc670fd19a6303c62689a5c2922",
+          "kind": "text",
+          "encoding": "utf-8"
+        }
+      ]
+    },
+    {
+      "name": "root-cause-analysis",
+      "category": "development",
+      "digest": "9a1dd0f1b0f7e3f7d08fa5404585a0b9e0cb27eedff60346b78d299064d0fef2",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 1710,
+          "sha256": "9a5e44fcbc551a8e3015f3f4de60e1682f2b4d4695e545f768698fccf8f8d221",
+          "kind": "text",
+          "encoding": "utf-8"
+        }
+      ]
+    },
+    {
+      "name": "sanctions-export-refusal",
+      "category": "legal",
+      "digest": "4e9e81e868a460030adfb09e748ed8f08fd4899c03771e4271b9d881a7e32e2b",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 2566,
+          "sha256": "7e719fb8798bbf296f7d36de512371acdd009911cc4471b223eb4ec34fc748dd",
+          "kind": "text",
+          "encoding": "utf-8"
+        }
+      ]
+    },
+    {
+      "name": "schema-migration-safety",
+      "category": "data",
+      "digest": "0d84b6ef5e792ae934cdeb3952ae9f1d7fa81d3e05d3d9b3f6b7c16523acf5c0",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 1042,
+          "sha256": "98356e97155f4bbe52ac0086c7b59e32fbfc67478ebb25be6674dcbec23b4f67",
+          "kind": "text",
+          "encoding": "utf-8"
+        }
+      ]
+    },
+    {
+      "name": "secrets-scanning",
+      "category": "security",
+      "digest": "9b469cddbd4c752a732241d405b4126a50d96be2cb9569f3e3c96cf97062d8f5",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 1622,
+          "sha256": "3ca993ffb78f94b293c2b1b6a694034d0a0462c7bb8cbfd5aae0a26fea140454",
+          "kind": "text",
+          "encoding": "utf-8"
+        }
+      ]
+    },
+    {
+      "name": "security-threat-model",
+      "category": "security",
+      "digest": "099e4ad48fb20aa799d89c40b3498ad5be07718ab7b9b8a5a36cbf93133f2dbc",
+      "files": [
+        {
+          "path": "LICENSE.txt",
+          "bytes": 10776,
+          "sha256": "4dd13869245e356246a5b770723247bbb80a8f07a181d1d3d873a1734297cdb9",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "SKILL.md",
+          "bytes": 6360,
+          "sha256": "75847f6fdc6081cb85557912e644c5705dd3940bb7a093d38ce6e5b2f0733d7e",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "SOURCE.md",
+          "bytes": 3025,
+          "sha256": "862ac596d14251a1241e75cf49ed319b4aeb2d0efdb0f59369663024afefb0c3",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "references/prompt-template.md",
+          "bytes": 12912,
+          "sha256": "79ad37b1f51c548751be421f8d1df6ceb14c2093ceadcb346adfbc1ff9c7fa8d",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "references/security-controls-and-assets.md",
+          "bytes": 1680,
+          "sha256": "d536cfa9acad2523dc39134bcf33b9566c29dd9a57b407cbc9901637230c6b98",
+          "kind": "text",
+          "encoding": "utf-8"
+        }
+      ]
+    },
+    {
+      "name": "systematic-debugging",
+      "category": "development",
+      "digest": "0b392fb9486f2cc747f8542bd7cf87bea3112f87e2101025821ff7d1eb6d86bf",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 1251,
+          "sha256": "b84035f9cb7b0dea74577fd55f2af14563bbfecd18d880fe4f299c4a51a118ef",
+          "kind": "text",
+          "encoding": "utf-8"
+        }
+      ]
+    },
+    {
+      "name": "task-decomposition",
+      "category": "management",
+      "digest": "92c3cfbed460c5a5c3be682af51e1d0b48ca8703de79ffeaeed7abbe23234806",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 1131,
+          "sha256": "0bd98c517b35546597e924c045cff8d3d3e18f8445342395a21481ab90f70451",
+          "kind": "text",
+          "encoding": "utf-8"
+        }
+      ]
+    },
+    {
+      "name": "technical-seo-audit",
+      "category": "marketing",
+      "digest": "3631f2cfed55ee8844fda4253a8afb57d7a0021329646f15a4de4997bb6be8d1",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 1505,
+          "sha256": "f0f8bd9df3cd7809ade5211da695466bb1e6c8aa7cf04f98afa0ad70de95acfa",
+          "kind": "text",
+          "encoding": "utf-8"
+        }
+      ]
+    },
+    {
+      "name": "test-coverage-gap",
+      "category": "development",
+      "digest": "b4048d6ac856be4fe51b79c97102ae9d21ab60d9df53ac4a1fa54b4d3311456e",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 1301,
+          "sha256": "a6840b2b21fd93675f7fddc83da77a63be44e7393065c731c1497c933841bbb7",
+          "kind": "text",
+          "encoding": "utf-8"
+        }
+      ]
+    },
+    {
+      "name": "test-driven-development",
+      "category": "testing",
+      "digest": "80519d2826190a466264881fb139a53d3fe03fe919808917121039c6fd39f526",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 704,
+          "sha256": "b7d09ea728f5fb0852814723542462d8490e9494579a930329930f8919322337",
+          "kind": "text",
+          "encoding": "utf-8"
+        }
+      ]
+    },
+    {
+      "name": "using-superpowers",
+      "category": "rigor",
+      "digest": "5baf495a1b6072748f8dc5d6672a3f9e1dd51a56c678fc68dc0c21a4dde74424",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 1696,
+          "sha256": "660e13453d9305f8d474dd7198a11583aff1ae1c6a4ab0961d47a9a202264080",
+          "kind": "text",
+          "encoding": "utf-8"
+        }
+      ]
+    },
+    {
+      "name": "vendor-risk-review",
+      "category": "legal",
+      "digest": "6b65a9b59c0e2271cb549d03be288d0b5d2ece74f4dd1ba8798446f99d3043bb",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 1844,
+          "sha256": "5ab7292da488d42361acbc98bddae699411bbc4ae5c06b922490b776c4f82862",
+          "kind": "text",
+          "encoding": "utf-8"
+        }
+      ]
+    },
+    {
+      "name": "verification-before-completion",
+      "category": "rigor",
+      "digest": "a0002ffe4f65f435a4b6e0870cc67f9456950e9f140b11e2269a6d578f6db7c7",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 781,
+          "sha256": "892a3ac4d0e0617a7dfbfb85f58c51e02bd079db5ac1e8a53ad53c2c33913aca",
+          "kind": "text",
+          "encoding": "utf-8"
+        }
+      ]
+    },
+    {
+      "name": "webapp-testing",
+      "category": "testing",
+      "digest": "aae19a503444611f4cb884390dcb576be8fe7f6a4911ddc66745e6a7846eef54",
+      "files": [
+        {
+          "path": "LICENSE.txt",
+          "bytes": 11345,
+          "sha256": "bc6b3af2f331cbc7fb0da1344efb2cbe5877a31498b4d70dbc7000f3405a1362",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "SKILL.md",
+          "bytes": 6999,
+          "sha256": "02cec9a1fdf95e86e891f19ee478b63c7acec89e720bd2800a012b52577e1f28",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "SOURCE.md",
+          "bytes": 4870,
+          "sha256": "72b9dcffb12195f4b41dd972284c890360326a2fb102940904d49f05397d0355",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "references/examples.md",
+          "bytes": 5224,
+          "sha256": "0d8b440b4470ba9054d848f80346c73f21750e0c80e33b0a1b021114538e4dfd",
+          "kind": "text",
+          "encoding": "utf-8"
+        },
+        {
+          "path": "references/with-server-helper.md",
+          "bytes": 7599,
+          "sha256": "e7798cbc8dad4d452435726913f25b9d57b680e4efe13cecb456918a72c57fbb",
+          "kind": "text",
+          "encoding": "utf-8"
+        }
+      ]
+    },
+    {
+      "name": "writing-implementation-plans",
+      "category": "management",
+      "digest": "be4c22e74e62f76daf0a4cc632991fe1694b11aa840c2c3abf5d8be40918c97f",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 775,
+          "sha256": "4cc1f50dbc121ff4c1c5da37fc06410c0282d0da3217ba4e9f9c3b27f48f6233",
+          "kind": "text",
+          "encoding": "utf-8"
+        }
+      ]
+    }
+  ]
+}

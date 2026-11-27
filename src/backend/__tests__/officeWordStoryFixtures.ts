@@ -1,0 +1,19 @@
+import JSZip from 'jszip';
+import { wordPictureDocument, wordPictureDrawing, WORD_IMAGE_W, WORD_IMAGE_A, WORD_IMAGE_PIC, WORD_IMAGE_WP, WORD_IMAGE_R } from './officeWordPictureFixtures';
+export async function wordStoryDocument(mode = 'ordinary') {
+  const zip = await JSZip.loadAsync(await wordPictureDocument());
+  const content = '<w:p><w:pPr><w:pStyle w:val="Header"/></w:pPr><w:r><w:rPr><w:b/></w:rPr><w:t>Story literal D1</w:t></w:r></w:p><w:bookmarkStart w:id="7" w:name="Customer"/><w:bookmarkEnd w:id="7"/><w:sdt><w:sdtPr><w:showingPlcHdr/><w:text/></w:sdtPr><w:sdtContent/></w:sdt><w:tbl><w:tblGrid><w:gridCol w:w="2000"/></w:tblGrid><w:tr><w:tc><w:p><w:r><w:t>Story cell</w:t></w:r></w:p></w:tc></w:tr></w:tbl><w:p>' + wordPictureDrawing(1) + '<w:r><w:t>Story final</w:t></w:r><w:fldSimple w:instr="PAGE"><w:r><w:t>1</w:t></w:r></w:fldSimple></w:p><v:keep/>';
+  for (const [name, local] of [['header1.xml', 'hdr'], ['footer1.xml', 'ftr']]) {
+    let xml = `<?xml version="1.0" encoding="UTF-8"?><!--before--><w:${local} xmlns:w="${WORD_IMAGE_W}" xmlns:a="${WORD_IMAGE_A}" xmlns:pic="${WORD_IMAGE_PIC}" xmlns:wp="${WORD_IMAGE_WP}" xmlns:r="${WORD_IMAGE_R}" xmlns:v="urn:vendor">${content}</w:${local}><!--after-->`;
+    if (mode === 'default-namespace') xml = xml.replace(`<w:${local} `, `<${local} xmlns="${WORD_IMAGE_W}" `).replace(`</w:${local}>`, `</${local}>`);
+    if (mode === 'alternate') xml = xml.replace('<v:keep/>', '<mc:AlternateContent xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"><mc:Choice Requires="pic"><w:p><w:r><w:t>Excluded alternative</w:t></w:r></w:p></mc:Choice><mc:Fallback/></mc:AlternateContent><v:keep/>');
+    if (mode.startsWith('strict')) { for (const [from, to] of [[WORD_IMAGE_W, 'http://purl.oclc.org/ooxml/wordprocessingml/main'], [WORD_IMAGE_A, 'http://purl.oclc.org/ooxml/drawingml/main'], [WORD_IMAGE_PIC, 'http://purl.oclc.org/ooxml/drawingml/picture'], [WORD_IMAGE_WP, 'http://purl.oclc.org/ooxml/drawingml/wordprocessingDrawing'], [WORD_IMAGE_R, 'http://purl.oclc.org/ooxml/officeDocument/relationships']]) xml = xml.replaceAll(from, to); xml = xml.replace('encoding="UTF-8"', 'encoding="UTF-16"'); }
+    const bytes = Buffer.from(xml, mode.startsWith('strict') ? 'utf16le' : 'utf8'); zip.file('word/' + name, mode === 'strict-be' ? Buffer.concat([Buffer.from([254, 255]), bytes.swap16()]) : mode === 'strict-le' ? Buffer.concat([Buffer.from([255, 254]), bytes]) : bytes);
+  }
+  const types = await zip.file('[Content_Types].xml')!.async('string'); zip.file('[Content_Types].xml', types.replace('</Types>', '<Override PartName="/word/header1.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.header+xml"/><Override PartName="/word/footer1.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.footer+xml"/></Types>'));
+  const rels = await zip.file('word/_rels/document.xml.rels')!.async('string'); zip.file('word/_rels/document.xml.rels', rels.replace('</Relationships>', `<Relationship Id="header" Type="${WORD_IMAGE_R}/header" Target="header1.xml"/><Relationship Id="footer" Type="${WORD_IMAGE_R}/footer" Target="footer1.xml"/></Relationships>`));
+  if (mode !== 'missing-header-rels') zip.file('word/_rels/header1.xml.rels', `<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="sharedImage" Type="${WORD_IMAGE_R}/image" Target="media/original.png"/></Relationships>`);
+  const main = await zip.file('word/document.xml')!.async('string'); zip.file('word/document.xml', main.replace('<w:sectPr/>', '<w:sectPr><w:headerReference w:type="default" r:id="header"/><w:footerReference w:type="default" r:id="footer"/></w:sectPr>'));
+  if (mode === 'bad-header') zip.file('word/header1.xml', '<w:hdr xmlns:w="' + WORD_IMAGE_W + '"><w:p>');
+  return zip.generateAsync({ type: 'nodebuffer' });
+}

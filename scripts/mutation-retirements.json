@@ -1,0 +1,122 @@
+{
+  "schema": "unode-mutation-retirements/v1",
+  "retirements": [
+    {
+      "group": "main",
+      "ids": [
+        "main-v0990-summary-sent-before-consent"
+      ],
+      "removedBy": "S1+S2 (86f0dada): the summary request's consent, cancel and limit steps moved verbatim from SummaryRequest.ts into the shared oneRequestTextTransport.ts",
+      "reason": "its anchor no longer exists as written; the same mutation (marked sent before consent) on the shared transport, with the same test",
+      "replacement": "main-v09110-summary-sent-before-consent"
+    },
+    {
+      "group": "main",
+      "ids": [
+        "main-v0990-summary-sent-after-cancel"
+      ],
+      "removedBy": "S1+S2 (86f0dada): the summary request's consent, cancel and limit steps moved into the shared oneRequestTextTransport.ts",
+      "reason": "its anchor no longer exists as written; the same mutation (a request cancelled while consent was open is still sent) on the shared transport, with the same test",
+      "replacement": "main-v09110-summary-sent-after-cancel"
+    },
+    {
+      "group": "main",
+      "ids": [
+        "main-v0994-limits-summary-stopped-request-sent"
+      ],
+      "removedBy": "S1+S2 (86f0dada): the limit crossing moved into the shared oneRequestTextTransport.ts as its beforeSend check",
+      "reason": "its anchor no longer exists as written; the same mutation (a request stopped at its limit is sent) on the shared transport, with the same test",
+      "replacement": "main-v09110-limits-summary-stopped-request-sent"
+    },
+    {
+      "group": "main",
+      "ids": [
+        "main-v0994-limits-summary-cancelled-while-deciding-sent"
+      ],
+      "removedBy": "S1+S2 (86f0dada): the limit crossing moved into the shared oneRequestTextTransport.ts as its beforeSend check",
+      "reason": "its anchor no longer exists as written; the same mutation (a request cancelled while the limit decision was open is sent) on the shared transport, with the same test",
+      "replacement": "main-v09110-limits-summary-cancelled-while-deciding-sent"
+    },
+    {
+      "group": "main",
+      "ids": [
+        "main-v0994-answered-reasoning-labelled"
+      ],
+      "removedBy": "v0.9.110 S2 (e90e2d22): ChatViewProvider gained a second line reading the turn delivery, so the one-line anchor matched twice",
+      "reason": "its anchor no longer exists as written; the same mutation on the same line, anchored with its next line so it names the reasoning label, with the same test",
+      "replacement": "main-v09110-answered-reasoning-labelled"
+    },
+    {
+      "group": "main",
+      "ids": [
+        "main-v0994-review-attempt-keeps-receipts"
+      ],
+      "removedBy": "v0.9.110 N1 (5e391d6c): the attempt-change block also forgets navigation cursors, so the anchored block changed",
+      "reason": "its anchor no longer exists as written; the same mutation (receipts kept across attempts) on the changed block, with the same test",
+      "replacement": "main-v09110-review-attempt-keeps-receipts"
+    },
+    {
+      "group": "main",
+      "ids": [
+        "main-v0994-limits-room-made-from-asked-request"
+      ],
+      "removedBy": "v0.9.110 S1 (dda3f66e): the request ceiling also keeps a request with auxiliary units, so the anchored line changed",
+      "reason": "its anchor no longer exists as written; the same mutation (a request being decided is no longer kept), keeping the auxiliary rule, with the same test",
+      "replacement": "main-v09110-limits-room-made-from-asked-request"
+    },
+    {
+      "group": "main",
+      "ids": [
+        "main-v0994-limits-turn-start-not-asked"
+      ],
+      "removedBy": "v0.9.110 R2 (2cc0fd2d): the turn-start condition also checks a pending recovery notice, so the anchored line changed",
+      "reason": "its anchor no longer exists as written; the same mutation (a limited request starts its turn without asking) on the changed line, with the same test",
+      "replacement": "main-v09110-limits-turn-start-not-asked"
+    },
+    {
+      "group": "main",
+      "ids": [
+        "main-v09100-s3-security-host-save-bytes"
+      ],
+      "removedBy": "v0.9.110 R1a (80ca14a6): the binary save returns { outcome }, so the anchored lines changed",
+      "reason": "its anchor no longer exists as written; the same mutation (the save skips the security-control decision) on the changed lines, with the same test",
+      "replacement": "main-v09110-s3-security-host-save-bytes"
+    },
+    {
+      "group": "main",
+      "ids": [
+        "main-v09100-s3-delta-notes-binary-note"
+      ],
+      "removedBy": "v0.9.110 R1a (80ca14a6): the binary save returns { outcome }, so the anchored refusal line changed",
+      "reason": "its anchor no longer exists as written; the same mutation (the refusal drops the per-call human note) on the changed line, with the same test",
+      "replacement": "main-v09110-s3-delta-notes-binary-note"
+    },
+    {
+      "group": "main",
+      "ids": [
+        "main-v09101-coordinator-reads-shown-text"
+      ],
+      "removedBy": "v0.9.110 smoke fix F1 (1f67a3da): read_file records the bytes it read through noteBytesRead, shared with the binary refusal, so the anchored line moved",
+      "reason": "its anchor no longer exists as written; the same mutation (the text shown is recorded instead of the bytes read) at the noteBytesRead call, with the same test",
+      "replacement": "main-v09110-coordinator-reads-shown-text"
+    },
+    {
+      "group": "main",
+      "ids": [
+        "main-v09103-import-keeps-old-seq"
+      ],
+      "removedBy": "v0.9.110 H0 (fa0de878): an import also gives each message a new id, so the anchored line changed",
+      "reason": "its anchor no longer exists as written; the same mutation (imported messages keep their old sequence numbers), keeping the new message ids, with the same test",
+      "replacement": "main-v09110-import-keeps-old-seq"
+    },
+    {
+      "group": "main",
+      "ids": [
+        "main-v0994-limits-continued-turn-pins"
+      ],
+      "removedBy": "v0.9.110 S1+S2 (86f0dada): RequestCeilingGate.begin() now remembers a request that began without a limit and returns early for it, so the SessionManager guard that keeps a continued turn from beginning it again no longer changes what a request may do",
+      "reason": "equivalent at this head: with the guard removed, the second begin() of a continued turn is a no-op, so the declared test passes (the 0.9.110 mutation run found it surviving); the property now lives in begin(), which the replacement mutates, proven by a direct RequestCeiling test",
+      "replacement": "main-v09110-limits-unlimited-request-stays-unlimited"
+    }
+  ]
+}

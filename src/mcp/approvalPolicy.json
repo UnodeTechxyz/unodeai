@@ -1,0 +1,4 @@
+{
+  "approvalTransports": ["stdio", "streamable-http", "sse"],
+  "environmentRequiresApproval": true
+}

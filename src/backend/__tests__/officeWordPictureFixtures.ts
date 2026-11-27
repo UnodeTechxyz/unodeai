@@ -1,0 +1,27 @@
+import JSZip from 'jszip';
+import { officeRouteDocument } from './officeInventoryRouteFixtures';
+import { PRESENTATION_PNG } from './presentationImageFixtures';
+export const WORD_IMAGE_W = 'http://schemas.openxmlformats.org/wordprocessingml/2006/main';
+export const WORD_IMAGE_A = 'http://schemas.openxmlformats.org/drawingml/2006/main';
+export const WORD_IMAGE_PIC = 'http://schemas.openxmlformats.org/drawingml/2006/picture';
+export const WORD_IMAGE_WP = 'http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing';
+export const WORD_IMAGE_R = 'http://schemas.openxmlformats.org/officeDocument/2006/relationships';
+export const wordPictureDrawing = (id: number, anchor = false) => `<w:r><w:drawing><wp:${anchor ? 'anchor' : 'inline'} distT="0" distB="0"${anchor ? ' simplePos="0" relativeHeight="0" behindDoc="0" locked="0" layoutInCell="1" allowOverlap="1"' : ''}>${anchor ? '<wp:simplePos x="0" y="0"/><wp:positionH relativeFrom="column"><wp:posOffset>180000</wp:posOffset></wp:positionH><wp:positionV relativeFrom="paragraph"><wp:posOffset>270000</wp:posOffset></wp:positionV>' : ''}<wp:extent cx="1000000" cy="1000000"/>${anchor ? '<wp:wrapNone/>' : ''}<wp:docPr id="${id}" name="Picture ${id}" descr="Original"/><a:graphic><a:graphicData uri="${WORD_IMAGE_PIC}"><pic:pic><pic:nvPicPr><pic:cNvPr id="${id}" name="Picture ${id}"/><pic:cNvPicPr/></pic:nvPicPr><pic:blipFill><a:blip r:embed="sharedImage"/><a:stretch><a:fillRect l="12"/></a:stretch></pic:blipFill><pic:spPr><a:xfrm rot="30000" flipH="1"><a:off x="0" y="0"/><a:ext cx="1000000" cy="1000000"/></a:xfrm><a:prstGeom prst="rect"><a:avLst/></a:prstGeom></pic:spPr></pic:pic></a:graphicData></a:graphic></wp:${anchor ? 'anchor' : 'inline'}></w:drawing></w:r>`;
+export async function wordPictureDocument(mode = 'ordinary') {
+  const zip = await JSZip.loadAsync(await officeRouteDocument()); let body = wordPictureDrawing(1, mode === 'anchor') + wordPictureDrawing(2);
+  if (mode === 'missing-offset') body = body.replaceAll('<a:off x="0" y="0"/>', '');
+  if (mode === 'missing-extent') body = body.replaceAll('<a:ext cx="1000000" cy="1000000"/>', '');
+  if (mode === 'empty-properties') body = body.replaceAll(/<pic:spPr>[\s\S]*?<\/pic:spPr>/g, '<pic:spPr/>');
+  if (mode === 'missing-transform') body = body.replaceAll(/<a:xfrm[\s\S]*?<\/a:xfrm>/g, '');
+  if (mode === 'svg') body = body.replace('<a:blip r:embed="sharedImage"/>', '<a:blip r:embed="sharedImage"><a:extLst><a:ext uri="svg"><asvg:svgBlip xmlns:asvg="http://schemas.microsoft.com/office/drawing/2016/SVG/main" r:embed="sharedSvg"/></a:ext><a:ext uri="vendor"/></a:extLst></a:blip>');
+  if (mode === 'alternate') body = `<mc:AlternateContent xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"><mc:Choice Requires="pic">${wordPictureDrawing(9)}</mc:Choice><mc:Fallback/></mc:AlternateContent>` + body;
+  if (mode === 'linked') body = body.replaceAll('r:embed="sharedImage"', 'r:link="externalImage"');
+  if (mode === 'grouped') body = body.replaceAll('<pic:pic>', '<a:grpSp><pic:pic>').replaceAll('</pic:pic>', '</pic:pic></a:grpSp>');
+  let xml = `<?xml version="1.0" encoding="UTF-8"?><w:document xmlns:w="${WORD_IMAGE_W}" xmlns:a="${WORD_IMAGE_A}" xmlns:pic="${WORD_IMAGE_PIC}" xmlns:wp="${WORD_IMAGE_WP}" xmlns:r="${WORD_IMAGE_R}"><w:body><w:p>${body}<w:r><w:t>Keep text</w:t></w:r></w:p><w:p><w:r><w:t>Original after</w:t></w:r></w:p><w:sectPr/></w:body></w:document>`;
+  if (mode.startsWith('strict')) { for (const [from, to] of [[WORD_IMAGE_W, 'http://purl.oclc.org/ooxml/wordprocessingml/main'], [WORD_IMAGE_A, 'http://purl.oclc.org/ooxml/drawingml/main'], [WORD_IMAGE_PIC, 'http://purl.oclc.org/ooxml/drawingml/picture'], [WORD_IMAGE_WP, 'http://purl.oclc.org/ooxml/drawingml/wordprocessingDrawing'], [WORD_IMAGE_R, 'http://purl.oclc.org/ooxml/officeDocument/relationships']]) xml = xml.replaceAll(from, to); xml = xml.replace('encoding="UTF-8"', 'encoding="UTF-16"'); }
+  const encoded = Buffer.from(xml, mode.startsWith('strict') ? 'utf16le' : 'utf8'); zip.file('word/document.xml', mode === 'strict-be' ? Buffer.concat([Buffer.from([254, 255]), encoded.swap16()]) : mode === 'strict-le' ? Buffer.concat([Buffer.from([255, 254]), encoded]) : encoded);
+  const relName = 'word/_rels/document.xml.rels'; const oldRels = await zip.file(relName)?.async('string') ?? '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"></Relationships>'; zip.file(relName, oldRels.replace('</Relationships>', `<Relationship Id="sharedImage" Type="${WORD_IMAGE_R}/image" Target="media/original.png"/><Relationship Id="sharedSvg" Type="${WORD_IMAGE_R}/image" Target="media/original.svg"/><Relationship Id="externalImage" Type="${WORD_IMAGE_R}/image" Target="https://example.invalid/private?credential=hidden" TargetMode="External"/></Relationships>`));
+  if (mode === 'missing-rels') zip.remove(relName);
+  zip.file('word/media/original.png', PRESENTATION_PNG); zip.file('word/media/original.svg', '<svg xmlns="http://www.w3.org/2000/svg" width="200" height="100"/>'); zip.file('custom/untouched.bin', Buffer.from([0, 255, 7]));
+  const types = await zip.file('[Content_Types].xml')!.async('string'); zip.file('[Content_Types].xml', types.replace('</Types>', '<Default Extension="png" ContentType="image/png"/><Default Extension="svg" ContentType="image/svg+xml"/></Types>')); return zip.generateAsync({ type: 'nodebuffer' });
+}
